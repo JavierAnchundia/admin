@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header card-title text-center" style="font-weight: 400;">
+            <h1> Inicio de sesión</h1>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="form_login" (submit)="submit()">
+              <div class="form-group row">
+                <label for="email_address" class="col-md-4 col-form-label text-md-right">Correo electrónico</label>
+                <div class="col-md-6">
+                  <input formControlName="email"  type="text" id="email_address" class="form-control" name="email-address" required autofocus>
+                </div>
+                <span class="text-danger small" *ngIf="form_login.controls['email'].touched && form_login.controls['email'].hasError('required')">
+                  Email es requerido! </span>
+              <span class="text-danger small" *ngIf="form_login.controls['email'].touched && form_login.controls['email'].hasError('email')">
+                  Email no valido! </span>
+              </div>
+  
+  
+              <div class="form-group row">
+                <label for="password" class="col-md-4 col-form-label text-md-right">Contraseña</label>
+                <div class="col-md-6">
+                  <input formControlName="contrasena" type="password" id="password" class="form-control" name="password" required>
+                </div>
+                <span class="text-danger small" *ngIf="form_login.controls['contrasena'].touched && form_login.controls['contrasena'].hasError('required')">
+                  Contraseña es requerida! </span>
+              </div>
+  
+              
+              <div class="col-md-6 offset-md-4">
+                <button type="submit" class="btn btn-primary">
+                  Ingresar
+                </button>
+                <a href="#" class="btn btn-link">
+                  ¿Olvidaste la contraseña?
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  

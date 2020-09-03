@@ -1,0 +1,306 @@
+<section id="cemetery-title">
+  <div class="container">
+    <h1 class="section-title">{{empresa.nombre}}</h1>
+  </div>
+</section>
+<div class="container">
+  <div class="row">
+    <div class="col-6 col-xs-4 item-photo">
+      <img
+        style="max-width: 100%;"
+        src="https://carmsanc.pythonanywhere.com{{camposanto.logo}}"
+      />
+    </div>
+    <div class="col-6 col-xs-4 text-align-center;">
+      <h2 style="text-align: center;">Información del cementerio</h2>
+
+      <div class="justify-content-center;">
+        <table class="">
+          <tbody>
+            <tr>
+              <td class="h6"><strong>Nombre cementerio: </strong></td>
+              <td></td>
+              <td class="p">{{ camposanto.nombre }}</td>
+            </tr>
+
+            <tr>
+              <td class="h6"><strong>Dirección:</strong></td>
+              <td></td>
+              <td class="p">{{ camposanto.direccion }}</td>
+            </tr>
+            <tr>
+              <td class="h6"><strong>Teléfono:</strong></td>
+              <td></td>
+              <td class="p">{{ camposanto.telefono }}</td>
+            </tr>
+
+            <tr>
+              <td class="h6"><strong>Correo:</strong></td>
+              <td></td>
+              <td class="p">{{ empresa.correo }}</td>
+            </tr>
+
+            <tr>
+              <td class="h6"><strong>Página Web:</strong></td>
+              <td></td>
+              <td>
+                <a href="{{empresa.web}}">{{
+                  empresa.web
+                }}</a>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="h6"><strong>RUC:</strong></td>
+              <td></td>
+              <td class="p">{{ empresa.ruc }}</td>
+            </tr>
+
+            <tr>
+              <td class="h6"><strong>Redes sociales:</strong></td>
+              <td></td>
+              <td class="h5"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="container">
+        <hr/>
+        <div class="text-center">
+          <div class="" *ngFor= "let red of redes">
+            <button *ngIf="red.nombre == 'Facebook'" type="button" class="btn btn-social-icon btn-facebook">
+              <a href ={{red.link}} style="text-decoration: none; color:white;" ><i class="fa fa-facebook"></i></a>
+            </button>
+            <button type="button" *ngIf="red.nombre == 'Youtube'" class="btn btn-social-icon btn-youtube">
+              <a href ={{red.link}} style="text-decoration: none; color:white;" ><i class="fa fa-youtube"></i></a>
+            </button>
+            <button *ngIf="red.nombre == 'Twitter'" type="button" class="btn btn-social-icon btn-twitter">
+              <a href ={{red.link}} style="text-decoration: none; color:white;" > <i class="fa fa-twitter"></i></a>
+            </button>
+            <button type="button" *ngIf="red.nombre == 'Linkedin'" class="btn btn-social-icon btn-linkedin">
+              <a href ={{red.link}} style="text-decoration: none; color:white;" ><i class="fa fa-linkedin"></i></a>
+            </button>
+            <button type="button" *ngIf="red.nombre == 'Instagram'"  class="btn btn-social-icon btn-instagram">
+              <a href ={{red.link}} style="text-decoration: none; color:white;"><i class="fa fa-instagram "></i></a>
+            </button>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="text-center form-row">
+        <div class="col">
+          <button
+            type="button"
+            class="btn btn-secondary btn-sm"
+            data-toggle="modal"
+            data-target="#verMapa"
+          >
+          <fa-icon [icon]="faMapMarkedAlt"></fa-icon>
+            Ver mapa
+          </button>
+        </div>
+        <div class="col">
+          <button
+            type="button"
+            class="btn btn-secondary btn-sm"
+            data-toggle="modal"
+            data-target="#mapaModalEditar"
+          >
+          <fa-icon [icon]="faMapMarker"></fa-icon>
+            Editar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="row btn-group-wrap">
+  <div class="btn-group">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      routerLink="/inicio/administradores"
+    >
+      Administradores
+    </button>
+    <button type="button" class="btn btn-outline-dark" routerLink="/inicio/difuntos">
+      Fallecidos
+    </button>
+    <button type="button" class="btn btn-outline-dark" routerLink="/inicio/perfil">
+      Paquetes
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      data-toggle="modal"
+      data-target="#exampleModalCenter"
+    >
+      Editar perfil
+    </button>
+  </div>
+</div>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div
+    class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+    role="document"
+  >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLongTitle">
+          Editar información
+        </h1>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="cemetery-name" class="col-form-label"
+              >Nombre del cementerio:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="cemetery-name"
+              value="{{ camposanto.nombre }}"
+            />
+          </div>
+          <div class="form-group">
+            <label for="address-text" class="col-form-label">Dirección:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="address-text"
+              value="{{ camposanto.direccion }}"
+            />
+          </div>
+          <div class="form-group">
+            <label for="address-text" class="col-form-label">Correo:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="address-text"
+              value="{{ empresa.correo }}"
+            />
+          </div>
+          <div class="form-group">
+            <label for="address-text" class="col-form-label">Página Web:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="address-text"
+              value="{{ empresa.web }}"
+            />
+          </div>
+          <div class="form-group">
+            <label for="address-text" class="col-form-label">RUC:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="address-text"
+              value="{{ empresa.ruc }}"
+            />
+          </div>
+          <div class="form-group" >
+            <label for="address-text" class="col-form-label">Redes sociales:</label>
+            <div *ngFor= "let red of redes">
+            <div class="input-group mb-3" >
+              <div *ngIf="red.nombre == 'Facebook'" class="input-group-prepend">
+                <span
+                  class="input-group-text"
+                  style="background-color: #3b579d; color: white;"
+                  id="basic-addon1"
+                  >Facebook</span
+                >
+              </div>
+              <input *ngIf="red.nombre == 'Facebook'"
+                type="text"
+                class="form-control"
+                value="{{red.link}}"
+                aria-label="URL Facebook"
+                aria-describedby="basic-addon1"
+              />
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span *ngIf="red.nombre == 'Twitter'"
+                  class="input-group-text"
+                  style="background-color: #2caae1; color: white;"
+                  id="basic-addon1"
+                  >Twitter</span
+                >
+              </div>
+              <input *ngIf="red.nombre == 'Twitter'"
+                type="text"
+                class="form-control"
+                value="{{red.link}}"
+                aria-label="URL twitter"
+                aria-describedby="basic-addon1"
+              />
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span *ngIf="red.nombre == 'Youtube'"
+                  class="input-group-text"
+                  style="background-color: #e52d27; color: white;"
+                  id="basic-addon1"
+                  >YouTube</span
+                >
+              </div>
+              <input *ngIf="red.nombre == 'Youtube'"
+                type="text"
+                class="form-control"
+                value= {{red.link}}
+                aria-label="URL youtube"
+                aria-describedby="basic-addon1"
+              />
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span *ngIf="red.nombre == 'Instagram'"
+                  class="input-group-text"
+                  style="background-color: #dc4a38; color: white;"
+                  id="basic-addon1"
+                  >Instagram</span
+                >
+              </div>
+              <input *ngIf="red.nombre == 'Instagram'"
+                type="text"
+                class="form-control"
+                value={{red.link}}
+                aria-label="URL Instagram"
+                aria-describedby="basic-addon1"
+              />
+            </div>
+          </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-primary">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-ver-mapa></app-ver-mapa>
+<app-editar-mapa></app-editar-mapa>

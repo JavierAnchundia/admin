@@ -1,0 +1,15 @@
+<div class="container-fluid" >
+    <div class="row justify-content-around" >
+        <div class="col-3 tarjetas container-fluid ml-0 mr-1 mt-5 = shadow rounded " *ngFor="let camposanto of lista_camposanto">
+            <div class="row fondoCrear justify-content-start" (click)="redirectProfile(camposanto.id_camposanto)">
+                <img src="https://carmsanc.pythonanywhere.com{{camposanto.logo}}" class=" img-fluid fotoCementerio ">
+                <p class=" mb-0 pt-2  nombreCementerio col-12 d-flex justify-content-start font-weight-bold "> {{camposanto.nombre}}</p>
+                <p class="pb-1 descripcionCementerio col-12 d-flex justify-content-start "> {{camposanto.direccion}}</p>
+
+            </div>
+        </div>
+        
+
+        <app-boton-crear class="col-3 p-0 tarjetas mr-1 mt-5 shadow rounded" [routerLink]="['/inicio/crear']"></app-boton-crear>     
+    </div>
+</div>

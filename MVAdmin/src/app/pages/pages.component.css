@@ -1,0 +1,14 @@
+.contenido {
+    margin-top: 5px;
+    margin-bottom: 0;
+    margin-right: 10px;
+    margin-left: 215px;
+}
+
+.inner-content {
+  margin-top: 75px;
+  padding: 24px;
+  background: #fff;
+  min-height: 1000px;
+  /* overflow-y: scroll; */
+}

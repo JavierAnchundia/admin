@@ -1,0 +1,26 @@
+.trigger {
+    font-size: 18px;
+    line-height: 64px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+.trigger:hover {
+    color: #1890ff;
+}
+.alinear{
+    margin-right: 10px;
+    float: right;
+}
+.paddingCont{
+    margin-right: 25px;
+}
+nz-header {
+    background: #fff;
+    padding: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+}
+nz-button-group {
+    margin: 0 8px 8px 0;
+}

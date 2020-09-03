@@ -1,0 +1,227 @@
+#cemetery-title {
+    padding: 2em 0;
+  }
+  
+  #cemetery-title h1.section-title {
+    color: rgb(100, 98, 98);
+    font-size: 40px;
+  }
+  
+  
+  section .section-title {
+    text-align: center;
+    margin-bottom: 0;
+    text-transform: capitalize;
+    padding: 0.5em;
+  }
+  
+  p {
+    text-transform: capitalize;
+    font-size: 18px;
+  }
+
+  @media (max-width: 426px) {
+  .container {
+    margin-top: 0px !important;
+  }
+
+  .container>.row {
+    padding: 0 !important;
+  }
+
+  .container>.row>.col-xs-12.col-sm-5 {
+    padding-right: 0;
+  }
+
+  .container>.row>.col-xs-12.col-sm-9>div>p {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .container>.row>.col-xs-12.col-sm-9>div>ul {
+    padding-left: 10px !important;
+
+  }
+
+  .section {
+    width: 104%;
+  }
+
+  .menu-items {
+    padding-left: 0;
+  }
+}
+
+.section {
+  width: 100%;
+  margin-left: -15px;
+  padding-bottom: 10px;
+  padding-left: 25px;
+  padding-right: 15px;
+  padding-top: 10px;
+  background: #f8f9f9
+}
+
+.item-photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.groupButton {
+    width: 100%;
+    justify-content: center;
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  .btn.btn-social-icon {
+    height: 50px;
+    padding: 0px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  
+  .btn-facebook {
+    background: #3b579d;
+    color: #ffffff;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 5px;
+  
+  
+  
+  }
+  
+  .btn-youtube {
+    background: #e52d27;
+    color: #ffffff;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 5px;
+  
+  
+  }
+  
+  .btn-twitter {
+    background: #2caae1;
+    color: #ffffff;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 5px;
+  
+  }
+  
+  
+  
+  .btn-linkedin {
+    background: #0177b5;
+    color: #ffffff;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 5px;
+  
+  
+  }
+  
+  .btn-instagram {
+    background: #dc4a38;
+    color: #ffffff;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 5px;
+  }
+  
+  .btn-facebook:hover,
+  .btn-facebook:focus {
+    background: #2d4278;
+    color: #ffffff;
+  
+  }
+  
+  .btn-youtube:hover,
+  .btn-youtube:focus {
+    background: #c21d17;
+    color: #ffffff
+  }
+  
+  .btn-twitter:hover,
+  .btn-twitter:focus {
+    background: #1b8dbf;
+    color: #ffffff
+  }
+  
+  .btn-dribbble:hover,
+  .btn-dribbble:focus {
+    background: #e51e6b;
+    color: #ffffff
+  }
+  
+  .btn-linkedin:hover,
+  .btn-linkedin:focus {
+    background: #015682;
+    color: #ffffff
+  }
+  
+  .btn-instagram:hover,
+  .btn-instagram:focus {
+    background: #bf3322;
+    color: #ffffff
+  }
+  
+  .fa {
+    padding: 2px;
+    font-size: 30px;
+  }
+  
+  .btn-group-wrap {
+    text-align: center;
+    padding-top: 8px;
+  }
+  
+  div.btn-group {
+    margin: 0 auto;
+    text-align: center;
+    width: inherit;
+    display: inline-block;
+  }
+  
+  .btn-group {
+    background-color: transparent;
+    color: #333;
+    display: block;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    height: 26px;
+    line-height: 17px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    position: relative;
+    text-align: center;
+    width: 100%;
+  }
+
+  .btn-group .btn:first-child {
+  margin-left: 0;
+  -webkit-border-top-left-radius: 4px;
+  -moz-border-radius-topleft: 4px;
+  border-top-left-radius: 4px;
+  -webkit-border-bottom-left-radius: 4px;
+  -moz-border-radius-bottomleft: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.btn-group .btn:last-child,
+.btn-group .dropdown-toggle {
+  -webkit-border-top-right-radius: 4px;
+  -moz-border-radius-topright: 4px;
+  border-top-right-radius: 4px;
+  -webkit-border-bottom-right-radius: 4px;
+  -moz-border-radius-bottomright: 4px;
+  border-bottom-right-radius: 4px;
+}

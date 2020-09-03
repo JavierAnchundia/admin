@@ -1,0 +1,81 @@
+import { NgModule } from '@angular/core';
+import { AgmCoreModule } from '@agm/core';
+import { environment } from '../../environments/environment';
+import { PAGES_ROUTES } from './pages.routes';
+import { SharedModule } from '../shared/shared.module';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
+//servicios
+import { ComunicateNavSiderService } from '../services/comunicatens/comunicate-nav-sider.service';
+import { CargarGeolocalizacionSadminService } from '../services/cargar-geolocalizacion-sadmin/cargar-geolocalizacion-sadmin.service'
+
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
+import es from '@angular/common/locales/es';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+// import { PagesComponent } from './pages.component';
+
+import { PerfilCementerioComponent } from './perfil-cementerio/perfil-cementerio.component';
+import { NgZorroAntdModule, es_ES, NZ_I18N } from 'ng-zorro-antd';
+import { HttpClientModule } from '@angular/common/http';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { SadminCrearCementerioComponent } from './sadmin-crear-cementerio/sadmin-crear-cementerio.component';
+import { PerfilConfiguracionComponent } from './perfil-configuracion/perfil-configuracion.component';
+import { PoligonoMapComponent } from './sadmin-crear-cementerio/poligono-map/poligono-map.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { BotonCrearComponent } from './dashboard/boton-crear/boton-crear.component';
+import { RegistroDifuntoComponent } from './registro-difunto/registro-difunto.component';
+import { DifuntosPanelComponent } from './difuntos-panel/difuntos-panel.component';
+import { CrearAdminComponent } from './crear-admin/crear-admin.component';
+import { VerMapaComponent } from './perfil-cementerio/ver-mapa/ver-mapa.component';
+import { EditarMapaComponent } from './perfil-cementerio/editar-mapa/editar-mapa.component';
+import { ServicioModules } from '../services/servicios.module';
+import { DetalleDifuntoComponent } from './difuntos-panel/detalle-difunto/detalle-difunto.component'
+registerLocaleData(es);
+
+@NgModule({
+    declarations: [
+        //PagesComponent,
+        PerfilCementerioComponent,
+        AdminPanelComponent,
+        SadminCrearCementerioComponent,
+        PerfilConfiguracionComponent,
+        PoligonoMapComponent,
+        DashboardComponent,
+        BotonCrearComponent,
+        RegistroDifuntoComponent,
+        DifuntosPanelComponent,
+        CrearAdminComponent,
+        VerMapaComponent,
+        EditarMapaComponent,
+        DetalleDifuntoComponent,
+    ],
+    exports: [
+        PerfilCementerioComponent,
+        SadminCrearCementerioComponent,
+        RegistroDifuntoComponent,
+    ],
+    imports: [
+        CommonModule,
+        SharedModule,
+        ServicioModules,
+        PAGES_ROUTES,
+        FormsModule,
+        NgZorroAntdModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        FontAwesomeModule,
+        MatSlideToggleModule,
+        AgmCoreModule.forRoot({
+            apiKey: environment.api_key,
+            libraries: ['places', 'drawing', 'geometry']
+        }),
+    ],
+    providers: [
+        ComunicateNavSiderService,
+        CargarGeolocalizacionSadminService,
+        { provide: NZ_I18N, useValue: es_ES }],
+})
+export class PagesModule { }

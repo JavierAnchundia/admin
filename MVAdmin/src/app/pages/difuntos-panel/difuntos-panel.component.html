@@ -1,0 +1,57 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/inicio/dashboard">Cementerios</a></li>
+    <li class="breadcrumb-item"><a routerLink="/inicio/perfil/{{this.id.camposanto}}">Perfil</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Difuntos</li>
+  </ol>
+</nav>
+<div class="row">
+  <div class="col-6">
+    <h1> Listado de difuntos</h1>
+  </div>
+  <div class="col-5">
+    <div class="input-group">
+      <input type="text" aria-label="Nombre" class="form-control" placeholder="Nombre">
+      <input type="text" aria-label="Apellido" class="form-control" placeholder="Apellido">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button" id="buttonBuscar">Buscar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="btn-toolbar">
+  <button class="btn btn-primary" routerLink="/inicio/registrodifunto">Agregar difunto</button>
+</div>
+<div class="container-fluid">
+  <table class="table table-striped">
+    <thead>
+      <tr >
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Cédula</th>
+        <th scope="col">Género</th>
+        <th scope="col">Fecha Nacimiento</th>
+        <th scope="col">Fecha Defunción</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let difunto of lista_difuntos">
+        <td>{{difunto.nombre}}</td>
+        <td>{{difunto.apellido}}</td>
+        <td>{{difunto.cedula}}</td>
+        <td>{{difunto.genero}}</td>
+        <td>{{difunto.fecha_nacimiento}}</td>
+        <td>{{difunto.fecha_difuncion}}</td>
+
+        <td>
+          <a><i class="fa fa-pencil"></i></a>
+          <a role="button" data-toggle="modal"><i class="fa fa-trash"></i></a>
+          <button style="outline: none; border: 0;" data-toggle="modal" (onClick)= 'senddata(difunto)' data-target="#detalleDifunto"><i class="fa fa-plus-circle"></i></button>
+          <app-detalle-difunto [difunto]=difunto ></app-detalle-difunto>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

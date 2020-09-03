@@ -1,0 +1,50 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/inicio/dashboard">Cementerios</a></li>
+    <li class="breadcrumb-item"><a routerLink="/inicio/perfil/{{this.id.camposanto}}">Perfil</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Administradores</li>
+  </ol>
+</nav>
+  <div class="row">
+    <div class="col-6">
+      <h1> Listado de administradores</h1>
+    </div>
+    <div class="col-5">
+      <div class="input-group view-container">
+        <input type="text" aria-label="First name" class="form-control" placeholder="Nombre">
+        <input type="text" aria-label="Last name" class="form-control" placeholder="Apellido">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary"  type="button" id="button-addon2">Buscar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="btn-toolbar">
+    <button class="btn btn-primary" routerLink="/inicio/create">Agregar administrador</button>
+  </div>
+  <div class="container-fluid">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Correo</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let admin of lista_admin">
+          <th scope="row">1</th>
+          <td>{{admin.first_name}}</td>
+          <td>{{admin.last_name}}</td>
+          <td>{{admin.email}}</td>
+          <td>
+            <a><i class="fa fa-pencil"></i></a>
+            <a role="button" data-toggle="modal"><i class="fa fa-user-times"></i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+

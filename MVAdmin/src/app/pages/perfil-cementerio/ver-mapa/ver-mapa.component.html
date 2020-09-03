@@ -1,0 +1,49 @@
+<div
+  class="modal fade"
+  id="verMapa"
+  tabindex="-1"
+  aria-labelledby="modalDibujarMapa"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Mapa del Camposanto
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row col-12">
+          <div class="agm-container col-12 p-1" *ngIf="show">
+            <agm-map
+              [latitude]="lat"
+              [longitude]="lng"
+              [zoom]="zoom"
+              [disableDefaultUI]="false"
+            >
+              <agm-polygon
+                [paths]="markers"
+                [strokeColor]="'red'"
+                [fillColor]="'red'"
+              >
+              </agm-polygon>
+            </agm-map>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

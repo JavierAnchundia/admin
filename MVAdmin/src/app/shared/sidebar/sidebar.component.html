@@ -1,0 +1,30 @@
+<nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+    <div class="logo"></div>
+
+    <ul nz-menu nzTheme="dark" nzMode="inline" *ngIf="rolSuperAdmin; else elseSuperAdmin">
+        <li nz-menu-item routerLink="/inicio/dashboard">
+            <i nz-icon nzType="home"></i>
+            <span>Cementerios</span>
+        </li>
+    </ul>
+    <ng-template #elseSuperAdmin>
+        <ul nz-menu nzTheme="dark" nzMode="inline">
+            <li nz-submenu nzTitle="Difuntos" nzIcon="user-add">
+             <ul>
+                <li nz-menu-item>Registrar</li>
+                <li nz-menu-item>Buscar</li>
+            </ul> 
+            </li>
+            <li nz-submenu nzTitle="Empleados" nzIcon="team">
+                <ul>
+                    <li nz-menu-item>Registrar</li>
+                    <li nz-menu-item>Buscar</li>
+                </ul>
+            </li>
+            <li nz-menu-item>
+                <i nz-icon nzType="file"></i>
+                <span>Paquetes</span>
+            </li>
+        </ul>
+    </ng-template>
+</nz-sider>

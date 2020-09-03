@@ -1,0 +1,15 @@
+i{
+    font-size: 20px;
+    padding: 10px;
+    color:rgba(6, 111, 231, 0.87);
+}
+
+.btn-toolbar{
+    padding: 10px;
+}
+
+.view-container {
+    /* prevents body content from overflowing into navbar */
+    overflow: hidden;
+    padding: 10px;
+}

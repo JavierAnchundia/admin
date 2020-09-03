@@ -1,0 +1,97 @@
+<div class="modal fade" id="detalleDifunto" tabindex="-1" aria-labelledby="modalDetalleDibujo" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Información del fallecido
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="cemetery-name" class="col-form-label">Nombres y Apellido:</label>
+            <input type="text" class="form-control" id="cemetery-name"
+              value="{{ difunto.nombre }} {{difunto.apellido}}" />
+          </div>
+          <div class="form-group">
+            <label for="address-text" class="col-form-label">Género:</label>
+            <input type="text" class="form-control" id="address-text" value="{{ difunto.genero }}" />
+          </div>
+          <div class="form-group">
+            <label for="address-text" class="col-form-label">Información nacimiento:</label>
+            <input type="text" class="form-control"
+              value="{{ difunto.fecha_nacimiento }} - {{difunto.lugar_nacimiento}} " />
+          </div>
+          <div class="form-group">
+            <label for="address-text" class="col-form-label">Información Defunción:</label>
+            <input type="text" class="form-control" id="address-text"
+              value="{{ difunto.fecha_difuncion }} - {{difunto.lugar_difuncion}} " />
+          </div>
+
+          <div class="form-group">
+            <label for="address-text" class="col-form-label">Cédula:</label>
+            <input type="text" class="form-control" value="{{ difunto.cedula }}" />
+          </div>
+          <div class="form-group">
+            <label for="address-text" class="col-form-label">No. lápida:</label>
+            <input type="text" class="form-control" value="{{ difunto.no_lapida }}" />
+          </div>
+
+          <div class="form-group">
+            <label for="address-text" class="col-form-label">Sector:</label>
+            <input type="text" class="form-control" value={{this.sector}} />
+          </div>
+          <div class="form-group">
+            <label for="address-text" class="col-form-label">Tipo sepultura:</label>
+            <input type="text" class="form-control" value={{this.sepultura}} />
+          </div>
+          <div class="form-group">
+            <label for="" class="col-form-label">No. de rosas:</label>
+            <input type="text" class="form-control" value="{{ difunto.num_rosas }}" />
+          </div>
+          <h5 class="modal-title" >
+            Información del responsable
+          </h5>
+          <div class="form-group">
+            <label for="cemetery-name" class="col-form-label">Nombres y Apellido:</label>
+            <input type="text" class="form-control" id="cemetery-name"
+              value="{{ responsable.nombre }} {{responsable.apellido}}" />
+          </div>
+          <div class="form-group">
+            <label for="cemetery-name" class="col-form-label">Correo:</label>
+            <input type="text" class="form-control" id="cemetery-name"
+              value="{{ responsable.correo }}" />
+          </div>
+          <div class="form-group">
+            <label for="cemetery-name" class="col-form-label">Teléfono:</label>
+            <input type="text" class="form-control" id="cemetery-name"
+              value="{{ responsable.telefono }}" />
+          </div>
+          <div class="form-group">
+            <label for="cemetery-name" class="col-form-label">Celular:</label>
+            <input type="text" class="form-control" id="cemetery-name"
+              value="{{ responsable.celular }}" />
+          </div>
+          <div class="form-group">
+            <label for="cemetery-name" class="col-form-label">Dirección:</label>
+            <input type="text" class="form-control" id="cemetery-name"
+              value="{{ responsable.direccion }}" />
+          </div>
+          <div class="form-group">
+            <label for="cemetery-name" class="col-form-label">Parentesco:</label>
+            <input type="text" class="form-control" id="cemetery-name"
+              value="{{ responsable.parentezco }}" />
+          </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" data-dismiss="modal">
+        Cerrar
+      </button>
+    </div>
+  </div>
+</div>
+</div>

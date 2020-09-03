@@ -1,0 +1,39 @@
+<div class="modal fade" id="mapaModal" tabindex="-1" aria-labelledby="modalDibujarMapa" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Dibujar mapa del camposanto</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-row col-12">
+                <div class="agm-container col-11 p-1">
+                    <agm-map
+                      [zoom]="zoom"
+                      [latitude]="lat"
+                      [longitude]="lng"
+                      (mapReady)="onMapReady($event)"
+                    >
+                    </agm-map>
+                </div>
+                <div class="col-1">
+                    <div class="container">
+                        <div class="row">
+                            <div class="mx-auto">
+                                <button class="btn btn-danger btn-sm" type="button"  (click) = "deleteSelectedShape()">
+                                    <fa-icon [icon]="faEraser"></fa-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click) = "cargarPuntos()">Cargar</button>
+        </div>
+      </div>
+    </div>
+</div>
