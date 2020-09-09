@@ -11,6 +11,7 @@ import { Red_social } from '../../models/red_social.model';
 declare var $: any;
 import Swal from 'sweetalert2'
 import { throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -51,7 +52,8 @@ export class SadminCrearCementerioComponent implements OnInit {
     private cargarGeoService: CargarGeolocalizacionSadminService,
     private _servicio: CamposantoService,
     private _servicioGeo: GeolocalizacionService,
-    private _servicioRed: RedsocialService
+    private _servicioRed: RedsocialService,
+    private router: Router
   ) { }
   selectFile(event) {
     this.archivo = event.target.files[0];
@@ -171,7 +173,7 @@ export class SadminCrearCementerioComponent implements OnInit {
             (data) => {
               if(i == this.redList.length -1 ){
                 this.delay(400);
-                window.location.reload()
+                this.router.navigate(['/inicio/dashboard']);
               }
               console.log(data);
             }
@@ -185,22 +187,4 @@ export class SadminCrearCementerioComponent implements OnInit {
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
-  // resetFormCemeneterio(){
-  //   this.form_cementerio.setValue(
-  //     {
-  //       nombre: '',
-  //       empresa: '',
-  //       direccion: '',
-  //       telefono: '',
-  //       email: '',
-  //       logo: '',
-  //       redes: this.fb.array([
-  //         this.fb.group({
-  //           redSocial: ''
-  //         })
-  //       ])
-  //     }
-  //   )
-  //   this.puntosL = []
-  // }
 }
