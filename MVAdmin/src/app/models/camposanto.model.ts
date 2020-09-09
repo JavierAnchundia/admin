@@ -1,14 +1,10 @@
 
 export class Camposanto{
-    constructor(
-        public nombre: String,
-        public direccion: String,
-        public imagenURL:String,
-        public telefono: String,
-        public estado: boolean,
-        public id?: any
-        
-    ){
-
-    }
+    id_camposanto: Number
+    nombre: String
+    direccion: String
+    telefono: String
+    estado: Boolean
+    logo: String
+    id_empresa: Number
 }

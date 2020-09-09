@@ -163,12 +163,13 @@
           class="close"
           data-dismiss="modal"
           aria-label="Close"
+          #closeModalEditar
         >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form [formGroup]="form_cementerio" (submit)="submit()" enctype="multipart/form-data">
           <div class="form-group">
             <label for="cemetery-name" class="col-form-label"
               >Nombre del cementerio:</label
@@ -177,7 +178,7 @@
               type="text"
               class="form-control"
               id="cemetery-name"
-              value="{{ camposanto.nombre }}"
+              formControlName="nombre"
             />
           </div>
           <div class="form-group">
@@ -186,7 +187,7 @@
               type="text"
               class="form-control"
               id="address-text"
-              value="{{ camposanto.direccion }}"
+              formControlName="direccion"
             />
           </div>
           <div class="form-group">
@@ -195,7 +196,7 @@
               type="text"
               class="form-control"
               id="address-text"
-              value="{{ empresa.correo }}"
+              formControlName="email"
             />
           </div>
           <div class="form-group">
@@ -204,7 +205,7 @@
               type="text"
               class="form-control"
               id="address-text"
-              value="{{ empresa.web }}"
+              formControlName="pagina_web"
             />
           </div>
           <div class="form-group">
@@ -213,7 +214,7 @@
               type="text"
               class="form-control"
               id="address-text"
-              value="{{ empresa.ruc }}"
+              formControlName="ruc"
             />
           </div>
           <div class="form-group" >
@@ -296,7 +297,7 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Cancelar
         </button>
-        <button type="button" class="btn btn-primary">Guardar cambios</button>
+        <button type="button" class="btn btn-primary" (click) = "submit()">Guardar cambios</button>
       </div>
     </div>
   </div>

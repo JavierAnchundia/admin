@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Empresa } from '../../models/empresa.model';
 import URL_SERVICIOS from 'src/app/config/config';
 import { UsuarioService } from '../usuario/usuario.service';
+import { Camposanto } from 'src/app/models/camposanto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,11 @@ export class CamposantoService {
     return this.http.post<FormData>(url, camposanto, httpOptions)
   }
 
+  putCamposanto(camposanto){
+    let url = URL_SERVICIOS.camposanto + camposanto.id_camposanto + '/';
+    return this.http.put(url, camposanto);
+  }
+
   getEmpresas():Observable<Empresa[]>{
     let url = URL_SERVICIOS.empresas;
     return this.http.get<Empresa[]>(url);
@@ -49,5 +55,11 @@ export class CamposantoService {
   getEmpresa(id: String):Observable<Empresa>{
     let url = URL_SERVICIOS.empresa_get + id + '/';
     return this.http.get<Empresa>(url);
+  }
+
+  putEmpresa(empresa: Empresa){
+    console.log(empresa)
+    let url = URL_SERVICIOS.empresa_get + empresa.id_empresa + '/';
+    return this.http.put<Empresa>(url, empresa);
   }
 }
