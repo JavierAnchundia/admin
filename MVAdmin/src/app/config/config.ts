@@ -19,6 +19,7 @@ const URL_SERVICIOS = {
     empresas: URL_ROOT + '/empresas/',
     empresa_get: URL_ROOT + '/empresa_get/',
     usuario: URL_ROOT_AUTH + '/users/',
+    datosUsuario: URL_ROOT + '/usuario/',
     login: URL_ROOT + '/token/',
     refreshlogin: URL_ROOT_AUTH +'api/token/refresh/ '
 }

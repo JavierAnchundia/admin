@@ -119,6 +119,17 @@ export class UsuarioService {
     return this.http.get(url, httpOptions);
   }
 
+  getDatosUser(email) {
+    let url = URL_SERVICIOS.datosUsuario + email + '/'
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+
+    return this.http.get(url, httpOptions);
+  }
+
   crearUsuario(usuario) {
     let url = URL_SERVICIOS.usuario;
     let httpOptions = {

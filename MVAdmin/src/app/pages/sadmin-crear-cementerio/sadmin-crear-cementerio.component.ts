@@ -91,7 +91,6 @@ export class SadminCrearCementerioComponent implements OnInit {
   }
   addRedSocial() {
     this.redList.push(this.createRedSocial());
-    this.postRedesSociales();
   }
 
   removeRedSocial(index) {
@@ -106,7 +105,7 @@ export class SadminCrearCementerioComponent implements OnInit {
       this.postCamposanto();
     }
   }
-  postCamposanto() {
+  async postCamposanto() {
     const camposanto = new FormData();
     camposanto.append('nombre', this.form_cementerio.value.nombre);
     camposanto.append('direccion', this.form_cementerio.value.direccion);
@@ -121,7 +120,7 @@ export class SadminCrearCementerioComponent implements OnInit {
       object[key] = value;
     });
     var json = JSON.stringify(object);
-    this._servicio.postCamposanto(camposanto).subscribe(
+    await this._servicio.postCamposanto(camposanto).subscribe(
       (data) => {
         console.log(data);
         this.id_camposanto = data['id_camposanto']
@@ -140,7 +139,7 @@ export class SadminCrearCementerioComponent implements OnInit {
         return throwError(error);
       })
   }
-  postCoordenadas() {
+  async postCoordenadas() {
     for (let punto in this.puntosL) {
       this.puntoGeo = {
         id_punto: null,
@@ -148,7 +147,7 @@ export class SadminCrearCementerioComponent implements OnInit {
         longitud: this.puntosL[punto].lng,
         id_camposanto: this.id_camposanto
       }
-      this._servicioGeo.postListGeolocalizacion(this.puntoGeo).subscribe(
+      await this._servicioGeo.postListGeolocalizacion(this.puntoGeo).subscribe(
         (data) => {
           console.log(data);
         })
@@ -170,11 +169,38 @@ export class SadminCrearCementerioComponent implements OnInit {
           }
           this._servicioRed.postRedes(this.redes).subscribe(
             (data) => {
+              if(i == this.redList.length -1 ){
+                this.delay(400);
+                window.location.reload()
+              }
               console.log(data);
             }
           )
         }
       }
+      
     }
   }
+  //sleep para mostrar el mensaje de actualizaion de los puntos
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+  // resetFormCemeneterio(){
+  //   this.form_cementerio.setValue(
+  //     {
+  //       nombre: '',
+  //       empresa: '',
+  //       direccion: '',
+  //       telefono: '',
+  //       email: '',
+  //       logo: '',
+  //       redes: this.fb.array([
+  //         this.fb.group({
+  //           redSocial: ''
+  //         })
+  //       ])
+  //     }
+  //   )
+  //   this.puntosL = []
+  // }
 }
