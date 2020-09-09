@@ -7,3 +7,31 @@ i{
 .btn-toolbar{
     padding: 10px;
 }
+
+table {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    min-width: 500px;
+}
+th.mat-header-cell {
+    text-align: left;
+    max-width: 300px;
+}
+
+.details-icon {
+    color:rgba(6, 111, 231, 0.87);
+    outline: none; 
+    border: 0;
+}
+
+.delete-icon {
+    color:rgba(236, 50, 3, 0.966);
+    outline: none; 
+    border: 0;
+}
+
+.update-icon {
+    color:rgba(39, 193, 231, 0.87);
+    background-color: none;
+}

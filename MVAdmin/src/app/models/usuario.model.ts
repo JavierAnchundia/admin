@@ -1,16 +1,14 @@
-export class Usuario{
-    constructor(
-        public nombre:String,
-        public apellido:String,
-        public email: String,
-        public usuario: String,
-        public contraseña: String,
-        public estado: boolean,
-        public telefono?: String,
-        public direccion?: String,
-        public genero?: String,
-        public idcamposanto?: any,
-    ){
-
-    }
+export interface Usuario{
+   
+        first_name:string,
+        last_name:string,
+        email: string,
+        username: string,
+        tipo_usuario:string,
+        staff?:boolean,
+        telefono?: string,
+        direccion?: string,
+        genero?: string,
+        id_camposanto?: any,
+    
 }

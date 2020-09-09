@@ -12,9 +12,9 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
   nameUsuario: string = 'Administrador';
   nombreApellido: string = 'Administrador'
-  id:any;
+  id: any;
   isCollapsed = false;
-  loggeduser=false;
+  loggeduser = false;
 
 
   constructor(
@@ -23,41 +23,41 @@ export class NavbarComponent implements OnInit {
     public router: Router
   ) { }
 
-  
+
   cambiar() {
     this.comunicateNSService.toggle();
     let shand = document.getElementsByClassName('contenido') as HTMLCollectionOf<HTMLElement>;
-    if(this.isCollapsed == true){
-      shand[0].style.marginLeft= "100px";
-    }else{
-      shand[0].style.marginLeft= "218px";
+    if (this.isCollapsed == true) {
+      shand[0].style.marginLeft = "100px";
+    } else {
+      shand[0].style.marginLeft = "218px";
     }
   }
   ngOnInit(): void {
     this.id = JSON.stringify(localStorage.getItem('id'));
     //this.getUser();
     this.getStatus();
+    this.nameUsuario = localStorage.getItem('username');
     console.log(this.loggeduser)
   }
 
-  getUser(){
+  getUser() {
     this._usuario.getUserId(this.id.user_id)
-    .subscribe((resp:any)=>
-      {
+      .subscribe((resp: any) => {
         console.log(resp)
       }
-    )
+      )
   }
-  getStatus(){
+  getStatus() {
     this.loggeduser = this._usuario.isLoggedin;
     return this.loggeduser;
   }
 
-  logged(){
+  logged() {
     this.loggeduser = this._usuario.isLoggedin;
   }
 
-  logout(){
+  logout() {
     Swal.fire({
       title: '¿Está seguro que desea salir?',
       icon: 'warning',
@@ -75,8 +75,8 @@ export class NavbarComponent implements OnInit {
         this.router.navigate(['/login'])
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
-          'Cancelled',
-          'error'
+          'Cancelado',
+          'El cierre de sesión se ha cancelado'
         )
       }
     })

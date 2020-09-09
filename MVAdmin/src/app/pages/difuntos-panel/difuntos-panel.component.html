@@ -9,49 +9,98 @@
   <div class="col-6">
     <h1> Listado de difuntos</h1>
   </div>
-  <div class="col-5">
-    <div class="input-group">
-      <input type="text" aria-label="Nombre" class="form-control" placeholder="Nombre">
-      <input type="text" aria-label="Apellido" class="form-control" placeholder="Apellido">
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button" id="buttonBuscar">Buscar</button>
-      </div>
-    </div>
-  </div>
+
 </div>
 <div class="btn-toolbar">
   <button class="btn btn-primary" routerLink="/inicio/registrodifunto">Agregar difunto</button>
 </div>
 <div class="container-fluid">
-  <table class="table table-striped">
-    <thead>
-      <tr >
-        <th scope="col">Nombre</th>
-        <th scope="col">Apellido</th>
-        <th scope="col">Cédula</th>
-        <th scope="col">Género</th>
-        <th scope="col">Fecha Nacimiento</th>
-        <th scope="col">Fecha Defunción</th>
-        <th scope="col">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let difunto of lista_difuntos">
-        <td>{{difunto.nombre}}</td>
-        <td>{{difunto.apellido}}</td>
-        <td>{{difunto.cedula}}</td>
-        <td>{{difunto.genero}}</td>
-        <td>{{difunto.fecha_nacimiento}}</td>
-        <td>{{difunto.fecha_difuncion}}</td>
+  <div>
+    <mat-form-field fxFlex="70%">
+      <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar">
+    </mat-form-field>
+  </div>
 
-        <td>
-          <a><i class="fa fa-pencil"></i></a>
-          <a role="button" data-toggle="modal"><i class="fa fa-trash"></i></a>
-          <button style="outline: none; border: 0;" data-toggle="modal" (onClick)= 'senddata(difunto)' data-target="#detalleDifunto"><i class="fa fa-plus-circle"></i></button>
-          <app-detalle-difunto [difunto]=difunto ></app-detalle-difunto>
-        </td>
-      </tr>
-    </tbody>
+  <table mat-table [dataSource]="dataSource" matSort matSortStart="desc" class="mat-elevation-z8">
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+      <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+    </ng-container>
+    <ng-container matColumnDef="apellido">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos </th>
+      <td mat-cell *matCellDef="let element"> {{element.apellido}} </td>
+    </ng-container>
+    <ng-container matColumnDef="cedula">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Cédula </th>
+      <td mat-cell *matCellDef="let element"> {{element.cedula}} </td>
+    </ng-container>
+    <ng-container matColumnDef="fecha_nacimiento">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de nacimiento </th>
+      <td mat-cell *matCellDef="let element"> {{element.fecha_nacimiento | date}}</td>
+    </ng-container>
+    <ng-container matColumnDef="fecha_difuncion">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Defunción </th>
+      <td mat-cell *matCellDef="let element"> {{element.fecha_difuncion | date}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Detalle">
+      <th mat-header-cell *matHeaderCellDef> Detalle </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button (click)="redirectToDetails(element.id_difunto)" style="outline: none; border: 0;">
+          <mat-icon class="details-icon">info</mat-icon>
+        </button>
+      </td>
+
+    </ng-container>
+    <ng-container matColumnDef="update">
+      <th mat-header-cell *matHeaderCellDef> Update </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button style="outline: none; border: 0;" (click)="redirectToUpdate(element.id)">
+          <mat-icon class="update-icon">edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> Delete </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button style="outline: none; border: 0;" (click)="redirectToDelete(element.id)">
+          <mat-icon class="delete-icon">delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row (click)="selectRow(mytemplate, row)" *matRowDef="let row; columns: displayedColumns;"></tr>
+
   </table>
-</div>
+  <ng-template #mytemplate>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">
+        Información del fallecido
+      </h5>
+    </div>
+    <label><b>Nombres:</b> <br>{{rowID['nombre']}} {{rowID['apellido']}}</label><br>
+    <label><b>Género:</b> <br>{{rowID['genero']}}</label><br>
+    <label><b>Cédula: </b><br>{{rowID['cedula']}}</label><br>
+    <label><b>Lugar y fecha Nacimiento:</b><br> {{rowID['lugar_nacimiento']}} -
+      {{rowID['fecha_nacimiento']}}</label><br>
+    <label><b>Lugar y fecha Defunción: </b><br>{{rowID['lugar_difuncion']}} - {{rowID['fecha_difuncion']}}</label><br>
+    <label><b>Sector: </b><br>{{this.sector}}</label><br>
+    <label><b>Tipo sepultura: </b><br>{{this.sepultura}}</label><br>
+    <label><b>No. de lápida: </b><br>{{rowID['no_lapida']}}</label><br>
+    <h5 class="modal-title">
+      Información del responsable
+    </h5>
+    <label><b>Nombres del Responsable:</b> <br>{{responsable['nombre']}} {{responsable['apellido']}}</label><br>
+    <label><b>Correo del Responsable:</b><br> {{responsable['correo']}}</label><br>
+    <label><b>Dirección del Responsable:</b> <br>{{responsable['direccion']}}</label><br>
+    <label><b>Teléfonos del Responsable:</b> <br>{{responsable['telefono']}} - {{responsable['celular']}}</label><br>
+    <label><b>Parentesco del Responsable:</b> <br>{{responsable['parentezco']}}</label><br>
 
+
+
+    <div class="modal-footer">
+      <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close class="btn btn-primary">Cerrar</button>
+      </mat-dialog-actions>
+    </div>
+  </ng-template>
+</div>

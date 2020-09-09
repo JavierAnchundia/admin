@@ -11,13 +11,13 @@ import { map } from "rxjs/operators";
 })
 export class UsuarioService {
 
-  private httpOptions:any;
+  private httpOptions: any;
 
   public token: string;
   public user: string;
   public token_expires: Date;
-  public username:string;
-  public errors:any=[];
+  public username: string;
+  public errors: any = [];
   public isLoggedin = false;
 
   constructor(
@@ -26,42 +26,42 @@ export class UsuarioService {
   ) {
     this.loadStorage();
     this.httpOptions = {
-      headers: new HttpHeaders({'Content-Type': 'application/json'})
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-   }
+  }
 
-   public loginUser(user){
-    localStorage.setItem('username', user['username']);
+  public loginUser(user) {
+    localStorage.setItem('username', user['email']);
     let url = URL_SERVICIOS.login;
     return this.http.post(url, JSON.stringify(user), this.httpOptions)
-                    .pipe(map((resp: any) =>{
-                      console.log(resp);
-                      this.isLoggedin = true;
+      .pipe(map((resp: any) => {
+        console.log(resp);
+        this.isLoggedin = true;
 
-                      this.token = JSON.stringify(resp['access']);
-                      this.updateData(resp['access'])
-                      localStorage.setItem('token', this.token);
-                      localStorage.setItem('id', JSON.stringify(this.tokenGestion(resp['access'])));
-                      localStorage.setItem('user', JSON.stringify(this.tokenGestion(resp['access'])));
-                      return true
-                    }));
+        this.token = JSON.stringify(resp['access']);
+        this.updateData(resp['access'])
+        localStorage.setItem('token', this.token);
+        localStorage.setItem('id', JSON.stringify(this.tokenGestion(resp['access'])));
+        localStorage.setItem('user', JSON.stringify(this.tokenGestion(resp['access'])));
+        return true
+      }));
   }
 
-  islogIn(){
-    return((this.token.length > 5))? true: false;
+  islogIn() {
+    return ((this.token.length > 5)) ? true : false;
   }
 
-  loadStorage(){
-    if(localStorage.getItem('token')){
+  loadStorage() {
+    if (localStorage.getItem('token')) {
       this.token = localStorage.getItem('token');
       this.user = JSON.parse(localStorage.getItem('user'));
-    } else{
-      this.token='';
-      this.user=null;
+    } else {
+      this.token = '';
+      this.user = null;
     }
   }
 
-  tokenGestion(token){
+  tokenGestion(token) {
     const token_parts = token.split(/\./);
     const token_decoded = JSON.parse(window.atob(token_parts[1]));
     return token_decoded;
@@ -71,9 +71,9 @@ export class UsuarioService {
     return localStorage.getItem('token');
   }
 
-  public refreshToken(){
+  public refreshToken() {
     let url = URL_SERVICIOS.refreshlogin;
-    this.http.post(url, JSON.stringify({token: this.token}), this.httpOptions).subscribe(
+    this.http.post(url, JSON.stringify({ token: this.token }), this.httpOptions).subscribe(
       data => {
         this.updateData(data['token']);
       },
@@ -83,11 +83,12 @@ export class UsuarioService {
     );
   }
 
-  public logoutUser(){
-    this.token='';
-    this.token_expires=null;
-    this.username=null;
+  public logoutUser() {
+    this.token = '';
+    this.token_expires = null;
+    this.username = null;
     localStorage.removeItem('token');
+    localStorage.removeItem('FBtoken');
     localStorage.removeItem('user');
     localStorage.removeItem('username');
     localStorage.removeItem('id');
@@ -96,47 +97,47 @@ export class UsuarioService {
     this.router.navigate(['/login'])
   }
 
-  private updateData(token){
+  private updateData(token) {
     this.token = token;
     this.errors = [];
 
     const token_parts = this.token.split(/\./);
     const token_decoded = JSON.parse(window.atob(token_parts[1]));
-    this.token_expires = new Date(token_decoded.exp*1000);
+    this.token_expires = new Date(token_decoded.exp * 1000);
     this.username = token_decoded.username;
   }
 
-  
-  getUserId(id){
-    let url = 'http://localhost:8000/users/'+id
+
+  getUserId(id) {
+    let url = URL_SERVICIOS.usuario + id
     let httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer '+this.getToken(),
+        'Authorization': 'Bearer ' + this.getToken(),
       })
     }
-    
+
     return this.http.get(url, httpOptions);
   }
 
-  crearUsuario (usuario){
+  crearUsuario(usuario) {
     let url = URL_SERVICIOS.usuario;
     let httpOptions = {
       headers: new HttpHeaders({
         'Access-Control-Allow-Origin': "*",
       })
     }
-    return this.http.post(url, usuario,httpOptions);
+    return this.http.post(url, usuario, httpOptions);
   }
 
-  getUsers(){
+  getUsers() {
     let url = URL_SERVICIOS.usuario;
     let httpOptions = {
       headers: new HttpHeaders({
 
-        'Authorization': 'Bearer '+this.getToken(),
+        'Authorization': 'Bearer ' + this.getToken(),
       })
     }
     return this.http.get(url, httpOptions);
   }
-  
+
 }

@@ -44,6 +44,7 @@ export class RegistroDifuntoComponent implements OnInit {
   submitted = false;
   generoOptions = ["Femenino", "Masculino"]
   monthNames = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+  numericNumberReg= '[0-9]*';
 
   constructor(
     public _difunto: DifuntoService, 
@@ -63,7 +64,7 @@ export class RegistroDifuntoComponent implements OnInit {
       firstName: new FormControl(null, Validators.required),
       lastName: new FormControl(null, Validators.required),
       generoDropdown: new FormControl(null, Validators.required),
-      cedula: new FormControl(null, [Validators.required, Validators.minLength(10)]),
+      cedula: new FormControl('', [Validators.required, Validators.minLength(10),Validators.maxLength(10),Validators.pattern(this.numericNumberReg)]),
       birthPlace: new FormControl(null, Validators.required),
       deathPlace: new FormControl(null, Validators.required),
       dayBirth: new FormControl(null, Validators.required),
@@ -80,11 +81,12 @@ export class RegistroDifuntoComponent implements OnInit {
     this.responsableForm = new FormGroup({
       NombreRes: new FormControl(null, Validators.required),
       ApellidoRes: new FormControl(null, Validators.required),
-      telefono: new FormControl(null, [Validators.required, Validators.maxLength(9)]),
-      celular: new FormControl(null, [Validators.required, Validators.maxLength(10)]),
+      telefono: new FormControl(null, [Validators.required, Validators.maxLength(7),Validators.minLength(7),Validators.pattern(this.numericNumberReg)]),
+      celular: new FormControl(null, [Validators.required, Validators.maxLength(10),Validators.minLength(10),Validators.pattern(this.numericNumberReg)]),
       correo: new FormControl(null, [Validators.required, Validators.email]),
       parentesco: new FormControl(null, Validators.required),
       direccion: new FormControl(null, Validators.required),
+      otro: new FormControl(null)
     })
 
     this.fillBirthYear();
@@ -124,8 +126,8 @@ export class RegistroDifuntoComponent implements OnInit {
     formData.append('lugar_difuncion', this.difuntoForm.value.birthPlace);
     formData.append('fecha_difuncion', this.difuntoForm.value.yearDeath +'-'+ this.difuntoForm.value.monDeath+'-'+ this.difuntoForm.value.dayDeath);
     formData.append('no_lapida', this.difuntoForm.value.lapida);
-    formData.append('latitud', '1212313.11');
-    formData.append('longitud', '1212313.11');
+    formData.append('latitud', String(this.latitudFinal));
+    formData.append('longitud', String(this.longitudFinal));
     formData.append('num_rosas', '0');
     formData.append('estado', 'True');
     formData.append('id_camposanto', this.id.camposanto);
@@ -164,7 +166,11 @@ export class RegistroDifuntoComponent implements OnInit {
     formData.append('celular', this.responsableForm.value.celular);
     formData.append('correo', this.responsableForm.value.correo);
     formData.append('direccion', this.responsableForm.value.direccion);
-    formData.append('parentezco', this.responsableForm.value.parentesco);
+    if(this.responsableForm.value.parentesco != 'Otro'){
+      formData.append('parentezco', this.responsableForm.value.parentesco);
+    }else{
+      formData.append('parentezco', this.responsableForm.value.otro);
+    }
 
     formData.append('id_difunto',id);
     this._difunto.postResponsable(formData).subscribe(

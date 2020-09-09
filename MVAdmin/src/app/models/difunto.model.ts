@@ -1,21 +1,20 @@
-export class Camposanto{
-    constructor(
-        public nombre:String,
-        public apellido:String,
-        public genero: String,
-        public lugarNac: String,
-        public fechaNac: any,
-        public lugarDef: String,
-        public fechaDef: any,
-        public nolapida: Number,
-        public longitud: Number,
-        public latitud: Number,
-        public norosas: Number,
-        public estado: boolean,
-        public idcamposanto?: any,
-        public idtiposepultura?: any,
-        public idsector?: any,
-    ){
-
-    }
+export interface Difunto{
+         nombre:string,
+         apellido:string,
+         genero: string,
+         cedula:string,
+         lugar_nacimiento: string,
+         fecha_nacimiento: Date,
+         lugar_difuncion: string,
+         fecha_difuncion: Date,
+         no_lapida: Number,
+         longitud: Number,
+         latitud: Number,
+         num_rosas: Number,
+         estado: boolean,
+         id_camposanto?: any,
+         id_difunto?:any,
+         id_tip_sepultura?: any,
+         id_sector?: any,
+    
 }

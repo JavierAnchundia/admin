@@ -32,8 +32,13 @@ import { CrearAdminComponent } from './crear-admin/crear-admin.component';
 import { VerMapaComponent } from './perfil-cementerio/ver-mapa/ver-mapa.component';
 import { EditarMapaComponent } from './perfil-cementerio/editar-mapa/editar-mapa.component';
 import { ServicioModules } from '../services/servicios.module';
-import { DetalleDifuntoComponent } from './difuntos-panel/detalle-difunto/detalle-difunto.component'
-registerLocaleData(es);
+import { DetalleDifuntoComponent } from './difuntos-panel/detalle-difunto/detalle-difunto.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule} from '@angular/material/icon';
+import { MatSortModule } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';registerLocaleData(es);
+import { MatInputModule } from '@angular/material/input';
+import {MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
     declarations: [
@@ -56,6 +61,13 @@ registerLocaleData(es);
         PerfilCementerioComponent,
         SadminCrearCementerioComponent,
         RegistroDifuntoComponent,
+        MatTableModule,
+        MatSortModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDialogModule
+
     ],
     imports: [
         CommonModule,
@@ -68,6 +80,12 @@ registerLocaleData(es);
         ReactiveFormsModule,
         FontAwesomeModule,
         MatSlideToggleModule,
+        MatTableModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatDialogModule,
+        MatSortModule,
+        MatInputModule,
         AgmCoreModule.forRoot({
             apiKey: environment.api_key,
             libraries: ['places', 'drawing', 'geometry']
