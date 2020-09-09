@@ -3,7 +3,7 @@ import { faEraser } from '@fortawesome/free-solid-svg-icons';
 import { GeolocalizacionService} from '../../../services/geolocalizacion/geolocalizacion.service';
 import { Punto_geolocalizacion } from '../../../models/punto_geolocalizacion.model'
 import { Router } from '@angular/router';
-
+import Swal from 'sweetalert2'
 declare const google: any;
 
 @Component({
@@ -28,7 +28,7 @@ export class EditarMapaComponent implements OnInit {
 
   constructor(
     private _servicioGeo : GeolocalizacionService,
-    private router: Router
+    private router: Router,
   ) {
     //this.id = JSON.parse(localStorage.getItem('camposanto'));
     //this.cargarPuntosGeoMapa(this.id.camposanto)
@@ -70,27 +70,38 @@ export class EditarMapaComponent implements OnInit {
     }
   }
 
-  crearNuevosPuntos(){
+  async crearNuevosPuntos(){
     if(this.pointList.length > 0){
-      for(let punt in this.pointList){
+      for(let punt = 0; punt < this.pointList.length; punt++ ){
         this.punto = {
           id_punto: null,
           latitud: this.pointList[punt].lat,
           longitud:  this.pointList[punt].lng,
           id_camposanto: this.id.camposanto
         }
-        this._servicioGeo.postListGeolocalizacion(this.punto).subscribe(
+        await this._servicioGeo.postListGeolocalizacion(this.punto).subscribe(
           (data) => {
             console.log(data);
             this.redirectProfile(this.id.camposanto);
         })
         this.closebutton.nativeElement.click();
+        if(punt == this.pointList.length-1 ){
+          Swal.close();
+          Swal.fire("Actualización exitosa de los puntos del Mapa");
+          await this.delay(400);
+          window.location.reload()
+        }
       }
     }
     else{
       this.alertError = true;
     }
   }
+  //sleep para mostrar el mensaje de actualizaion de los puntos
+  delay(ms: number) {
+      return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
   onMapReady(map) {
     this.initDrawingManager(map);
   }
