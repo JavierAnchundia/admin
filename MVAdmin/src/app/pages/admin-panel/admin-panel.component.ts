@@ -27,20 +27,17 @@ export class AdminPanelComponent implements OnInit,AfterViewInit  {
     ) { }
 
   ngOnInit(): void {
-    this.id = JSON.parse(localStorage.getItem('camposanto'));
+    this.id = this.id = JSON.parse(localStorage.getItem('camposanto'));
     this.cargarAdmin();
   }
 
   cargarAdmin(){
-    this._usuario.getUsers()
+    this._usuario.getUsers(this.id.camposanto)
     .subscribe((resp:any)=>{
       this.lista_admin = [];
       for (var i =0; i < resp.length; i++){
         if((resp[i]['tipo_usuario']=="ad")|| (resp[i]['tipo_usuario']=="su")){
-          if(resp[i]['id_camposanto']== this.id.camposanto){
             this.lista_admin.push(resp[i]);
-          }
-          
         }
       }
       console.log(this.lista_admin)

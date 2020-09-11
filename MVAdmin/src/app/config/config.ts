@@ -21,7 +21,8 @@ const URL_SERVICIOS = {
     usuario: URL_ROOT_AUTH + '/users/',
     datosUsuario: URL_ROOT + '/usuario/',
     login: URL_ROOT + '/token/',
-    refreshlogin: URL_ROOT_AUTH +'api/token/refresh/ '
+    refreshlogin: URL_ROOT_AUTH +'api/token/refresh/ ',
+    usuarios_camp: URL_ROOT + '/usuarios_camp/'
 }
 
 export default URL_SERVICIOS
