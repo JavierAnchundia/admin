@@ -47,7 +47,7 @@ export class CrearAdminComponent implements OnInit {
       lastName: [null, Validators.required],
       contrasena: [null, [Validators.required, Validators.minLength(6)]],
       repetirContrasena: [null, Validators.required],
-      telefono: [null, [Validators.required,Validators.minLength(9),Validators.maxLength(10),Validators.pattern(this.numericNumberReg)]],
+      telefono: [null, [Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern(this.numericNumberReg)]],
       tipoAdmin: [null, Validators.required],
       cementerio: [null, Validators.required],
       permisoToggle: [null],

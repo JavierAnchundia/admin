@@ -93,17 +93,21 @@
 
                 <div class="col-5"> 
                     <div class="form-group">
-                    <label for="telefono"> Teléfono </label>
-                    <input id="telefono" type="text" formControlName="telefono" class="form-control" minlength="9" maxlength="10" />
-                        <div>
-                          <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)">
-                            <div *ngIf="telefono.errors.required" class="text-danger">Campo requerido.</div>
+                      <label for="telefono"> Teléfono </label>
+                      <input id="telefono" type="text" formControlName="telefono" class="form-control" minlength="7" maxlength="10" />
+                      <div
+                        *ngIf="adminForm.controls['telefono'].invalid && (adminForm.controls['telefono'].dirty || adminForm.controls['telefono'].touched)">
+                        <div class="text-danger" *ngIf="adminForm.controls['telefono'].errors.required">
+                          Este campo es obligatorio.
                         </div>
-                        <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" >
-                          <div *ngIf="telefono.errors.maxlength || telefono.errors.minlength" class="text-danger">Longitud mínima 9, máxima 10 .</div>
+                        <div class="text-danger"
+                          *ngIf="adminForm.controls['telefono'].errors.minlength ||adminForm.controls['telefono'].errors.maxlength">
+                          La longitud del campo debe ser de 7 o 10.
+                        </div>
+                        <div class="text-danger" *ngIf="adminForm.controls['telefono'].errors.pattern">
+                          Ingrese un valor válido.
+                        </div>
                       </div>
-                        </div>
-                    
                     </div>
                 </div>
                 
