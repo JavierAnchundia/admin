@@ -150,12 +150,28 @@
             </div>
           </div>
           <div class="col-5">
-            <div class="form-group">
+            <div class="form-row">
               <label for="birthPlace">Lugar de nacimiento</label>
-              <input placeholder="Guayaquil, Ecuador" type="text" formControlName="birthPlace" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.birthPlace.errors }" />
-              <div *ngIf="submitted && f.birthPlace.errors" class="invalid-feedback">
-                <div *ngIf="f.birthPlace.errors.required">Ingresar un lugar de nacimiento</div>
+            </div>
+            <div class="form-row">
+              <mat-form-field class="example-full-width">
+                <input type="text" formControlName="birthPlace"
+                  [ngClass]="{ 'is-invalid': submitted && f.birthPlace.errors }" placeholder="" aria-label="Number"
+                  matInput [matAutocomplete]="autoNacimi">
+                <mat-autocomplete #autoNacimi="matAutocomplete">
+                  <mat-option *ngFor="let optionNacimi of filteredOptions_nacimiento | async" [value]="optionNacimi">
+                    {{optionNacimi}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+            </div>
+            <div class="form-row">
+              <div
+                *ngIf="difuntoForm.controls['birthPlace'].invalid && (difuntoForm.controls['birthPlace'].dirty || difuntoForm.controls['birthPlace'].touched)">
+                <div class="text-danger" *ngIf="difuntoForm.controls['birthPlace'].errors.required">
+                  Este campo es obligatorio.
+                </div>
               </div>
             </div>
           </div>
@@ -215,11 +231,31 @@
           </div>
           <div class="col-5">
             <div class="form-group">
-              <label for="deathPlace">Lugar de defunción</label>
-              <input placeholder="Guayaquil, Ecuador" type="text" formControlName="deathPlace" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.deathPlace.errors }" />
-              <div *ngIf="submitted && f.deathPlace.errors" class="invalid-feedback">
-                <div *ngIf="f.deathPlace.errors.required">Ingresar un lugar de defunción</div>
+              <div class="form-row">
+                <label for="deathPlace">Lugar de defunción</label>
+              </div>
+              <div class="form-row">
+                <mat-form-field class="example-full-width">
+                  <input type="text" formControlName="deathPlace"
+                    [ngClass]="{ 'is-invalid': submitted && f.deathPlace.errors }" placeholder="" aria-label="Number"
+                    matInput [matAutocomplete]="autoFalleci">
+                  <mat-autocomplete #autoFalleci="matAutocomplete">
+                    <mat-option *ngFor="let optionFalleci of filteredOptions_fallecimiento | async"
+                      [value]="optionFalleci">
+                      {{optionFalleci}}
+                    </mat-option>
+                  </mat-autocomplete>
+
+                </mat-form-field>
+
+              </div>
+              <div class="form-row">
+                <div
+                  *ngIf="difuntoForm.controls['deathPlace'].invalid && (difuntoForm.controls['deathPlace'].dirty || difuntoForm.controls['deathPlace'].touched)">
+                  <div class="text-danger" *ngIf="difuntoForm.controls['deathPlace'].errors.required">
+                    Este campo es obligatorio.
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -236,8 +272,7 @@
             <label>Coordenadas de la sepultura:</label>
           </div>
           <div class="col-5">
-            <button class="btn btn-success" data-toggle="modal" data-target="#mapaDifuntoModal"
-              (click)="ocultarAlertError()">
+            <button class="btn btn-success" data-toggle="modal" data-target="#mapaDifuntoModal">
               Elegir ubicación</button>
           </div>
         </div>
@@ -246,36 +281,34 @@
             <div class="form-group">
               <label>Tipo de sepultura:</label>
               <div class="row">
-                <select required formControlName="tipoSepultura" class="form-control custom-select" id="sepultura"
-                  
+                <select formControlName="tipoSepultura" class="form-control custom-select" id="sepultura"
                   (change)="onChangeSepultura($event.target.value)">
                   <option style="display:none" value=null default>Seleccione un tipo</option>
                   <option [value]="sep.id_tip_sepultura" *ngFor="let sep of lista_sepultura">{{sep.nombre}}</option>
                 </select>
               </div>
               <div
-                  *ngIf="difuntoForm.controls['tipoSepultura'].invalid && (difuntoForm.controls['tipoSepultura'].dirty || difuntoForm.controls['tipoSepultura'].touched)">
-                  <div class="text-danger" *ngIf="difuntoForm.controls['tipoSepultura'].errors.required">
-                    Este campo es obligatorio.
-                  </div>
+                *ngIf="difuntoForm.controls['tipoSepultura'].invalid && (difuntoForm.controls['tipoSepultura'].dirty || difuntoForm.controls['tipoSepultura'].touched)">
+                <div class="text-danger" *ngIf="difuntoForm.controls['tipoSepultura'].errors.required">
+                  Este campo es obligatorio.
                 </div>
+              </div>
             </div>
           </div>
           <div class="col-4">
             <div class="form-group">
               <label>Sector:</label>
               <select class="custom-select" formControlName="sector" placeholder="Sector"
-                (change)="onChangeSector($event.target.value)"
-                [ngClass]="{ 'is-invalid': submitted && f.sector.errors }">
+                (change)="onChangeSector($event.target.value)">
                 <option style="display:none" value=null>Seleccione un sector</option>
                 <option *ngFor="let sec of lista_sector" [value]=sec.id_sector>{{sec.nombre}}</option>
               </select>
               <div
-                  *ngIf="difuntoForm.controls['sector'].invalid && (difuntoForm.controls['sector'].dirty || difuntoForm.controls['sector'].touched)">
-                  <div class="text-danger" *ngIf="difuntoForm.controls['sector'].errors.required">
-                    Este campo es obligatorio.
-                  </div>
+                *ngIf="difuntoForm.controls['sector'].invalid && (difuntoForm.controls['sector'].dirty || difuntoForm.controls['sector'].touched)">
+                <div class="text-danger" *ngIf="difuntoForm.controls['sector'].errors.required">
+                  Este campo es obligatorio.
                 </div>
+              </div>
             </div>
           </div>
           <div class="col-4">
@@ -332,8 +365,8 @@
             <div class="col-5">
               <div class="form-group">
                 <label for="telefono">Teléfono del responsable:</label>
-                <input type="text" placeholder="2222222" formControlName="telefono" class="form-control" minlength="7"
-                  maxlength="7" />
+                <input type="text" placeholder="2222222" formControlName="telefono" class="form-control" minlength="9"
+                  maxlength="9" />
                 <div
                   *ngIf="responsableForm.controls['telefono'].invalid && (responsableForm.controls['telefono'].dirty || responsableForm.controls['telefono'].touched)">
                   <div class="text-danger" *ngIf="responsableForm.controls['telefono'].errors.required">
@@ -341,7 +374,7 @@
                   </div>
                   <div class="text-danger"
                     *ngIf="responsableForm.controls['telefono'].errors.minlength ||responsableForm.controls['telefono'].errors.maxlength">
-                    La longitud del campo es 10.
+                    La longitud del campo es 9.
                   </div>
                   <div class="text-danger" *ngIf="responsableForm.controls['telefono'].errors.pattern">
                     Ingrese un valor válido.
@@ -355,9 +388,7 @@
                 <input type="email" formControlName="correo" class="form-control" />
                 <div
                   *ngIf="responsableForm.controls['correo'].errors && (responsableForm.controls['correo'].dirty || responsableForm.controls['correo'].touched)">
-                  <div class="text-danger" *ngIf="responsableForm.controls['correo'].errors.required">
-                    Este campo es obligatorio.
-                  </div>
+
                   <div class="text-danger" *ngIf="responsableForm.controls['correo'].errors.email">
                     Ingrese un valor válido.
                   </div>
@@ -369,7 +400,7 @@
             <div class="col-5">
               <div class="form-group">
                 <label for="celular">Celular del responsable:</label>
-                <input type="text" formControlName="celular" class="form-control" minlength="10" />
+                <input type="text" formControlName="celular" class="form-control" minlength="10" maxlength="10" />
                 <div
                   *ngIf="responsableForm.controls['celular'].invalid && (responsableForm.controls['celular'].dirty || responsableForm.controls['celular'].touched)">
                   <div class="text-danger" *ngIf="responsableForm.controls['celular'].errors.required">

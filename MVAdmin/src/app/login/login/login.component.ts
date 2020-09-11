@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
 
   async loginUser(form){
     if(form.invalid){
+      
       return; 
     }
     this.user.email = form.value.email;
@@ -54,7 +55,8 @@ export class LoginComponent implements OnInit {
               localStorage.removeItem('username');
               localStorage.removeItem('id');
               Swal.close();
-              Swal.fire('No está autenticado para acceder a esta página.')
+              Swal.fire('No está autorizado.','No tiene permitido acceder a está página.')
+              this.form_login.reset();
             }
           }
         );

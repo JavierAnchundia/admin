@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { PAGES_ROUTES } from './pages.routes';
 import { SharedModule } from '../shared/shared.module';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 //servicios
 import { ComunicateNavSiderService } from '../services/comunicatens/comunicate-nav-sider.service';
@@ -66,7 +67,8 @@ import {MatDialogModule } from '@angular/material/dialog';
         MatIconModule,
         MatFormFieldModule,
         MatInputModule,
-        MatDialogModule
+        MatDialogModule,
+        MatAutocompleteModule
 
     ],
     imports: [
@@ -86,6 +88,7 @@ import {MatDialogModule } from '@angular/material/dialog';
         MatDialogModule,
         MatSortModule,
         MatInputModule,
+        MatAutocompleteModule,
         AgmCoreModule.forRoot({
             apiKey: environment.api_key,
             libraries: ['places', 'drawing', 'geometry']

@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, FormArray } from '@angular/forms';
-import { FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { DifuntoService } from '../../services/difunto/difunto.service';
 import { SectorService } from '../../services/sector/sector.service';
 import { TiposepulturaService } from '../../services/tiposepultura/tiposepultura.service';
 import { GeolocalizacionService } from '../../services/geolocalizacion/geolocalizacion.service'
-import { throwError } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
 import { MouseEvent } from '@agm/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2'
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-registro-difunto',
@@ -64,7 +64,7 @@ export class RegistroDifuntoComponent implements OnInit {
       firstName: new FormControl(null, Validators.required),
       lastName: new FormControl(null, Validators.required),
       generoDropdown: new FormControl(null, Validators.required),
-      cedula: new FormControl('', [Validators.required, Validators.minLength(10),Validators.maxLength(10),Validators.pattern(this.numericNumberReg)]),
+      cedula: new FormControl('', [Validators.required, Validators.minLength(9),Validators.maxLength(10),Validators.pattern(this.numericNumberReg)]),
       birthPlace: new FormControl(null, Validators.required),
       deathPlace: new FormControl(null, Validators.required),
       dayBirth: new FormControl(null, Validators.required),
@@ -81,9 +81,9 @@ export class RegistroDifuntoComponent implements OnInit {
     this.responsableForm = new FormGroup({
       NombreRes: new FormControl(null, Validators.required),
       ApellidoRes: new FormControl(null, Validators.required),
-      telefono: new FormControl(null, [Validators.required, Validators.maxLength(7),Validators.minLength(7),Validators.pattern(this.numericNumberReg)]),
+      telefono: new FormControl(null, [Validators.required, Validators.maxLength(9),Validators.minLength(9),Validators.pattern(this.numericNumberReg)]),
       celular: new FormControl(null, [Validators.required, Validators.maxLength(10),Validators.minLength(10),Validators.pattern(this.numericNumberReg)]),
-      correo: new FormControl(null, [Validators.required, Validators.email]),
+      correo: new FormControl('', [Validators.email]),
       parentesco: new FormControl(null, Validators.required),
       direccion: new FormControl(null, Validators.required),
       otro: new FormControl(null)
@@ -95,8 +95,36 @@ export class RegistroDifuntoComponent implements OnInit {
     this.fillDeathYear();
 
     this.cargarPuntosGeoMapa(this.id.camposanto);
+
+    this.filteredOptions_nacimiento = this.difuntoForm.get('birthPlace').valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter_nacimiento(value))
+      );
+
+    this.filteredOptions_fallecimiento = this.difuntoForm.get('deathPlace').valueChanges
+    .pipe(
+      startWith(''),
+      map(value => this._filter_fallecimiento(value))
+    );
   }
 
+  control_nacimiento = new FormControl();
+  options_nacimiento: string[] = ['Guayaquil', 'Cuenca','Quito','Portoviejo','Machala','Durán','Daule'];
+  filteredOptions_nacimiento: Observable<string[]>;
+  private _filter_nacimiento(value: string): string[] {
+    const filterValueN = value.toLowerCase();
+    return this.options_nacimiento.filter(optionN => optionN.toLowerCase().includes(filterValueN));
+  }
+
+  control_fallecimiento = new FormControl();
+  options_fallecimiento: string[] = ['Guayaquil', 'Cuenca','Quito','Portoviejo','Machala','Durán','Daule'];
+  filteredOptions_fallecimiento: Observable<string[]>;
+  private _filter_fallecimiento(value: string): string[] {
+    const filterValueF = value.toLowerCase();
+    return this.options_fallecimiento.filter(optionF => optionF.toLowerCase().includes(filterValueF));
+  }
+  
   get f() { return this.difuntoForm.controls; }
 
   get r() { return this.responsableForm.controls; }
@@ -149,7 +177,7 @@ export class RegistroDifuntoComponent implements OnInit {
         console.error('Error:' + error);
         Swal.close()
         Swal.fire("Hubo un error al guardar los datos, intentelo de nuevo",error)
-        this.difuntoForm.reset();
+        
 
         return throwError(error);
       }
@@ -159,12 +187,12 @@ export class RegistroDifuntoComponent implements OnInit {
   }
 
   crearResponsable(id){
+    
     const formData = new FormData();
     formData.append('nombre', this.responsableForm.value.NombreRes);
     formData.append('apellido', this.responsableForm.value.ApellidoRes);
     formData.append('telefono', this.responsableForm.value.telefono);
     formData.append('celular', this.responsableForm.value.celular);
-    formData.append('correo', this.responsableForm.value.correo);
     formData.append('direccion', this.responsableForm.value.direccion);
     if(this.responsableForm.value.parentesco != 'Otro'){
       formData.append('parentezco', this.responsableForm.value.parentesco);
@@ -172,12 +200,13 @@ export class RegistroDifuntoComponent implements OnInit {
       formData.append('parentezco', this.responsableForm.value.otro);
     }
 
+    if(this.responsableForm.value.correo != ''){
+      formData.append('correo', this.responsableForm.value.correo);
+    }
     formData.append('id_difunto',id);
     this._difunto.postResponsable(formData).subscribe(
-      data => {
-        console.log('success');
-        this.responsableForm.reset();
-        return true;
+      () => {
+        console.log(this.responsableForm);
 
       },
       error => {
@@ -341,6 +370,8 @@ export class RegistroDifuntoComponent implements OnInit {
   ocultarAlertError(){
     this.alertError = false;
   }
+  
+  
 }
 interface Marker {
   lat: Number;
