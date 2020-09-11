@@ -21,3 +21,7 @@ p.descripcionCementerio{
     height: 150px;
     width: 100%;
 }
+
+.punteroHand{
+    cursor:pointer; cursor: hand
+}

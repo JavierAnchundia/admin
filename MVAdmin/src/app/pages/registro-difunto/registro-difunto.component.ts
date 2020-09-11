@@ -10,6 +10,8 @@ import { throwError } from 'rxjs';
 import { MouseEvent } from '@agm/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2'
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-registro-difunto',
@@ -95,6 +97,33 @@ export class RegistroDifuntoComponent implements OnInit {
     this.fillDeathYear();
 
     this.cargarPuntosGeoMapa(this.id.camposanto);
+    this.filteredOptions_nacimiento = this.difuntoForm.get('birthPlace').valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter_nacimiento(value))
+      );
+
+    this.filteredOptions_fallecimiento = this.difuntoForm.get('deathPlace').valueChanges
+    .pipe(
+      startWith(''),
+      map(value => this._filter_fallecimiento(value))
+    );
+  }
+
+  control_nacimiento = new FormControl();
+  options_nacimiento: string[] = ['Guayaquil', 'Cuenca'];
+  filteredOptions_nacimiento: Observable<string[]>;
+  private _filter_nacimiento(value: string): string[] {
+    const filterValueN = value.toLowerCase();
+    return this.options_nacimiento.filter(optionN => optionN.toLowerCase().includes(filterValueN));
+  }
+
+  control_fallecimiento = new FormControl();
+  options_fallecimiento: string[] = ['Guayaquil', 'Cuenca'];
+  filteredOptions_fallecimiento: Observable<string[]>;
+  private _filter_fallecimiento(value: string): string[] {
+    const filterValueF = value.toLowerCase();
+    return this.options_fallecimiento.filter(optionF => optionF.toLowerCase().includes(filterValueF));
   }
 
   get f() { return this.difuntoForm.controls; }
@@ -166,6 +195,7 @@ export class RegistroDifuntoComponent implements OnInit {
     formData.append('celular', this.responsableForm.value.celular);
     formData.append('correo', this.responsableForm.value.correo);
     formData.append('direccion', this.responsableForm.value.direccion);
+    
     if(this.responsableForm.value.parentesco != 'Otro'){
       formData.append('parentezco', this.responsableForm.value.parentesco);
     }else{
@@ -341,6 +371,7 @@ export class RegistroDifuntoComponent implements OnInit {
   ocultarAlertError(){
     this.alertError = false;
   }
+  
 }
 interface Marker {
   lat: Number;

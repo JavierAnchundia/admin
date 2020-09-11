@@ -39,6 +39,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';registerLocaleData(es);
 import { MatInputModule } from '@angular/material/input';
 import {MatDialogModule } from '@angular/material/dialog';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
     declarations: [
@@ -66,10 +67,11 @@ import {MatDialogModule } from '@angular/material/dialog';
         MatIconModule,
         MatFormFieldModule,
         MatInputModule,
-        MatDialogModule
-
+        MatDialogModule,
+        MatAutocompleteModule,
     ],
     imports: [
+        MatAutocompleteModule,
         CommonModule,
         SharedModule,
         ServicioModules,

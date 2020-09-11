@@ -157,6 +157,10 @@ export class SadminCrearCementerioComponent implements OnInit {
   }
 
   postRedesSociales() {
+    if(this.redList.length == 0 ){
+      this.delay(400);
+      this.router.navigate(['/inicio/dashboard']);
+    }
     for (let i = 0; i < this.redList.length; i++) {
       let link = String(this.redList.value[i].redSocial);
       let linkMins = link.toLowerCase();
