@@ -40,3 +40,7 @@ th.mat-header-cell {
     text-align: left;
     max-width: 300px;
 }
+
+.punteroHand{
+    cursor:pointer; cursor: hand
+}
