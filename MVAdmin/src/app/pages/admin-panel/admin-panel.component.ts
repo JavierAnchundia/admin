@@ -27,7 +27,7 @@ export class AdminPanelComponent implements OnInit,AfterViewInit  {
     ) { }
 
   ngOnInit(): void {
-    this.id = JSON.parse(localStorage.getItem('camposanto'));
+    this.id = this.id = JSON.parse(localStorage.getItem('camposanto'));
     this.cargarAdmin();
   }
 

@@ -37,7 +37,7 @@ export class CrearAdminComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.id = localStorage.getItem('camposanto');
+    this.id = this.id = JSON.parse(localStorage.getItem('camposanto'));
     
     console.log(this.id.camposanto)
     this.adminForm = this.fb.group({
