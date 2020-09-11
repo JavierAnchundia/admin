@@ -374,8 +374,8 @@
             <div class="col-5">
               <div class="form-group">
                 <label for="telefono">Teléfono del responsable:</label>
-                <input type="text" placeholder="2222222" formControlName="telefono" class="form-control" minlength="7"
-                  maxlength="7" />
+                <input type="text"  formControlName="telefono" class="form-control" minlength="9"
+                  maxlength="9" />
                 <div
                   *ngIf="responsableForm.controls['telefono'].invalid && (responsableForm.controls['telefono'].dirty || responsableForm.controls['telefono'].touched)">
                   <div class="text-danger" *ngIf="responsableForm.controls['telefono'].errors.required">
@@ -411,7 +411,7 @@
             <div class="col-5">
               <div class="form-group">
                 <label for="celular">Celular del responsable:</label>
-                <input type="text" formControlName="celular" class="form-control" minlength="10" />
+                <input type="text" formControlName="celular" class="form-control" minlength="10" maxlength="10"/>
                 <div
                   *ngIf="responsableForm.controls['celular'].invalid && (responsableForm.controls['celular'].dirty || responsableForm.controls['celular'].touched)">
                   <div class="text-danger" *ngIf="responsableForm.controls['celular'].errors.required">
