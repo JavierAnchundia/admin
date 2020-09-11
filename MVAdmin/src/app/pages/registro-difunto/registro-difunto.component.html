@@ -170,10 +170,13 @@
                   </mat-autocomplete>
                 </mat-form-field>
               </div>
-              <!-- <input placeholder="Guayaquil, Ecuador" type="text" formControlName="birthPlace" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.birthPlace.errors }" /> -->
-              <div *ngIf="submitted && f.birthPlace.errors" class="invalid-feedback">
-                <div *ngIf="f.birthPlace.errors.required">Ingresar un lugar de nacimiento</div>
+              <div class="form-row">
+                <div
+                  *ngIf="difuntoForm.controls['birthPlace'].invalid && (difuntoForm.controls['birthPlace'].dirty || difuntoForm.controls['birthPlace'].touched)">
+                  <div class="text-danger" *ngIf="difuntoForm.controls['birthPlace'].errors.required">
+                    Este campo es obligatorio.
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -252,10 +255,13 @@
                   </mat-autocomplete>
                 </mat-form-field>
               </div>
-              <!-- <input placeholder="Guayaquil, Ecuador" type="text" formControlName="deathPlace" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.deathPlace.errors }" /> -->
-              <div *ngIf="submitted && f.deathPlace.errors" class="invalid-feedback">
-                <div *ngIf="f.deathPlace.errors.required">Ingresar un lugar de defunción</div>
+              <div class="form-row">
+                <div
+                  *ngIf="difuntoForm.controls['deathPlace'].invalid && (difuntoForm.controls['deathPlace'].dirty || difuntoForm.controls['deathPlace'].touched)">
+                  <div class="text-danger" *ngIf="difuntoForm.controls['deathPlace'].errors.required">
+                    Este campo es obligatorio.
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -507,30 +513,3 @@
   </div>
 </div>
 
-<mat-form-field class="example-full-width">
-  <input type="text"
-         placeholder="Ciudad Nacimiento"
-         aria-label="Number"
-         matInput
-         [formControl]="control_nacimiento"
-         [matAutocomplete]="autoNacimi">
-  <mat-autocomplete #autoNacimi="matAutocomplete">
-    <mat-option *ngFor="let optionNacimi of filteredOptions_nacimiento | async" [value]="optionNacimi">
-      {{optionNacimi}}
-    </mat-option>
-  </mat-autocomplete>
-</mat-form-field>
-
-<mat-form-field class="example-full-width">
-  <input type="text"
-         placeholder="Ciudad fallecimiento"
-         aria-label="Number"
-         matInput
-         [formControl]="control_fallecimiento"
-         [matAutocomplete]="autoFalleci">
-  <mat-autocomplete #autoFalleci="matAutocomplete">
-    <mat-option *ngFor="let optionFalleci of filteredOptions_fallecimiento | async" [value]="optionFalleci">
-      {{optionFalleci}}
-    </mat-option>
-  </mat-autocomplete>
-</mat-form-field>

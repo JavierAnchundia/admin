@@ -33,6 +33,7 @@ export class SadminCrearCementerioComponent implements OnInit {
   puntoGeo: Punto_geolocalizacion;
   empresas: Empresa[] = [];
   redes: Red_social;
+  numericNumberReg= '[0-9]*';
   redes_sociales: String[] = [
     "facebook",
     "twitter",
@@ -69,7 +70,7 @@ export class SadminCrearCementerioComponent implements OnInit {
       nombre: [null, Validators.compose([Validators.required])],
       empresa: [null, Validators.compose([Validators.required])],
       direccion: [null, Validators.compose([Validators.required])],
-      telefono: [null, Validators.compose([Validators.required])],
+      telefono: [null, Validators.compose([Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern(this.numericNumberReg)])],
       email: [null, Validators.compose([Validators.required, Validators.email])],
       logo: [null,],
       redes: this.fb.array([this.createRedSocial()])
@@ -157,7 +158,7 @@ export class SadminCrearCementerioComponent implements OnInit {
   }
 
   postRedesSociales() {
-    if(this.redList.length == 0 ){
+    if(this.redList.length == 0){
       this.delay(400);
       this.router.navigate(['/inicio/dashboard']);
     }

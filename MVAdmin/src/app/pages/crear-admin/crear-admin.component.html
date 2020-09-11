@@ -24,7 +24,7 @@
                   <label for="usuario"> Nombre de Usuario</label>
                   <input id="usuario" type="text"  class="form-control" formControlName="usuario"
                    required [ngClass]="{ 'is-invalid': submitted && usuario.errors }"/>
-                  <div *ngIf=" usuario.invalid && (usuario.dirty || usuario.touched)" class="alert alert-danger">
+                  <div *ngIf=" usuario.invalid && (usuario.dirty || usuario.touched)" class="">
                     <div *ngIf="usuario.errors.required " class="text-danger">Ingresar un nombre de usuario</div>
                   </div>
                 </div>
@@ -36,7 +36,7 @@
                   <label for="correo"> Correo</label>
                   <input id="correo" type="text" formControlName="correo" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.correo.errors }" required/>
-                  <div *ngIf=" correo.invalid && (correo.dirty || correo.touched) " class="alert alert-danger">
+                  <div *ngIf=" correo.invalid && (correo.dirty || correo.touched) " class="">
                     <div *ngIf="correo.errors.required" class="text-danger">Ingresar un correo electrónico</div>
                     <div *ngIf="correo.errors.email" class="text-danger">Ingresar un correo electrónico válido</div> 
                   </div>
@@ -49,7 +49,7 @@
                 <label for="firstName">Nombres</label>
                 <input id="firstName" type="text" formControlName="firstName" class="form-control"
                   [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" required/>
-                <div *ngIf=" firstName.invalid && (firstName.dirty || firstName.touched)"  class="alert alert-danger">
+                <div *ngIf=" firstName.invalid && (firstName.dirty || firstName.touched)" >
                   <div *ngIf="firstName.errors.required" class="text-danger">Ingresar nombres</div>
                 </div>
               </div>
@@ -60,7 +60,7 @@
                 <label for="lastName">Apellidos</label>
                 <input id="lastName" type="text" formControlName="lastName" class="form-control"
                   [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
-                <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert alert-danger">
+                <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" >
                   <div *ngIf="lastName.errors.required" class="text-danger">Ingresar apellidos</div>
                 </div>
               </div>
@@ -71,7 +71,7 @@
                   <label for="contrasena">Contraseña</label>
                   <input id="contrasena" type="password" formControlName="contrasena" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.contrasena.errors }" />
-                  <div *ngIf="contrasena.invalid && (contrasena.dirty || contrasena.touched)" class="alert alert-danger">
+                  <div *ngIf="contrasena.invalid && (contrasena.dirty || contrasena.touched)" >
                     <div *ngIf="contrasena.errors.required" class="text-danger">Ingresar Contraseña</div>
                     <div *ngIf="contrasena.errors.minlength" class="text-danger">La contrasena debe tener minimo 6 carácteres </div>
 
@@ -84,7 +84,7 @@
                     <label for="repetirContrasena"> Repetir Contraseña</label>
                     <input id="repetirContrasena" type="password" formControlName="repetirContrasena" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.repetirContrasena.errors }" />
-                    <div *ngIf="repetirContrasena.invalid && (repetirContrasena.dirty || repetirContrasena.touched)" class="alert alert-danger">
+                    <div *ngIf="repetirContrasena.invalid && (repetirContrasena.dirty || repetirContrasena.touched)">
                         <div *ngIf="repetirContrasena.errors.required" class="text-danger">Repetir la Contraseña</div>
                         <div *ngIf="repetirContrasena.errors.mustMatch" class="text-danger">Las contraseñas deben coincidir </div>
                     </div>
@@ -94,11 +94,16 @@
                 <div class="col-5"> 
                     <div class="form-group">
                     <label for="telefono"> Teléfono </label>
-                    <input id="telefono" type="text" formControlName="telefono" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }" />
-                    <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="alert alert-danger">
-                        <div *ngIf="telefono.errors.required" class="text-danger">Ingresar Teléfono</div>
-                    </div>
+                    <input id="telefono" type="text" formControlName="telefono" class="form-control" minlength="9" maxlength="10" />
+                        <div>
+                          <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)">
+                            <div *ngIf="telefono.errors.required" class="text-danger">Campo requerido.</div>
+                        </div>
+                        <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" >
+                          <div *ngIf="telefono.errors.maxlength || telefono.errors.minlength" class="text-danger">Longitud mínima 9, máxima 10 .</div>
+                      </div>
+                        </div>
+                    
                     </div>
                 </div>
                 
@@ -115,7 +120,7 @@
                         </div>
                        
                       </div>
-                      <div *ngIf="submitted && tipoAdmin.invalid" class="alert alert-danger">
+                      <div *ngIf="submitted && tipoAdmin.invalid" class="">
                         <div  class="text-danger">Elegir un tipo</div>
                       </div>
                     </div>
@@ -132,15 +137,13 @@
                   <option value="4">Camposanto Pascuales</option>
                   <option value="5">Camposanto Guayaquil</option>
                   <option value="6">Camposanto Daule</option>
-                  <option value="7">Prueba</option>
-
-
-
+                  <option value="15">Panteon Metropolitano</option>
+                  <option value="16">Parque la paz Riobamba</option>
 
                   <option *ngFor="let cementerioif of cementerios; let i = index" [value]="cementerioif.nombre">{{cementerioif.nombre}}
                   </option>
                 </select>
-                <div *ngIf="submitted && (cementerio.invalid )" class="alert alert-danger">
+                <div *ngIf="submitted && (cementerio.invalid )" class="">
                   <div class="text-danger">Seleccione una opción</div>
                 </div>
               </div>

@@ -27,6 +27,9 @@ export class CrearAdminComponent implements OnInit {
   variable:Boolean= true;
   disabled = true;
   id:any;
+  numericNumberReg= '[0-9]*';
+
+
   constructor(private fb: FormBuilder, public mustMatchService: MustMatchService, 
     public dashboardService: DashboardService, public _usuario: UsuarioService,
     public router: Router) { 
@@ -44,7 +47,7 @@ export class CrearAdminComponent implements OnInit {
       lastName: [null, Validators.required],
       contrasena: [null, [Validators.required, Validators.minLength(6)]],
       repetirContrasena: [null, Validators.required],
-      telefono: [null, Validators.required],
+      telefono: [null, [Validators.required,Validators.minLength(9),Validators.maxLength(10),Validators.pattern(this.numericNumberReg)]],
       tipoAdmin: [null, Validators.required],
       cementerio: [null, Validators.required],
       permisoToggle: [null],
