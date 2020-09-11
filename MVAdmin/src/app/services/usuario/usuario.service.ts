@@ -140,11 +140,10 @@ export class UsuarioService {
     return this.http.post(url, usuario, httpOptions);
   }
 
-  getUsers() {
-    let url = URL_SERVICIOS.usuario;
+  getUsers(id) {
+    let url = URL_SERVICIOS.usuarios_camp + id + '/';
     let httpOptions = {
       headers: new HttpHeaders({
-
         'Authorization': 'Bearer ' + this.getToken(),
       })
     }
