@@ -18,14 +18,14 @@ export class GeolocalizacionService {
     return this.http.get<Punto_geolocalizacion[]>(url);
   }
 
-  postListGeolocalizacion(listGeo: Punto_geolocalizacion):Observable<Punto_geolocalizacion>{
+  async postListGeolocalizacion(listGeo: Punto_geolocalizacion){
     let url = URL_SERVICIOS.geolocalizacion_post;
     let httpOptions = {
       headers: new HttpHeaders({
           'Content-Type': 'application/json',
         })
     }
-    return this.http.post<Punto_geolocalizacion>(url, listGeo,httpOptions);
+    return await this.http.post<Punto_geolocalizacion>(url, listGeo,httpOptions).toPromise();
   }
 
   deletePointGeolocalizacion(id:Number){

@@ -81,7 +81,7 @@ export class RegistroDifuntoComponent implements OnInit {
     this.responsableForm = new FormGroup({
       NombreRes: new FormControl(null, Validators.required),
       ApellidoRes: new FormControl(null, Validators.required),
-      telefono: new FormControl(null, [Validators.required, Validators.maxLength(9),Validators.minLength(7),Validators.pattern(this.numericNumberReg)]),
+      telefono: new FormControl(null, [Validators.required, Validators.maxLength(9),Validators.minLength(9),Validators.pattern(this.numericNumberReg)]),
       celular: new FormControl(null, [Validators.required, Validators.maxLength(10),Validators.minLength(10),Validators.pattern(this.numericNumberReg)]),
       correo: new FormControl('', [Validators.email]),
       parentesco: new FormControl(null, Validators.required),

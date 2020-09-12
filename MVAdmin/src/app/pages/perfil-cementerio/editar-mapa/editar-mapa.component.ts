@@ -45,6 +45,12 @@ export class EditarMapaComponent implements OnInit {
         this.puntosGeo = data;
         this.eliminarPuntos();
         this.crearNuevosPuntos();
+        this._servicioGeo.getListGeolocalizacion(id).subscribe(
+          data=> {
+            console.log('linea 50', data)
+          }
+        )
+        
       }
     )
   }
@@ -71,6 +77,7 @@ export class EditarMapaComponent implements OnInit {
   }
 
   async crearNuevosPuntos(){
+    console.log('linea74',this.pointList);
     if(this.pointList.length > 0){
       for(let punt = 0; punt < this.pointList.length; punt++ ){
         this.punto = {
@@ -79,16 +86,12 @@ export class EditarMapaComponent implements OnInit {
           longitud:  this.pointList[punt].lng,
           id_camposanto: this.id.camposanto
         }
-        await this._servicioGeo.postListGeolocalizacion(this.punto).subscribe(
-          (data) => {
-            console.log(data);
-            this.redirectProfile(this.id.camposanto);
-        })
+        await this._servicioGeo.postListGeolocalizacion(this.punto);
         this.closebutton.nativeElement.click();
         if(punt == this.pointList.length-1 ){
           Swal.close();
           Swal.fire("Actualización exitosa de los puntos del Mapa");
-          await this.delay(400);
+          await this.delay(500);
           window.location.reload()
         }
       }
