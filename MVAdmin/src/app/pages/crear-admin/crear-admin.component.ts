@@ -8,7 +8,9 @@ import {Camposanto} from '../../models/camposanto.model';
 import { UsuarioService } from '../../services/usuario/usuario.service';
 import Swal from 'sweetalert2'
 import { Router } from '@angular/router';
-import { throwError } from 'rxjs';
+import { of,throwError } from 'rxjs';
+import { map,catchError } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-crear-admin',
@@ -115,10 +117,24 @@ export class CrearAdminComponent implements OnInit {
       this.adminForm.get('generoDropdown').errors.required
     )
   }
-
+  errorTranslateHandler(error:String){
+    switch(error) { 
+      case "user with this email address already exists.": { 
+         return "Hubo un error al guardar los datos: Ya existe este correo, intente con otro";
+      } 
+      case "user with this username already exists.": { 
+         return "Hubo un error al guardar los datos: Ya existe este nombre de usuario, intente con otro"      
+      } 
+      default: { 
+         return "Hubo un error al guardar los datos"
+      } 
+   } 
+  }
   registrarAdministrador() {
     
     const formData = new FormData();
+    console.log(this.adminForm.value.cementerio);
+    console.log(this.adminForm.value.tipoAdmin);
 
     formData.append('first_name', this.adminForm.value.firstName);
     formData.append('last_name', this.adminForm.value.lastName);
@@ -134,7 +150,14 @@ export class CrearAdminComponent implements OnInit {
 
     
     
-    this._usuario.crearUsuario(formData)
+    this._usuario.crearUsuario(formData) 
+                        .pipe(
+                          catchError(err => {
+                            
+                            Swal.close()
+                            Swal.fire(this.errorTranslateHandler(err.error[Object.keys(err.error)[0]][0]) );
+                            return throwError(err);
+                        }))
                         .subscribe(
                           (resp:any)=>{
                             console.log(resp);
@@ -145,12 +168,13 @@ export class CrearAdminComponent implements OnInit {
                             return true;
                           },
                           error => {
+                            
                             console.error('Error:' + error);
-                            Swal.close()
-                            Swal.fire("Hubo un error al guardar los datos, intentelo de nuevo");
+                            
                     
                             return throwError(error);
-                          }
+                          },
+                          () => console.log('HTTP request completed.')
                         );
     
     

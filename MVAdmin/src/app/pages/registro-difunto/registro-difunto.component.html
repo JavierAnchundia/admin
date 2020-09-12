@@ -308,7 +308,7 @@
               <label>Sector:</label>
               <select class="custom-select" formControlName="sector" placeholder="Sector"
                 (change)="onChangeSector($event.target.value)"
-                [ngClass]="{ 'is-invalid': submitted && f.sector.errors }">
+                >
                 <option style="display:none" value=null>Seleccione un sector</option>
                 <option *ngFor="let sec of lista_sector" [value]=sec.id_sector>{{sec.nombre}}</option>
               </select>
@@ -374,7 +374,7 @@
             <div class="col-5">
               <div class="form-group">
                 <label for="telefono">Teléfono del responsable:</label>
-                <input type="text" placeholder="042222222" formControlName="telefono" class="form-control" minlength="9"
+                <input type="text"  formControlName="telefono" class="form-control" minlength="9"
                   maxlength="9" />
                 <div
                   *ngIf="responsableForm.controls['telefono'].invalid && (responsableForm.controls['telefono'].dirty || responsableForm.controls['telefono'].touched)">
@@ -383,7 +383,7 @@
                   </div>
                   <div class="text-danger"
                     *ngIf="responsableForm.controls['telefono'].errors.minlength ||responsableForm.controls['telefono'].errors.maxlength">
-                    La longitud del campo debe ser 9.
+                    La longitud del campo es 9.
                   </div>
                   <div class="text-danger" *ngIf="responsableForm.controls['telefono'].errors.pattern">
                     Ingrese un valor válido.

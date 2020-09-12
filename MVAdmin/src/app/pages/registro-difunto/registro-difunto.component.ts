@@ -172,7 +172,6 @@ export class RegistroDifuntoComponent implements OnInit {
         Swal.fire("Registro exitoso")
         this.difuntoForm.reset();
         this.router.navigate(['/inicio/difuntos']);
-        return true;
 
       },
       error => {
@@ -196,16 +195,18 @@ export class RegistroDifuntoComponent implements OnInit {
     formData.append('telefono', this.responsableForm.value.telefono);
     formData.append('celular', this.responsableForm.value.celular);
     formData.append('direccion', this.responsableForm.value.direccion);
-    
+    formData.append('correo', this.responsableForm.value.correo);
+
     if(this.responsableForm.value.parentesco != 'Otro'){
       formData.append('parentezco', this.responsableForm.value.parentesco);
     }else{
       formData.append('parentezco', this.responsableForm.value.otro);
     }
 
-    if(this.responsableForm.value.correo != ''){
+    /* if(this.responsableForm.value.correo != ''){
       formData.append('correo', this.responsableForm.value.correo);
-    }
+    } */
+    console.log(this.responsableForm.value.correo)
     formData.append('id_difunto',id);
     this._difunto.postResponsable(formData).subscribe(
       () => {
@@ -214,7 +215,6 @@ export class RegistroDifuntoComponent implements OnInit {
       },
       error => {
         console.error('Error:' + error);
-        alert("Hubo un error al guardar los datos, intentelo de nuevo");
 
         return throwError(error);
       }

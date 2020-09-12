@@ -15,7 +15,13 @@
               </div>
             </div>
             <div class="form-row col-12">
+              
                 <div class="agm-container col-11 p-1">
+                  <div class="d-flex justify-content-center" *ngIf="loaded == false">
+                    <div class="spinner-border" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  </div>
                     <agm-map
                       [zoom]="zoom"
                       [latitude]="lat"

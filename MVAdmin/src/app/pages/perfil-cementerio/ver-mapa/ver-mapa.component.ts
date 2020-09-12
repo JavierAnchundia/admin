@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { GeolocalizacionService} from '../../../services/geolocalizacion/geolocalizacion.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-ver-mapa',
@@ -16,8 +17,10 @@ export class VerMapaComponent implements OnInit {
   lng: any;
   markers: Marker[] = [];
   show: Boolean = false;
+  loaded:boolean = false;
   constructor(
     private _servicioGeo : GeolocalizacionService,
+
   ) {}
 
   ngOnInit(): void {
@@ -29,6 +32,7 @@ export class VerMapaComponent implements OnInit {
     await this._servicioGeo.getListGeolocalizacion(id).subscribe(
       (data) => {
         this.show = true;
+        
         for(let punto in data){
           this.marker = {
             lat : data[punto].latitud,
@@ -36,6 +40,7 @@ export class VerMapaComponent implements OnInit {
           }
           this.markers.push(this.marker);
         }
+        this.loaded = true;
         this.lat = data[0].latitud;
         this.lng = data[0].longitud;
         console.log(data);

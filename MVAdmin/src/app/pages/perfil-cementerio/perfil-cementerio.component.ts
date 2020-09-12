@@ -8,6 +8,10 @@ import { Empresa } from '../../models/empresa.model';
 import { Camposanto } from '../../models/camposanto.model';
 import { Red_social } from '../../models/red_social.model';
 import Swal from 'sweetalert2'
+import { map,catchError } from 'rxjs/operators';
+import { of,throwError } from 'rxjs';
+
+
 
 @Component({
   selector: 'app-perfil-cementerio',
@@ -120,25 +124,46 @@ export class PerfilCementerioComponent implements OnInit {
       telefono: this.camposanto.telefono,
       id_empresa: this.camposanto.id_empresa
     }
-    await this._servicio.putEmpresa(this.empresa).subscribe(
+    await this._servicio.putEmpresa(this.empresa)
+    
+    .subscribe(
       (data) => {
         this.closeModalEditar.nativeElement.click();
-        this._servicio.putCamposanto(campo).subscribe(
+        this._servicio.putCamposanto(campo)
+        .pipe(
+          catchError(err => {
+            
+            Swal.close()
+            Swal.fire(this.errorTranslateHandler(err.error[Object.keys(err.error)[0]][0]) );
+            console.log(err.error[Object.keys(err.error)[0]][0]);
+            return throwError(err);
+        }))
+        .subscribe(
           (data) => {
             Swal.close();
             Swal.fire("Actualización Exitosa")
           },
           (error) =>{
-            Swal.close();
-            Swal.fire("Hubo un error al actualizar los datos, intentelo de nuevo");
           }
         )
       },
       (error) => {
         this.closeModalEditar.nativeElement.click();
-        Swal.close();
-        Swal.fire("Hubo un error al actualizar los datos, intentelo de nuevo");
       }
     )
+  }
+
+  errorTranslateHandler(error:String){
+    switch(error) { 
+      case "camposanto with this email address already exists.": { 
+         return "Hubo un error al guardar los datos: Ya existe este correo, intente con otro";
+      } 
+      case   "camposanto with this nombre already exists."      : { 
+         return "Hubo un error al guardar los datos: Ya existe este nombre de camposanto, intente con otro"      
+      } 
+      default: { 
+         return "Hubo un error al guardar los datos"
+      } 
+   } 
   }
 }

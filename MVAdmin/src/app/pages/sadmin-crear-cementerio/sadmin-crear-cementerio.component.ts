@@ -10,9 +10,9 @@ import { Empresa } from '../../models/empresa.model';
 import { Red_social } from '../../models/red_social.model';
 declare var $: any;
 import Swal from 'sweetalert2'
-import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
-
+import { of,throwError } from 'rxjs';
+import { map,catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sadmin-crear-cementerio',
@@ -123,7 +123,16 @@ export class SadminCrearCementerioComponent implements OnInit {
       object[key] = value;
     });
     var json = JSON.stringify(object);
-    await this._servicio.postCamposanto(camposanto).subscribe(
+    await this._servicio.postCamposanto(camposanto)
+    .pipe(
+      catchError(err => {
+        
+        Swal.close()
+        Swal.fire(this.errorTranslateHandler(err.error[Object.keys(err.error)[0]][0]) );
+        console.log(err.error[Object.keys(err.error)[0]][0]);
+        return throwError(err);
+    }))
+    .subscribe(
       (data) => {
         console.log(data);
         this.id_camposanto = data['id_camposanto']
@@ -136,12 +145,25 @@ export class SadminCrearCementerioComponent implements OnInit {
         Swal.fire("Registro existoso")
       }, error =>{
         console.error('Error:' + error);
-        Swal.close()
-        Swal.fire("Hubo un error al guardar los datos, intentelo de nuevo");
                     
         return throwError(error);
       })
   }
+
+  errorTranslateHandler(error:String){
+    switch(error) { 
+      case "camposanto with this email address already exists.": { 
+         return "Hubo un error al guardar los datos: Ya existe este correo, intente con otro";
+      } 
+      case   "camposanto with this nombre already exists."      : { 
+         return "Hubo un error al guardar los datos: Ya existe este nombre de camposanto, intente con otro"      
+      } 
+      default: { 
+         return "Hubo un error al guardar los datos"
+      } 
+   } 
+  }
+  
   async postCoordenadas() {
     for (let punto in this.puntosL) {
       this.puntoGeo = {
@@ -150,10 +172,7 @@ export class SadminCrearCementerioComponent implements OnInit {
         longitud: this.puntosL[punto].lng,
         id_camposanto: this.id_camposanto
       }
-      await this._servicioGeo.postListGeolocalizacion(this.puntoGeo).subscribe(
-        (data) => {
-          console.log(data);
-        })
+      await this._servicioGeo.postListGeolocalizacion(this.puntoGeo);
     }
   }
 
