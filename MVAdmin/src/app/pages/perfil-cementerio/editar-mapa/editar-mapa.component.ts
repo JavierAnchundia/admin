@@ -25,6 +25,7 @@ export class EditarMapaComponent implements OnInit {
   pointList: { lat: number; lng: number }[] = [];
   drawingManager: any;
   selectedShape: any;
+  loaded:boolean = false;
 
   constructor(
     private _servicioGeo : GeolocalizacionService,
@@ -51,6 +52,7 @@ export class EditarMapaComponent implements OnInit {
 
   actualizarPuntos(){
     console.log(this.puntosGeo)
+    Swal.showLoading()
     this.cargarPuntosGeoMapa(this.id.camposanto);
   }
 
@@ -104,6 +106,7 @@ export class EditarMapaComponent implements OnInit {
 
   onMapReady(map) {
     this.initDrawingManager(map);
+    this.loaded= true;
   }
 
   initDrawingManager = (map: any) => {
