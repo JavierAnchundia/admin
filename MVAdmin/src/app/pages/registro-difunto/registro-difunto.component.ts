@@ -10,6 +10,7 @@ import { MouseEvent } from '@agm/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2'
 import {map, startWith} from 'rxjs/operators';
+import {catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-registro-difunto',
@@ -164,7 +165,16 @@ export class RegistroDifuntoComponent implements OnInit {
     formData.append('id_tip_sepultura', this.difuntoForm.value.tipoSepultura);
     formData.append('id_sector', this.difuntoForm.value.sector);
     console.log(formData.get('fecha_nacimiento'))
-    this._difunto.postDifunto(formData).subscribe(
+    this._difunto.postDifunto(formData)
+    .pipe(
+      catchError(err => {
+        
+        Swal.close()
+        //Swal.fire(this.errorTranslateHandler(err.error[Object.keys(err.error)[0]][0]) );
+        console.log(err.error);
+        return throwError(err);
+    }))
+    .subscribe(
       data => {
         console.log('success');
         this.crearResponsable(data['id_difunto'])
@@ -188,6 +198,19 @@ export class RegistroDifuntoComponent implements OnInit {
 
   }
 
+  errorTranslateHandler(error:String){
+    switch(error) { 
+      case "camposanto with this email address already exists.": { 
+         return "Hubo un error al guardar los datos: Ya existe este correo, intente con otro";
+      } 
+      case   "camposanto with this nombre already exists."      : { 
+         return "Hubo un error al guardar los datos: Ya existe este nombre de camposanto, intente con otro"      
+      } 
+      default: { 
+         return "Hubo un error al guardar los datos"
+      } 
+   } 
+  }
   crearResponsable(id){
     
     const formData = new FormData();
