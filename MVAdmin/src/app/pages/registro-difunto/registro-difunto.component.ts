@@ -9,7 +9,7 @@ import { throwError, Observable } from 'rxjs';
 import { MouseEvent } from '@agm/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2'
-import {map, startWith} from 'rxjs/operators';
+import {catchError, map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-registro-difunto',
@@ -40,7 +40,7 @@ export class RegistroDifuntoComponent implements OnInit {
   bdayOption: string;
   bmonthOption: string;
   byearOption: string;
-
+  verPuntos = false;
   submitted = false;
   generoOptions = ["Femenino", "Masculino"]
   monthNames = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
@@ -133,16 +133,37 @@ export class RegistroDifuntoComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    if (this.difuntoForm.valid && this.responsableForm.valid) {
-      Swal.showLoading();
+    Swal.close()
+    if(this.markers.length==0){
+      Swal.close();
+      console.log(this.verPuntos)
+      console.log(this.markers.length)
+      if(this.verPuntos) {this.verPuntos= false; return}
+      Swal.fire("No ha escogido la ubicación del difunto");
+      console.log("antes del elif")
 
+    }else
+      if(this.difuntoForm.value.yearBirth >= this.difuntoForm.value.yearDeath){
+        this.submitted = false;
+        Swal.fire('No se pudo guardar el registro','Existe un error con las fechas. Intente nuevamente')
+      }
+    
+    else {if (this.difuntoForm.valid && this.responsableForm.valid) {
+      Swal.showLoading();
+      console.log("A punto de entrar a crear Difunto")
       this.crearDifunto();
 
     } else {
       if (this.difuntoForm.invalid || this.responsableForm.invalid) {
+        console.log("despues del elif")
+
         return;
       }
-    }
+    }}
+  }
+
+  puntosBoton(){
+    this.verPuntos = true;
   }
 
   crearDifunto(){
@@ -164,7 +185,17 @@ export class RegistroDifuntoComponent implements OnInit {
     formData.append('id_tip_sepultura', this.difuntoForm.value.tipoSepultura);
     formData.append('id_sector', this.difuntoForm.value.sector);
     console.log(formData.get('fecha_nacimiento'))
-    this._difunto.postDifunto(formData).subscribe(
+    this._difunto.postDifunto(formData)
+    .pipe(
+      catchError(err => {
+        
+        Swal.close()
+        Swal.fire(this.errorTranslateHandler(err.error[Object.keys(err.error)[0]][0]) );
+        console.log(err.error);
+        console.log("estoy en el pipe")
+        return throwError(err);
+    }))
+    .subscribe(
       data => {
         console.log('success');
         this.crearResponsable(data['id_difunto'])
@@ -172,12 +203,12 @@ export class RegistroDifuntoComponent implements OnInit {
         Swal.fire("Registro exitoso")
         this.difuntoForm.reset();
         this.router.navigate(['/inicio/difuntos']);
+        return true;
 
       },
       error => {
         console.error('Error:' + error);
-        Swal.close()
-        Swal.fire("Hubo un error al guardar los datos, intentelo de nuevo",error)
+        console.log("estoy en el error")
         
 
         return throwError(error);
@@ -187,6 +218,20 @@ export class RegistroDifuntoComponent implements OnInit {
 
   }
 
+  errorTranslateHandler(error:String){
+    switch(error) { 
+      case "usuario with this email address already exists.": { 
+         return "Hubo un error al guardar los datos: Ya existe este correo, intente con otro";
+      } 
+      case   "usuario with this nombre already exists."      : { 
+         return "Hubo un error al guardar los datos: Ya existe este nombre de camposanto, intente con otro"      
+      } 
+      default: { 
+         return "Hubo un error al guardar los datos"
+      } 
+   } 
+  }
+  
   crearResponsable(id){
     
     const formData = new FormData();
