@@ -26,7 +26,7 @@ export class RegistroDifuntoComponent implements OnInit {
   markers: Marker[] = [];
   marker: Marker;
   zoom: Number = 15;
-
+  verPuntos = false;
   difuntoForm: FormGroup;
   responsableForm: FormGroup;
   id: any;
@@ -133,16 +133,36 @@ export class RegistroDifuntoComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    if (this.difuntoForm.valid && this.responsableForm.valid) {
-      Swal.showLoading();
+    Swal.close()
+    if(this.markers.length==0){
+      Swal.close();
+      console.log(this.verPuntos)
+      console.log(this.markers.length)
+      if(this.verPuntos) {this.verPuntos= false; return}
+      Swal.fire("No ha escogido la ubicación del difunto");
+      console.log("antes del elif")
 
+    }
+    if(this.difuntoForm.value.yearBirth < this.difuntoForm.value.birthPlace){
+      Swal.close();
+      Swal.fire("Fecha de defuncion debe ser mayor que la de nacimiento");
+    }
+    else {if (this.difuntoForm.valid && this.responsableForm.valid && (this.difuntoForm.value.yearBirth >= this.difuntoForm.value.birthPlace)) {
+      Swal.showLoading();
+      console.log("A punto de entrar a crear Difunto")
       this.crearDifunto();
 
     } else {
       if (this.difuntoForm.invalid || this.responsableForm.invalid) {
+        console.log("despues del elif")
+
         return;
       }
-    }
+    }}
+  }
+
+  puntosBoton(){
+    this.verPuntos = true;
   }
 
   crearDifunto(){
