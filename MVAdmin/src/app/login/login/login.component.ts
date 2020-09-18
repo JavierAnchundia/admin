@@ -18,7 +18,9 @@ export class LoginComponent implements OnInit {
     private formb: FormBuilder,
     public _usuarioService: UsuarioService,
     public router: Router,
-  ) { }
+  ) {
+    this.validarSesion();
+  }
 
   ngOnInit(): void {
     this.form_login = this.formb.group({
@@ -39,27 +41,14 @@ export class LoginComponent implements OnInit {
     this.user.email = form.value.email;
     this.user.password = form.value.contrasena;
 
-    await this._usuarioService.loginUser(this.user).subscribe( 
+    await this._usuarioService.loginUser(this.user).toPromise().then( 
       resp=>{
         Swal.close();
+        let email_user = localStorage.getItem('username');
+        console.log(email_user);
+        this.usuarioSesion(email_user);
+        console.log('token creado desde componente login', resp)
         
-        console.log('token creado desde componente login')
-        this._usuarioService.getDatosUser(this.user.email).subscribe(
-          (data) => {
-            if(data['tipo_usuario'] != 'uf'){
-              this.router.navigate(['/inicio/dashboard']);
-            }
-            else{
-              localStorage.removeItem('token'); 
-              localStorage.removeItem('user');
-              localStorage.removeItem('username');
-              localStorage.removeItem('id');
-              Swal.close();
-              Swal.fire('No está autorizado.','No tiene permitido acceder a está página.')
-              this.form_login.reset();
-            }
-          }
-        );
       },
       error => {
         console.error('Error:' + error);
@@ -81,5 +70,37 @@ export class LoginComponent implements OnInit {
     console.log(this.form_login.value);
     Swal.showLoading();
     this.loginUser(this.form_login);
+  }
+
+  async usuarioSesion(email_user){
+    await this._usuarioService.getDatosUser(email_user).toPromise().then(
+      (data) => {
+        localStorage.setItem('tipo_user', data['tipo_usuario']);
+        console.log(data)
+        console.log(localStorage.getItem('tipo_user'))
+        if(data['tipo_usuario'] == 'ha'){
+          this.router.navigate(['/inicio/dashboard']);
+        }
+        else if(data['tipo_usuario'] == 'su'){
+          this.router.navigate(['/inicio/perfil/'+data['id_camposanto']]);
+        }
+        else{
+          localStorage.removeItem('tipo_user'); 
+          localStorage.removeItem('token'); 
+          localStorage.removeItem('user');
+          localStorage.removeItem('username');
+          localStorage.removeItem('id');
+          Swal.close();
+          Swal.fire('No está autorizado.','No tiene permitido acceder a está página.')
+          this.form_login.reset();
+        }
+      }
+    );
+  }
+  validarSesion(){
+    if(this._usuarioService.isAuthenticated()){
+      let email_user = localStorage.getItem('username');
+        this.usuarioSesion(email_user);
+    }
   }
 }

@@ -34,9 +34,9 @@
             <i nz-icon nzType="setting"></i>
             <span>Configuracion</span>
           </li>
-          <li nz-menu-item>
+          <li nz-menu-item (click)="logout()">
             <i nz-icon nzType="import"></i>
-            <span (click)="logout()">Salir</span>
+            <span>Salir</span>
           </li>
         </ul>
       </nz-dropdown-menu>

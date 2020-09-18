@@ -9,6 +9,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegistroDifuntoComponent } from './registro-difunto/registro-difunto.component';
 import { DifuntosPanelComponent } from './difuntos-panel/difuntos-panel.component';
 import { CrearAdminComponent } from './crear-admin/crear-admin.component';
+import { AuthGuard } from '../guards/auth/auth.guard';
 
 
 
@@ -39,7 +40,8 @@ const pagesRoutes: Routes = [
         path: 'create', component: CrearAdminComponent, data: { titulo: 'Crear Administrador' }
     },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-    { path: 'dashboard' , component:DashboardComponent, data:{ titulo:' DashBoard '} }
+    { path: 'dashboard' , component:DashboardComponent, data:{ titulo:' DashBoard '},
+    canActivate: [AuthGuard] }
 ];
 
 

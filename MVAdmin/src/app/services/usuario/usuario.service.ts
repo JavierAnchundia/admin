@@ -5,14 +5,14 @@ import URL_SERVICIOS from 'src/app/config/config';
 import { Router } from '@angular/router';
 import { Usuario } from '../../models/usuario.model';
 import { map } from "rxjs/operators";
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
-
   private httpOptions: any;
-
+  
   public token: string;
   public user: string;
   public token_expires: Date;
@@ -92,8 +92,8 @@ export class UsuarioService {
     localStorage.removeItem('user');
     localStorage.removeItem('username');
     localStorage.removeItem('id');
+    localStorage.removeItem('tipo_user'); 
     this.isLoggedin = true;
-
     this.router.navigate(['/login'])
   }
 
@@ -150,4 +150,7 @@ export class UsuarioService {
     return this.http.get(url, httpOptions);
   }
 
+  isAuthenticated(){
+    return this.getToken();
+  };
 }

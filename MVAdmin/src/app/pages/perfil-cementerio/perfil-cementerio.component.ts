@@ -45,9 +45,9 @@ export class PerfilCementerioComponent implements OnInit {
     public route: ActivatedRoute,
     private fb: FormBuilder,
     )
-    {
-      
-    }
+  {
+    
+  }
   
   
   ngOnInit(): void {
@@ -65,8 +65,6 @@ export class PerfilCementerioComponent implements OnInit {
       instagram: [, ],
       youtube: [, ]
     });
-    
-    
   }
 
   async cargarCamposanto() {
