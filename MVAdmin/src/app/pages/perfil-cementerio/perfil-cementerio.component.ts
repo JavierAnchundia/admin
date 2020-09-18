@@ -10,6 +10,7 @@ import { Red_social } from '../../models/red_social.model';
 import Swal from 'sweetalert2'
 import { map,catchError } from 'rxjs/operators';
 import { of,throwError } from 'rxjs';
+import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 
 
 
@@ -44,6 +45,7 @@ export class PerfilCementerioComponent implements OnInit {
     public router: Router, 
     public route: ActivatedRoute,
     private fb: FormBuilder,
+    private _usuarioService : UsuarioService
     )
   {
     
@@ -51,6 +53,7 @@ export class PerfilCementerioComponent implements OnInit {
   
   
   ngOnInit(): void {
+    this._usuarioService.loadStorage();
     this.data = this.route.snapshot.paramMap.get('id');
     this.cargarCamposanto();
     this.cargarRedes();

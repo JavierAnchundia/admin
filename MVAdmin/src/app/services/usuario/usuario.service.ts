@@ -14,6 +14,7 @@ export class UsuarioService {
   private httpOptions: any;
   
   public token: string;
+  public refresh: string;
   public user: string;
   public token_expires: Date;
   public username: string;
@@ -28,6 +29,7 @@ export class UsuarioService {
     this.httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
+    
   }
 
   public loginUser(user) {
@@ -39,8 +41,10 @@ export class UsuarioService {
         this.isLoggedin = true;
 
         this.token = JSON.stringify(resp['access']);
+        this.refresh = JSON.stringify(resp['refresh']).slice(1,-1);
         this.updateData(resp['access'])
         localStorage.setItem('token', this.token);
+        localStorage.setItem('refresh', this.refresh);
         localStorage.setItem('id', JSON.stringify(this.tokenGestion(resp['access'])));
         localStorage.setItem('user', JSON.stringify(this.tokenGestion(resp['access'])));
         return true
@@ -52,9 +56,10 @@ export class UsuarioService {
   }
 
   loadStorage() {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem('token') && localStorage.getItem('refresh')) {
       this.token = localStorage.getItem('token');
       this.user = JSON.parse(localStorage.getItem('user'));
+      this.refreshToken()
     } else {
       this.token = '';
       this.user = null;
@@ -73,9 +78,12 @@ export class UsuarioService {
 
   public refreshToken() {
     let url = URL_SERVICIOS.refreshlogin;
-    this.http.post(url, JSON.stringify({ token: this.token }), this.httpOptions).subscribe(
+    this.http.post(url, { "refresh" : localStorage.getItem('refresh')}, this.httpOptions).subscribe(
       data => {
-        this.updateData(data['token']);
+        localStorage.setItem('token', data['access']);
+        localStorage.setItem('id', JSON.stringify(this.tokenGestion(data['access'])));
+        localStorage.setItem('user', JSON.stringify(this.tokenGestion(data['access'])));
+        this.updateData(data['access']);
       },
       err => {
         this.errors = err['error'];
@@ -93,6 +101,7 @@ export class UsuarioService {
     localStorage.removeItem('username');
     localStorage.removeItem('id');
     localStorage.removeItem('tipo_user'); 
+    localStorage.removeItem('refresh'); 
     this.isLoggedin = true;
     this.router.navigate(['/login'])
   }
@@ -151,6 +160,7 @@ export class UsuarioService {
   }
 
   isAuthenticated(){
+    console.log(this.token_expires)
     return this.getToken();
   };
 }
