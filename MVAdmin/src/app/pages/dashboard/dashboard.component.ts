@@ -5,6 +5,7 @@ import { CamposantoService } from 'src/app/services/servicios.index';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
+import URL_SERVICIOS from 'src/app/config/config';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +14,7 @@ import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 })
 export class DashboardComponent implements OnInit {
   lista_camposanto: any[] = [];
-  
+  url_backend: String = URL_SERVICIOS.url_backend;
   constructor(
     public _servicio: CamposantoService, 
     private router: Router,

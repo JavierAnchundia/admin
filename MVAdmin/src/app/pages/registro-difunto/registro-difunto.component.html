@@ -26,14 +26,14 @@
         <div class="row">
           <div class="col-5">
             <div class="form-group">
-              <label for="firstName">Nombres</label>
+              <label for="firstName"><i class="campo-req">*</i> Nombres</label>
               <input type="text" formControlName="firstName" class="form-control" />
               <div
                 *ngIf="difuntoForm.controls['firstName'].invalid && (difuntoForm.controls['firstName'].dirty || difuntoForm.controls['firstName'].touched)">
 
                 <div class="text-danger"
                   *ngIf="difuntoForm.controls['firstName'].touched && difuntoForm.controls['firstName'].errors.required">
-                  Este campo es obligatorio.
+                  <small>Este campo es obligatorio.</small>
                 </div>
               </div>
             </div>
@@ -41,7 +41,7 @@
           </div>
           <div class="col-5">
             <div class="form-group">
-              <label for="lastName">Apellidos</label>
+              <label for="lastName"><i class="campo-req">*</i> Apellidos</label>
               <input type="text" formControlName="lastName" class="form-control"
                 [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
               <div
@@ -49,7 +49,7 @@
 
                 <div class="text-danger"
                   *ngIf="difuntoForm.controls['lastName'].touched && difuntoForm.controls['lastName'].errors.required">
-                  Este campo es obligatorio.
+                  <small>Este campo es obligatorio.</small>
                 </div>
               </div>
             </div>
@@ -58,35 +58,35 @@
         <div class="row">
           <div class="col-5">
             <div class="form-group">
-              <label>Género:</label>
+              <label><i class="campo-req">*</i> Género:</label>
               <select class="custom-select" formControlName="generoDropdown" placeholder="Seleccione un género"
                 [ngClass]="{ 'is-invalid': submitted && f.generoDropdown.errors }">
                 <option value=""></option>
                 <option value="Femenino">Femenino</option>
                 <option value="Masculino">Masculino</option>
               </select>
-              <div *ngIf="submitted && f.generoDropdown.errors" class="invalid-feedback">
-                <div *ngIf="f.generoDropdown.errors">Seleccione una opción</div>
-              </div>
+              <!-- <div *ngIf="submitted && f.generoDropdown.errors" class="invalid-feedback"> -->
+                <div *ngIf="difuntoForm.controls['generoDropdown'].touched && difuntoForm.controls['generoDropdown'].hasError('required')" class="text-danger"><small>Seleccione una opción</small></div>
+              <!-- </div> -->
             </div>
 
           </div>
           <div class="col-5">
             <div class="form-group">
-              <label for="cedula"> No. de cédula</label>
+              <label for="cedula"><i class="campo-req">*</i> No. de cédula</label>
               <input type="text" [pattern]="numericNumberReg" formControlName="cedula" class="form-control"
                 minlength="10" maxlength="10" />
               <div
                 *ngIf="difuntoForm.controls['cedula'].invalid && (difuntoForm.controls['cedula'].dirty || difuntoForm.controls['cedula'].touched)">
                 <div class="text-danger" *ngIf="difuntoForm.controls['cedula'].errors.required">
-                  Este campo es obligatorio.
+                  <small>Este campo es obligatorio.</small>
                 </div>
                 <div class="text-danger"
                   *ngIf="difuntoForm.controls['cedula'].errors.maxlength || difuntoForm.controls['cedula'].errors.minlength">
-                  La longitud del campo es de 10.
+                  <small>La longitud del campo es de 10.</small>
                 </div>
                 <div class="text-danger" *ngIf="difuntoForm.controls['cedula'].errors.pattern">
-                  Ingrese un valor válido.
+                  <small>Ingrese un valor válido.</small>
                 </div>
 
               </div>
@@ -98,7 +98,7 @@
 
         <div class="row">
           <div class="col-12">
-            <h4>Información de nacimiento</h4>
+            <h4> Información de nacimiento</h4>
           </div>
         </div>
 
@@ -115,7 +115,7 @@
                     <option selected disabled>DD</option>
                   </select>
                   <div *ngIf="submitted && f.dayBirth.errors" class="invalid-feedback">
-                    <div *ngIf="f.dayBirth.errors">Seleccione una opción</div>
+                    <div *ngIf="f.dayBirth.errors"><small>Seleccione una opción</small></div>
                   </div>
                 </div>
               </div>
@@ -129,7 +129,7 @@
                     <option *ngFor="let mon of monthNames" [value]=mon>{{mon}}</option>
                   </select>
                   <div *ngIf="submitted && f.monBirth.errors" class="invalid-feedback">
-                    <div *ngIf="f.monBirth.errors">Seleccione una opción</div>
+                    <div *ngIf="f.monBirth.errors"><small>Seleccione una opción</small></div>
                   </div>
                 </div>
               </div>
@@ -143,7 +143,7 @@
 
                   </select>
                   <div *ngIf="submitted && f.yearBirth.errors" class="invalid-feedback">
-                    <div *ngIf="f.yearBirth.errors">Seleccione una opción</div>
+                    <div *ngIf="f.yearBirth.errors"><small>Seleccione una opción</small></div>
                   </div>
                 </div>
               </div>
@@ -152,7 +152,7 @@
           <div class="col-5">
             <div class="form-group">
               <div class="form-row">
-                <label for="birthPlace">Lugar de nacimiento</label>
+                <label for="birthPlace"><i class="campo-req">*</i> Lugar de nacimiento</label>
               </div>
               <div class="form-row">
                 <mat-form-field class="example-full-width">
@@ -174,7 +174,7 @@
                 <div
                   *ngIf="difuntoForm.controls['birthPlace'].invalid && (difuntoForm.controls['birthPlace'].dirty || difuntoForm.controls['birthPlace'].touched)">
                   <div class="text-danger" *ngIf="difuntoForm.controls['birthPlace'].errors.required">
-                    Este campo es obligatorio.
+                    <small>Este campo es obligatorio.</small>
                   </div>
                 </div>
               </div>
@@ -201,7 +201,7 @@
 
                   </select>
                   <div *ngIf="submitted && f.dayDeath.errors" class="invalid-feedback">
-                    <div *ngIf="f.dayDeath.errors">Seleccione una opción</div>
+                    <div *ngIf="f.dayDeath.errors"><small>Seleccione una opción</small></div>
                   </div>
                 </div>
               </div>
@@ -215,7 +215,7 @@
                     <option *ngFor="let mon of monthNames" [value]=mon>{{mon}} </option>
                   </select>
                   <div *ngIf="submitted && f.monDeath.errors" class="invalid-feedback">
-                    <div *ngIf="f.monDeath.errors">Seleccione una opción</div>
+                    <div *ngIf="f.monDeath.errors"><small>Seleccione una opción</small></div>
                   </div>
                 </div>
               </div>
@@ -228,7 +228,7 @@
                     <option selected disabled>YY</option>
                   </select>
                   <div *ngIf="submitted && f.yearDeath.errors" class="invalid-feedback">
-                    <div *ngIf="f.yearDeath.errors">Seleccione una opción</div>
+                    <div *ngIf="f.yearDeath.errors"><small>Seleccione una opción</small></div>
                   </div>
                 </div>
               </div>
@@ -237,7 +237,7 @@
           <div class="col-5">
             <div class="form-group">
               <div class="form-row">
-                <label for="deathPlace">Lugar de defunción</label>
+                <label for="deathPlace"><i class="campo-req">*</i> Lugar de defunción</label>
               </div>
               <div class="form-row">
                 <mat-form-field class="example-full-width">
@@ -259,7 +259,7 @@
                 <div
                   *ngIf="difuntoForm.controls['deathPlace'].invalid && (difuntoForm.controls['deathPlace'].dirty || difuntoForm.controls['deathPlace'].touched)">
                   <div class="text-danger" *ngIf="difuntoForm.controls['deathPlace'].errors.required">
-                    Este campo es obligatorio.
+                    <small>Este campo es obligatorio.</small>
                   </div>
                 </div>
               </div>
@@ -275,7 +275,7 @@
         </div>
         <div class="row">
           <div class="col-5">
-            <label>Coordenadas de la sepultura:</label>
+            <label><i class="campo-req">*</i> Coordenadas de la sepultura:</label>
           </div>
           <div class="col-5">
             <button class="btn btn-success" data-toggle="modal" data-target="#mapaDifuntoModal" (click)="puntosBoton()"
@@ -283,10 +283,11 @@
               Elegir ubicación</button>
           </div>
         </div>
+        <br>
         <div class="row">
           <div class="col-4">
             <div class="form-group">
-              <label>Tipo de sepultura:</label>
+              <label><i class="campo-req">*</i> Tipo de sepultura:</label>
               <div class="row">
                 <select required formControlName="tipoSepultura" class="form-control custom-select" id="sepultura"
                   
@@ -298,14 +299,14 @@
               <div
                   *ngIf="difuntoForm.controls['tipoSepultura'].invalid && (difuntoForm.controls['tipoSepultura'].dirty || difuntoForm.controls['tipoSepultura'].touched)">
                   <div class="text-danger" *ngIf="difuntoForm.controls['tipoSepultura'].errors.required">
-                    Este campo es obligatorio.
+                    <small>Este campo es obligatorio.</small>
                   </div>
                 </div>
             </div>
           </div>
           <div class="col-4">
             <div class="form-group">
-              <label>Sector:</label>
+              <label><i class="campo-req">*</i> Sector:</label>
               <select class="custom-select" formControlName="sector" placeholder="Sector"
                 (change)="onChangeSector($event.target.value)"
                 >
@@ -315,19 +316,19 @@
               <div
                   *ngIf="difuntoForm.controls['sector'].invalid && (difuntoForm.controls['sector'].dirty || difuntoForm.controls['sector'].touched)">
                   <div class="text-danger" *ngIf="difuntoForm.controls['sector'].errors.required">
-                    Este campo es obligatorio.
+                    <small>Este campo es obligatorio.</small>
                   </div>
                 </div>
             </div>
           </div>
           <div class="col-4">
             <div class="form-group">
-              <label for="lapida"> No. de lapida</label>
+              <label for="lapida"><i class="campo-req">*</i> No. de lapida</label>
               <input type="text" formControlName="lapida" class="form-control" />
               <div
                 *ngIf="difuntoForm.controls['lapida'].invalid && (difuntoForm.controls['lapida'].dirty || difuntoForm.controls['lapida'].touched)">
                 <div class="text-danger" *ngIf="difuntoForm.controls['lapida'].errors.required">
-                  Este campo es obligatorio.
+                  <small>Este campo es obligatorio.</small>
                 </div>
               </div>
             </div>
@@ -346,12 +347,12 @@
           <div class="row">
             <div class="col-5">
               <div class="form-group">
-                <label for="NombreRes">Nombres del responsable: </label>
+                <label for="NombreRes"><i class="campo-req">*</i> Nombres del responsable: </label>
                 <input type="text" formControlName="NombreRes" class="form-control" />
                 <div
                   *ngIf="responsableForm.controls['NombreRes'].invalid && (responsableForm.controls['NombreRes'].dirty || responsableForm.controls['NombreRes'].touched)">
                   <div class="text-danger" *ngIf="responsableForm.controls['NombreRes'].errors.required">
-                    Este campo es obligatorio.
+                    <small>Este campo es obligatorio.</small>
                   </div>
                 </div>
               </div>
@@ -359,12 +360,12 @@
             </div>
             <div class="col-5">
               <div class="form-group">
-                <label for="ApellidoRes">Apellidos del responsable:</label>
+                <label for="ApellidoRes"><i class="campo-req">*</i> Apellidos del responsable:</label>
                 <input type="text" formControlName="ApellidoRes" class="form-control" />
                 <div
                   *ngIf="responsableForm.controls['ApellidoRes'].invalid && (responsableForm.controls['ApellidoRes'].dirty || responsableForm.controls['ApellidoRes'].touched)">
                   <div class="text-danger" *ngIf="responsableForm.controls['ApellidoRes'].errors.required">
-                    Este campo es obligatorio.
+                    <small>Este campo es obligatorio.</small>
                   </div>
                 </div>
               </div>
@@ -373,20 +374,20 @@
           <div class="row">
             <div class="col-5">
               <div class="form-group">
-                <label for="telefono">Teléfono del responsable:</label>
+                <label for="telefono"><i class="campo-req">*</i> Teléfono del responsable:</label>
                 <input type="text"  formControlName="telefono" class="form-control" minlength="9"
                   maxlength="9" />
                 <div
                   *ngIf="responsableForm.controls['telefono'].invalid && (responsableForm.controls['telefono'].dirty || responsableForm.controls['telefono'].touched)">
                   <div class="text-danger" *ngIf="responsableForm.controls['telefono'].errors.required">
-                    Este campo es obligatorio.
+                    <small>Este campo es obligatorio.</small>
                   </div>
                   <div class="text-danger"
                     *ngIf="responsableForm.controls['telefono'].errors.minlength ||responsableForm.controls['telefono'].errors.maxlength">
-                    La longitud del campo es 9.
+                    <small>La longitud del campo es 9.</small>
                   </div>
                   <div class="text-danger" *ngIf="responsableForm.controls['telefono'].errors.pattern">
-                    Ingrese un valor válido.
+                    <small>Ingrese un valor válido.</small>
                   </div>
                 </div>
               </div>
@@ -398,10 +399,10 @@
                 <div
                   *ngIf="responsableForm.controls['correo'].errors && (responsableForm.controls['correo'].dirty || responsableForm.controls['correo'].touched)">
                   <div class="text-danger" *ngIf="responsableForm.controls['correo'].errors.required">
-                    Este campo es obligatorio.
+                    <small>Este campo es obligatorio.</small>
                   </div>
                   <div class="text-danger" *ngIf="responsableForm.controls['correo'].errors.email">
-                    Ingrese un valor válido.
+                    <small>Ingrese un valor válido.</small>
                   </div>
                 </div>
               </div>
@@ -410,26 +411,26 @@
           <div class="row">
             <div class="col-5">
               <div class="form-group">
-                <label for="celular">Celular del responsable:</label>
+                <label for="celular"><i class="campo-req">*</i> Celular del responsable:</label>
                 <input type="text" formControlName="celular" class="form-control" minlength="10" maxlength="10"/>
                 <div
                   *ngIf="responsableForm.controls['celular'].invalid && (responsableForm.controls['celular'].dirty || responsableForm.controls['celular'].touched)">
                   <div class="text-danger" *ngIf="responsableForm.controls['celular'].errors.required">
-                    Este campo es obligatorio.
+                    <small>Este campo es obligatorio.</small>
                   </div>
                   <div class="text-danger"
                     *ngIf="responsableForm.controls['celular'].errors.minlength ||responsableForm.controls['celular'].errors.maxlength">
-                    La longitud del campo es 10.
+                    <small>La longitud del campo es 10.</small>
                   </div>
                   <div class="text-danger" *ngIf="responsableForm.controls['celular'].errors.pattern">
-                    Ingrese un valor válido.
+                    <small>Ingrese un valor válido.</small>
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-5">
               <div class="form-group">
-                <label>Parentesco:</label>
+                <label><i class="campo-req">*</i>  Parentesco:</label>
                 <select class="custom-select" formControlName="parentesco" placeholder="Seleccione un parentesco">
                   <option>Hijo/a</option>
                   <option>Esposo/a</option>
@@ -441,7 +442,7 @@
                 <div
                   *ngIf="responsableForm.controls['parentesco'].invalid && (responsableForm.controls['parentesco'].dirty || responsableForm.controls['parentesco'].touched)">
                   <div class="text-danger" *ngIf="responsableForm.controls['parentesco'].errors.required">
-                    Este campo es obligatorio.
+                    <small>Este campo es obligatorio.</small>
                   </div>
                 </div>
 
@@ -451,13 +452,13 @@
           <div class="row">
             <div class="col-5">
               <div class="form-group">
-                <label for="direccion">Dirección del responsable:</label>
+                <label for="direccion"><i class="campo-req">*</i> Dirección del responsable:</label>
                 <input type="text" formControlName="direccion" class="form-control" />
 
                 <div
                   *ngIf="responsableForm.controls['direccion'].invalid && (responsableForm.controls['direccion'].dirty || responsableForm.controls['direccion'].touched)">
                   <div class="text-danger" *ngIf="responsableForm.controls['direccion'].errors.required">
-                    Este campo es obligatorio.
+                    <small>Este campo es obligatorio.</small>
                   </div>
                 </div>
               </div>

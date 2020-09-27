@@ -25,7 +25,7 @@ export class VerMapaComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = JSON.parse(localStorage.getItem('camposanto'));
-    this.cargarPuntosGeoMapa(this.id.camposanto);
+    this.cargarPuntosGeoMapa(this.id['camposanto']);
   }
   
   async cargarPuntosGeoMapa(id){

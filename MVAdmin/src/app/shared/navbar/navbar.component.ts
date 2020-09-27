@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   nameUsuario: string = 'Administrador';
-  nombreApellido: string = 'Administrador'
+  tipoUsuario: string = 'Administrador'
   id: any;
   isCollapsed = false;
   loggeduser = false;
@@ -36,6 +36,16 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.id = JSON.stringify(localStorage.getItem('id'));
     //this.getUser();
+    let tipo = localStorage.getItem('tipo_user');
+    if(tipo == 'ha'){
+      this.tipoUsuario = 'Hyper Administrador';
+    }
+    else if(tipo == 'su'){
+      this.tipoUsuario = 'Super Administrador'
+    }
+    else if(tipo == 'ad'){
+      this.tipoUsuario = 'Administrador'
+    }
     this.getStatus();
     this.nameUsuario = localStorage.getItem('username');
     console.log(this.loggeduser)

@@ -12,7 +12,7 @@
       <h1>Registro de administrador</h1>
     </div>
   </div>
-
+  <br>
   <div class="container-fluid">
     
     <div class="row">
@@ -21,11 +21,12 @@
           <div class="row">
             <div class="col-5">
                 <div class="form-group">
-                  <label for="usuario"> Nombre de Usuario</label>
-                  <input id="usuario" type="text"  class="form-control" formControlName="usuario"
-                   required [ngClass]="{ 'is-invalid': submitted && usuario.errors }"/>
+                  <label for="usuario"><i class="campo-req">*</i> Nombre de Usuario</label>
+                  <input id="usuario" type="text"  class="form-control form-control-sm" formControlName="usuario"
+                   required [ngClass]="{ 'is-invalid': submitted && usuario.errors }" (input)="match_username()"/>
                   <div *ngIf=" usuario.invalid && (usuario.dirty || usuario.touched)" class="">
-                    <div *ngIf="usuario.errors.required " class="text-danger">Ingresar un nombre de usuario</div>
+                    <div *ngIf="usuario.errors.required " class="text-danger"><small>Ingresar un nombre de usuario</small></div>
+                    <div *ngIf="usuario.errors.usernameMatch" class="text-danger"><small> Nombre de usuario ya registrado</small></div>
                   </div>
                 </div>
     
@@ -33,12 +34,13 @@
 
             <div class="col-5">
                 <div class="form-group">
-                  <label for="correo"> Correo</label>
-                  <input id="correo" type="text" formControlName="correo" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.correo.errors }" required/>
+                  <label for="correo"><i class="campo-req">*</i> Correo</label>
+                  <input id="correo" type="text" formControlName="correo" class="form-control form-control-sm"
+                    [ngClass]="{ 'is-invalid': submitted && f.correo.errors }" required (input)="match_email()"/>
                   <div *ngIf=" correo.invalid && (correo.dirty || correo.touched) " class="">
-                    <div *ngIf="correo.errors.required" class="text-danger">Ingresar un correo electrónico</div>
-                    <div *ngIf="correo.errors.email" class="text-danger">Ingresar un correo electrónico válido</div> 
+                    <div *ngIf="correo.errors.required" class="text-danger"><small>Ingresar un correo electrónico</small></div>
+                    <div *ngIf="correo.errors.email" class="text-danger"><small>Ingresar un correo electrónico válido</small></div>
+                    <div *ngIf="correo.errors.correoMatch" class="text-danger"> <small>Este correo ya ha sido registrado</small></div> 
                   </div>
                 </div>
     
@@ -46,34 +48,34 @@
 
             <div class="col-5">
               <div class="form-group">
-                <label for="firstName">Nombres</label>
-                <input id="firstName" type="text" formControlName="firstName" class="form-control"
+                <label for="firstName"><i class="campo-req">*</i> Nombres</label>
+                <input id="firstName" type="text" formControlName="firstName" class="form-control form-control-sm"
                   [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" required/>
                 <div *ngIf=" firstName.invalid && (firstName.dirty || firstName.touched)" >
-                  <div *ngIf="firstName.errors.required" class="text-danger">Ingresar nombres</div>
+                  <div *ngIf="firstName.errors.required" class="text-danger"><small>Ingresar nombres</small></div>
                 </div>
               </div>
   
             </div>
             <div class="col-5"> 
               <div class="form-group">
-                <label for="lastName">Apellidos</label>
-                <input id="lastName" type="text" formControlName="lastName" class="form-control"
+                <label for="lastName"><i class="campo-req">*</i> Apellidos</label>
+                <input id="lastName" type="text" formControlName="lastName" class="form-control form-control-sm"
                   [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
                 <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" >
-                  <div *ngIf="lastName.errors.required" class="text-danger">Ingresar apellidos</div>
+                  <div *ngIf="lastName.errors.required" class="text-danger"><small>Ingresar apellidos</small></div>
                 </div>
               </div>
             </div>
 
             <div class="col-5"> 
                 <div class="form-group">
-                  <label for="contrasena">Contraseña</label>
-                  <input id="contrasena" type="password" formControlName="contrasena" class="form-control"
+                  <label for="contrasena"><i class="campo-req">*</i> Contraseña</label>
+                  <input id="contrasena" type="password" formControlName="contrasena" class="form-control form-control-sm"
                     [ngClass]="{ 'is-invalid': submitted && f.contrasena.errors }" />
                   <div *ngIf="contrasena.invalid && (contrasena.dirty || contrasena.touched)" >
-                    <div *ngIf="contrasena.errors.required" class="text-danger">Ingresar Contraseña</div>
-                    <div *ngIf="contrasena.errors.minlength" class="text-danger">La contrasena debe tener minimo 6 carácteres </div>
+                    <div *ngIf="contrasena.errors.required" class="text-danger"><small>Ingresar Contraseña</small></div>
+                    <div *ngIf="contrasena.errors.minlength" class="text-danger"><small>La contrasena debe tener minimo 6 carácteres</small> </div>
 
                   </div>
                 </div>
@@ -81,31 +83,31 @@
 
                 <div class="col-5"> 
                     <div class="form-group">
-                    <label for="repetirContrasena"> Repetir Contraseña</label>
-                    <input id="repetirContrasena" type="password" formControlName="repetirContrasena" class="form-control"
+                    <label for="repetirContrasena"><i class="campo-req">*</i> Repetir Contraseña</label>
+                    <input id="repetirContrasena" type="password" formControlName="repetirContrasena" class="form-control form-control-sm"
                         [ngClass]="{ 'is-invalid': submitted && f.repetirContrasena.errors }" />
                     <div *ngIf="repetirContrasena.invalid && (repetirContrasena.dirty || repetirContrasena.touched)">
-                        <div *ngIf="repetirContrasena.errors.required" class="text-danger">Repetir la Contraseña</div>
-                        <div *ngIf="repetirContrasena.errors.mustMatch" class="text-danger">Las contraseñas deben coincidir </div>
+                        <div *ngIf="repetirContrasena.errors.required" class="text-danger"><small>Repetir la Contraseña</small></div>
+                        <div *ngIf="repetirContrasena.errors.mustMatch" class="text-danger"><small>Las contraseñas deben coincidir</small></div>
                     </div>
                     </div>
                 </div>
 
                 <div class="col-5"> 
                     <div class="form-group">
-                      <label for="telefono"> Teléfono </label>
-                      <input id="telefono" type="text" formControlName="telefono" class="form-control" minlength="7" maxlength="10" />
+                      <label for="telefono"><i class="campo-req">*</i> Teléfono </label>
+                      <input id="telefono" type="text" formControlName="telefono" class="form-control form-control-sm" minlength="7" maxlength="10" />
                       <div
                         *ngIf="adminForm.controls['telefono'].invalid && (adminForm.controls['telefono'].dirty || adminForm.controls['telefono'].touched)">
                         <div class="text-danger" *ngIf="adminForm.controls['telefono'].errors.required">
-                          Este campo es obligatorio.
+                          <small>Este campo es obligatorio.</small>
                         </div>
                         <div class="text-danger"
                           *ngIf="adminForm.controls['telefono'].errors.minlength ||adminForm.controls['telefono'].errors.maxlength">
-                          La longitud del campo debe ser de 7 o 10.
+                          <small>La longitud del campo debe ser de 7 o 10.</small>
                         </div>
                         <div class="text-danger" *ngIf="adminForm.controls['telefono'].errors.pattern">
-                          Ingrese un valor válido.
+                          <small>Ingrese un valor válido.</small>
                         </div>
                       </div>
                     </div>
@@ -113,7 +115,7 @@
                 
                 <div class="col-5">
                     <div class="form-group">
-                      <label>Tipo de Administrador:</label>
+                      <label><i class="campo-req">*</i> Tipo de Administrador:</label>
                       <div class="row">
                         <div class="col-6">
                           <input  id="superadmin" type="radio" value="su"  formControlName="tipoAdmin" required>
@@ -125,41 +127,16 @@
                        
                       </div>
                       <div *ngIf="submitted && tipoAdmin.invalid" class="">
-                        <div  class="text-danger">Elegir un tipo</div>
+                        <div  class="text-danger"><small>Elegir un tipo</small></div>
                       </div>
                     </div>
                   </div>
-          </div>
-          <div class="row">
-            <div class="col-5">
-              <div class="form-group">
-                <label>Cementerio:</label>
-                <select id="cementerio" class="custom-select" formControlName="cementerio" 
-                  [ngClass]="{ 'is-invalid': submitted && f.cementerio.errors }" required>
-                  <option [ngValue]="null">Selecciona un cementerio</option>
-                  <option value="1">Camposanto La aurora</option>
-                  <option value="4">Camposanto Pascuales</option>
-                  <option value="5">Camposanto Guayaquil</option>
-                  <option value="6">Camposanto Daule</option>
-                  <option value="15">Panteon Metropolitano</option>
-                  <option value="16">Parque la paz Riobamba</option>
-
-                  <option *ngFor="let cementerioif of cementerios; let i = index" [value]="cementerioif.nombre">{{cementerioif.nombre}}
-                  </option>
-                </select>
-                <div *ngIf="submitted && (cementerio.invalid )" class="">
-                  <div class="text-danger">Seleccione una opción</div>
-                </div>
-              </div>
-  
-            </div>
-           
           </div>
           <div class="row mt-3">
             <div class="col-5">
                 <div class="form-group">
                     <mat-slide-toggle id="permisoToggle" formControlName="permisoToggle" class="font-weight-bold" [checked]="permisoPaginas" 
-                     labelPosition="before"  ng-model="pepe" (change)="onChange()">  Permiso de Páginas </mat-slide-toggle> 
+                     labelPosition="before"  ng-model="pepe" (change)="onChange()"> Asignar Permisos </mat-slide-toggle> 
                 </div>
             </div>
           </div>
@@ -168,40 +145,14 @@
             <div class="col-12">
               <div class="form-group">
                 <div class="row">
-                  <div class="col-4 mt-2">
-                    <input ng-disabled="pepe" type="checkbox" value="crearAdmin" name="crearAdmin" formControlName="crearAdmin" [attr.disabled]="disabled ? '' : null" >
-                    Crear Administrador
-                  </div>
-                  <div class="col-4 mt-2">
-                    <input type="checkbox" value="subirHomenaje" name="subirHomenaje" formControlName="subirHomenaje" [attr.disabled]="disabled ? '' : null"> Subir Homenajes Pagados
-                  </div>
-                  <div class="col-4 mt-2">
-                    <input type="checkbox" value="crearTarifasHomenaje" name="crearTarifasHomenaje" formControlName="crearTarifasHomenaje" [attr.disabled]="disabled ? '' : null">
-                    Crear Tarifas de Homenajes
-                  </div>
-                  <div class="col-4 mt-2">
-                    <input type="checkbox" value="registrarDifunto" name="registrarDifunto" formControlName="registrarDifunto" [attr.disabled]="disabled ? '' : null">
-                    Registrar Datos del Difunto
-                  </div>
-                  <div class="col-4 mt-2">
-                    <input type="checkbox" value="eliminarHomenajes" name="eliminarHomenajes" formControlName="eliminarHomenajes" [attr.disabled]="disabled ? '' : null">
-                    Eliminar o Bloquear Homenajes
-                  </div>
-                  <div class="col-4 mt-2">
-                    <input type="checkbox" value="editarRolesUsuarios" name="editarRolesUsuarios" formControlName="editarRolesUsuarios" [attr.disabled]="disabled ? '' : null">
-                    Editar Roles de Usuarios
-                  </div>
-                  <div class="col-4 mt-2">
-                    <input type="checkbox" value="mostrarTipsRecyNot" name="mostrarTipsRecyNot" formControlName="mostrarTipsRecyNot" [attr.disabled]="disabled ? '' : null">
-                    Mostrar Tips, Recomendaciones y Notifiaciones
+                  <div class="col-4 mt-2" *ngFor="let permiso of lista_permisos; let i = index">
+                    <input type="checkbox" [value]="permiso.id_permiso" name="permisos_Admin" [attr.disabled]="disabled ? '' : null" >
+                    {{permiso.nombre}}
                   </div>
                 </div>
-                
               </div>
             </div>
           </div>
-  
-          
           <div class="form-group mt-10">
             <button class="btn btn-primary" type="submit" [disabled]="!adminForm.valid">Guardar registro</button>
           </div>

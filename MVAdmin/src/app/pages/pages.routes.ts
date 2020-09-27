@@ -10,7 +10,8 @@ import { RegistroDifuntoComponent } from './registro-difunto/registro-difunto.co
 import { DifuntosPanelComponent } from './difuntos-panel/difuntos-panel.component';
 import { CrearAdminComponent } from './crear-admin/crear-admin.component';
 import { AuthGuard } from '../guards/auth/auth.guard';
-
+import { PerfilCementerioGuard } from '../guards/perfil-cementerio/perfil-cementerio.guard'
+import { CrearAdminGuard } from '../guards/crear-admin/crear-admin.guard';
 
 
 // Guards
@@ -19,7 +20,8 @@ import { AuthGuard } from '../guards/auth/auth.guard';
 
 const pagesRoutes: Routes = [
     {
-        path: 'perfil/:id', component: PerfilCementerioComponent, data: { titulo: 'Perfil' }
+        path: 'perfil/:id', component: PerfilCementerioComponent, data: { titulo: 'Perfil' },
+        canActivate: [PerfilCementerioGuard]
     },
     {
         path: 'configuracion', component: PerfilConfiguracionComponent, data: { titulo: 'Configuración Perfil' }
@@ -37,7 +39,8 @@ const pagesRoutes: Routes = [
         path: 'difuntos', component: DifuntosPanelComponent, data: { titulo: 'Difuntos' }
     },
     {
-        path: 'create', component: CrearAdminComponent, data: { titulo: 'Crear Administrador' }
+        path: 'create', component: CrearAdminComponent, data: { titulo: 'Crear Administrador' },
+        canActivate: [CrearAdminGuard]
     },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: 'dashboard' , component:DashboardComponent, data:{ titulo:' DashBoard '},

@@ -23,7 +23,7 @@ export class UsuarioService {
 
   constructor(
     public http: HttpClient,
-    public router: Router
+    public router: Router,
   ) {
     this.loadStorage();
     this.httpOptions = {
@@ -33,7 +33,7 @@ export class UsuarioService {
   }
 
   public loginUser(user) {
-    localStorage.setItem('username', user['email']);
+    localStorage.setItem('username', user.username);
     let url = URL_SERVICIOS.login;
     return this.http.post(url, JSON.stringify(user), this.httpOptions)
       .pipe(map((resp: any) => {
@@ -59,8 +59,14 @@ export class UsuarioService {
     if (localStorage.getItem('token') && localStorage.getItem('refresh')) {
       this.token = localStorage.getItem('token');
       this.user = JSON.parse(localStorage.getItem('user'));
-      this.refreshToken()
-    } else {
+      let expires_in = JSON.parse(localStorage.getItem('id'))['exp'];
+      let tiempo_token_exp = new Date(expires_in*1000).getTime() -  new Date().getTime();
+      // console.log(tiempo_token_exp)
+      if(tiempo_token_exp <= 300000){
+        this.refreshToken();
+      }
+    }
+    else {
       this.token = '';
       this.user = null;
     }
@@ -160,7 +166,12 @@ export class UsuarioService {
   }
 
   isAuthenticated(){
-    console.log(this.token_expires)
     return this.getToken();
   };
+
+  getUsersAll(){
+    let url = URL_SERVICIOS.obtener_usuarios;
+    return this.http.get(url);
+  }
+
 }

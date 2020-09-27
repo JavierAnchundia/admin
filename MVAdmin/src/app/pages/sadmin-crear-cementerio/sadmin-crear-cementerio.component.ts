@@ -72,7 +72,7 @@ export class SadminCrearCementerioComponent implements OnInit {
       direccion: [null, Validators.compose([Validators.required])],
       telefono: [null, Validators.compose([Validators.required,Validators.minLength(7),Validators.maxLength(10),Validators.pattern(this.numericNumberReg)])],
       email: [null, Validators.compose([Validators.required, Validators.email])],
-      logo: [null,],
+      logo: [null, Validators.compose([Validators.required])],
       redes: this.fb.array([this.createRedSocial()])
     });
     this.redList = this.form_cementerio.get('redes') as FormArray;
@@ -138,7 +138,7 @@ export class SadminCrearCementerioComponent implements OnInit {
         this.id_camposanto = data['id_camposanto']
         this.postCoordenadas();
         let lenCadena = String(this.redList.value[0].redSocial);
-        if (this.redList.length > 0 || lenCadena.length > 0) {
+        if (this.redList.length >= 0 || lenCadena.length >= 0) {
           this.postRedesSociales();
         }
         Swal.close();

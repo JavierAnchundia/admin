@@ -1,3 +1,7 @@
 agm-map {
     height: 380px;
 }
+
+.campo-req{
+    color: red;
+}
