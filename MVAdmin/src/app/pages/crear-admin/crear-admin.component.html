@@ -23,7 +23,7 @@
                 <div class="form-group">
                   <label for="usuario"><i class="campo-req">*</i> Nombre de Usuario</label>
                   <input id="usuario" type="text"  class="form-control form-control-sm" formControlName="usuario"
-                   required [ngClass]="{ 'is-invalid': submitted && usuario.errors }" (input)="match_username()"/>
+                   required [ngClass]="{ 'is-invalid': submitted && usuario.errors }"/>
                   <div *ngIf=" usuario.invalid && (usuario.dirty || usuario.touched)" class="">
                     <div *ngIf="usuario.errors.required " class="text-danger"><small>Ingresar un nombre de usuario</small></div>
                     <div *ngIf="usuario.errors.usernameMatch" class="text-danger"><small> Nombre de usuario ya registrado</small></div>
@@ -36,7 +36,7 @@
                 <div class="form-group">
                   <label for="correo"><i class="campo-req">*</i> Correo</label>
                   <input id="correo" type="text" formControlName="correo" class="form-control form-control-sm"
-                    [ngClass]="{ 'is-invalid': submitted && f.correo.errors }" required (input)="match_email()"/>
+                    [ngClass]="{ 'is-invalid': submitted && f.correo.errors }" required/>
                   <div *ngIf=" correo.invalid && (correo.dirty || correo.touched) " class="">
                     <div *ngIf="correo.errors.required" class="text-danger"><small>Ingresar un correo electrónico</small></div>
                     <div *ngIf="correo.errors.email" class="text-danger"><small>Ingresar un correo electrónico válido</small></div>

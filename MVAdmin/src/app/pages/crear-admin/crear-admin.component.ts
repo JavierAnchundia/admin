@@ -87,10 +87,13 @@ export class CrearAdminComponent implements OnInit {
         permisoToggle: [null],
       },
       {
-        validator: this.mustMatchService.MustMatch(
+        validator:[ this.mustMatchService.MustMatch(
           'contrasena',
           'repetirContrasena'
         ),
+          this.match_username(),
+          this.match_email()
+        ],
       }
     );
   }
@@ -116,26 +119,38 @@ export class CrearAdminComponent implements OnInit {
   }
 
   match_username() {
-    let username = this.adminForm.value.usuario;
-    username = String(username);
-    let list_username = this.usernameLista;
-    const usernameControl = this.adminForm.controls['usuario'];
-    if (list_username.includes(username)) {
-      usernameControl.setErrors({ usernameMatch: true });
-    } else {
-      usernameControl.setErrors(null);
+    // let username = this.adminForm.value.usuario;
+    // username = String(username);
+    return (formGroup: FormGroup) =>{
+      let list_username = this.usernameLista;
+      const usernameControl = formGroup.controls['usuario'];
+      if (usernameControl.errors && ! usernameControl.errors.match_username) {
+        // return if another validator has already found an error on the matchingControl
+        return;
+      }
+      if (list_username.includes(usernameControl.value)) {
+        usernameControl.setErrors({ usernameMatch: true });
+      } else {
+        usernameControl.setErrors(null);
+      }
     }
   }
 
   match_email() {
-    let correo_u = this.adminForm.value.correo;
-    correo_u = String(correo_u);
-    let list_correo = this.emailLista;
-    const correoControl = this.adminForm.controls['correo'];
-    if (list_correo.includes(correo_u)) {
-      correoControl.setErrors({ correoMatch: true });
-    } else {
-      correoControl.setErrors(null);
+    // let correo_u = this.adminForm.value.correo;
+    // correo_u = String(correo_u);
+    return (formGroup: FormGroup) =>{
+      let list_correo = this.emailLista;
+      const correoControl = formGroup.controls['correo'];
+      if (correoControl.errors && ! correoControl.errors.match_email) {
+        // return if another validator has already found an error on the matchingControl
+        return;
+      }
+      if (list_correo.includes(correoControl.value)) {
+        correoControl.setErrors({ correoMatch: true });
+      } else {
+        correoControl.setErrors(null);
+      }
     }
   }
 
