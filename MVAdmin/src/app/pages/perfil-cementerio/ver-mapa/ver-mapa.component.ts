@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { GeolocalizacionService} from '../../../services/geolocalizacion/geolocalizacion.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-ver-mapa',
@@ -21,7 +22,7 @@ export class VerMapaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.id = JSON.parse(localStorage.getItem('camposanto'));
+     this.id = JSON.parse(localStorage.getItem('camposanto'));
     this.cargarPuntosGeoMapa(this.id.camposanto);
   }
   
