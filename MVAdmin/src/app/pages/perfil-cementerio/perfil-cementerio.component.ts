@@ -10,7 +10,8 @@ import { Red_social } from '../../models/red_social.model';
 import Swal from 'sweetalert2'
 import { map,catchError } from 'rxjs/operators';
 import { of,throwError } from 'rxjs';
-
+import { UsuarioService } from 'src/app/services/usuario/usuario.service';
+import URL_SERVICIOS from 'src/app/config/config';
 
 
 @Component({
@@ -21,6 +22,7 @@ import { of,throwError } from 'rxjs';
 export class PerfilCementerioComponent implements OnInit {
   @ViewChild('closeModalEditar') closeModalEditar;
   
+  url_backend: String = URL_SERVICIOS.url_backend;
   faMapMarker = faMapMarker;
   faMapMarkedAlt = faMapMarkedAlt;
    cementerio =
@@ -33,8 +35,24 @@ export class PerfilCementerioComponent implements OnInit {
     "web": "https://www.jardinesdeesperanza.com.ec/quienes-somos.php",
     "ruc": "0999999999999"
   } 
-  camposanto: Camposanto;
-  empresa: Empresa;
+  camposanto: Camposanto = {
+    id_camposanto: 0,
+    nombre: "",
+    direccion: "",
+    telefono: "",
+    estado: false,
+    logo: "",
+    id_empresa: 0
+  };
+  empresa: Empresa = {
+    id_empresa: 0,
+    nombre: "",
+    correo: "",
+    ruc: "",
+    web: "",
+    estado: false,
+    direccion_matriz: ""
+  }
   data:any;
   redes: Red_social[];
   public form_cementerio: FormGroup;
@@ -44,13 +62,24 @@ export class PerfilCementerioComponent implements OnInit {
     public router: Router, 
     public route: ActivatedRoute,
     private fb: FormBuilder,
+    private _usuarioService : UsuarioService
     )
-    {
-      
-    }
+  {
+    let ruta = String(this.router.url).split('/').slice(3,);
+    let username = localStorage.getItem('username');
+    this._usuarioService.getDatosUser(username).toPromise().then(
+      (data) => {
+        if(data['tipo_usuario'] != 'ha'){
+          if(data['id_camposanto'] != ruta[0]){
+            this.router.navigate(['/404']);
+          }
+        }
+      })
+  }
   
   
   ngOnInit(): void {
+    this._usuarioService.loadStorage();
     this.data = this.route.snapshot.paramMap.get('id');
     this.cargarCamposanto();
     this.cargarRedes();
@@ -65,14 +94,20 @@ export class PerfilCementerioComponent implements OnInit {
       instagram: [, ],
       youtube: [, ]
     });
-    
-    
   }
 
   async cargarCamposanto() {
     await this._servicio.getCamposantoByID(this.data)
       .subscribe((resp: any) => {
-        this.camposanto = resp;
+        this.camposanto = {
+          id_camposanto: resp["id_camposanto"],
+          nombre: resp["nombre"],
+          direccion: resp["direccion"],
+          telefono: resp["telefono"],
+          estado: resp["estado"],
+          logo: resp["logo"],
+          id_empresa: resp["id_empresa"]
+        };
          this.cargarEmpresa(resp.id_empresa);
 
       })
@@ -80,8 +115,15 @@ export class PerfilCementerioComponent implements OnInit {
 
   async cargarEmpresa(id){
     await this._servicio.getEmpresa(id).subscribe((resp: any) => {
-      this.empresa = resp;
-      console.log();
+      this.empresa = {
+          id_empresa: resp["id_empresa"],
+          nombre: resp["nombre"],
+          correo: resp["correo"],
+          ruc: resp["ruc"],
+          web: resp["web"],
+          estado: resp["estado"],
+          direccion_matriz: resp["direccion_matriz"]
+      }
       localStorage.setItem('camposanto', JSON.stringify({camposanto: this.camposanto['id_camposanto'], empresa: this.empresa['id_empresa']}));
       this.setModalCamposanto();
     })

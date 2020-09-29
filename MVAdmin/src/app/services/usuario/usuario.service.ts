@@ -5,15 +5,16 @@ import URL_SERVICIOS from 'src/app/config/config';
 import { Router } from '@angular/router';
 import { Usuario } from '../../models/usuario.model';
 import { map } from "rxjs/operators";
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
-
   private httpOptions: any;
-
+  
   public token: string;
+  public refresh: string;
   public user: string;
   public token_expires: Date;
   public username: string;
@@ -22,16 +23,17 @@ export class UsuarioService {
 
   constructor(
     public http: HttpClient,
-    public router: Router
+    public router: Router,
   ) {
     this.loadStorage();
     this.httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
+    
   }
 
   public loginUser(user) {
-    localStorage.setItem('username', user['email']);
+    localStorage.setItem('username', user.username);
     let url = URL_SERVICIOS.login;
     return this.http.post(url, JSON.stringify(user), this.httpOptions)
       .pipe(map((resp: any) => {
@@ -39,8 +41,10 @@ export class UsuarioService {
         this.isLoggedin = true;
 
         this.token = JSON.stringify(resp['access']);
+        this.refresh = JSON.stringify(resp['refresh']).slice(1,-1);
         this.updateData(resp['access'])
         localStorage.setItem('token', this.token);
+        localStorage.setItem('refresh', this.refresh);
         localStorage.setItem('id', JSON.stringify(this.tokenGestion(resp['access'])));
         localStorage.setItem('user', JSON.stringify(this.tokenGestion(resp['access'])));
         return true
@@ -52,10 +56,17 @@ export class UsuarioService {
   }
 
   loadStorage() {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem('token') && localStorage.getItem('refresh')) {
       this.token = localStorage.getItem('token');
       this.user = JSON.parse(localStorage.getItem('user'));
-    } else {
+      let expires_in = JSON.parse(localStorage.getItem('id'))['exp'];
+      let tiempo_token_exp = new Date(expires_in*1000).getTime() -  new Date().getTime();
+      // console.log(tiempo_token_exp)
+      if(tiempo_token_exp <= 300000){
+        this.refreshToken();
+      }
+    }
+    else {
       this.token = '';
       this.user = null;
     }
@@ -73,9 +84,12 @@ export class UsuarioService {
 
   public refreshToken() {
     let url = URL_SERVICIOS.refreshlogin;
-    this.http.post(url, JSON.stringify({ token: this.token }), this.httpOptions).subscribe(
+    this.http.post(url, { "refresh" : localStorage.getItem('refresh')}, this.httpOptions).subscribe(
       data => {
-        this.updateData(data['token']);
+        localStorage.setItem('token', data['access']);
+        localStorage.setItem('id', JSON.stringify(this.tokenGestion(data['access'])));
+        localStorage.setItem('user', JSON.stringify(this.tokenGestion(data['access'])));
+        this.updateData(data['access']);
       },
       err => {
         this.errors = err['error'];
@@ -92,8 +106,9 @@ export class UsuarioService {
     localStorage.removeItem('user');
     localStorage.removeItem('username');
     localStorage.removeItem('id');
+    localStorage.removeItem('tipo_user'); 
+    localStorage.removeItem('refresh'); 
     this.isLoggedin = true;
-
     this.router.navigate(['/login'])
   }
 
@@ -148,6 +163,15 @@ export class UsuarioService {
       })
     }
     return this.http.get(url, httpOptions);
+  }
+
+  isAuthenticated(){
+    return this.getToken();
+  };
+
+  getUsersAll(){
+    let url = URL_SERVICIOS.obtener_usuarios;
+    return this.http.get(url);
   }
 
 }

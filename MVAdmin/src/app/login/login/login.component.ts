@@ -5,6 +5,9 @@ import { UsuarioService } from '../../services/usuario/usuario.service';
 import Swal from 'sweetalert2'
 import { throwError } from 'rxjs';
 import { Usuario } from '../../models/usuario.model'
+import { Camposanto } from 'src/app/models/camposanto.model';
+import { Empresa } from 'src/app/models/empresa.model';
+import { CamposantoService } from 'src/app/services/servicios.index';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,19 +17,24 @@ export class LoginComponent implements OnInit {
   public form_login: FormGroup;
   private user: any;
   private usuarioLog: any
+  camposanto: Camposanto;
+  empresa: Empresa;
   constructor(
     private formb: FormBuilder,
     public _usuarioService: UsuarioService,
     public router: Router,
-  ) { }
+    public _servicio: CamposantoService, 
+  ) {
+    this.validarSesion();
+  }
 
   ngOnInit(): void {
     this.form_login = this.formb.group({
-      email: [null, Validators.compose([Validators.required, Validators.email])],
+      username: [null, Validators.compose([Validators.required])],
       contrasena: [null, Validators.compose([Validators.required])]
     });
     this.user = {
-      email: ' ',
+      username: ' ',
       password: ' '
     };
   }
@@ -36,30 +44,17 @@ export class LoginComponent implements OnInit {
       
       return; 
     }
-    this.user.email = form.value.email;
+    this.user.username = form.value.username;
     this.user.password = form.value.contrasena;
 
-    await this._usuarioService.loginUser(this.user).subscribe( 
+    await this._usuarioService.loginUser(this.user).toPromise().then( 
       resp=>{
         Swal.close();
+        let username = localStorage.getItem('username');
+        console.log(username);
+        this.usuarioSesion(username);
+        console.log('token creado desde componente login', resp)
         
-        console.log('token creado desde componente login')
-        this._usuarioService.getDatosUser(this.user.email).subscribe(
-          (data) => {
-            if(data['tipo_usuario'] != 'uf'){
-              this.router.navigate(['/inicio/dashboard']);
-            }
-            else{
-              localStorage.removeItem('token'); 
-              localStorage.removeItem('user');
-              localStorage.removeItem('username');
-              localStorage.removeItem('id');
-              Swal.close();
-              Swal.fire('No está autorizado.','No tiene permitido acceder a está página.')
-              this.form_login.reset();
-            }
-          }
-        );
       },
       error => {
         console.error('Error:' + error);
@@ -82,4 +77,39 @@ export class LoginComponent implements OnInit {
     Swal.showLoading();
     this.loginUser(this.form_login);
   }
+
+  async usuarioSesion(username){
+    await this._usuarioService.getDatosUser(username).toPromise().then(
+      (data) => {
+        localStorage.setItem('tipo_user', data['tipo_usuario']);
+        console.log(data)
+        console.log(localStorage.getItem('tipo_user'))
+        // console.log('///',data['id_camposanto'])
+        // this.cargarCamposanto(data['id_camposanto']);
+        if(data['tipo_usuario'] == 'ha'){
+          this.router.navigate(['/inicio/dashboard']);
+        }
+        else if(data['tipo_usuario'] == 'su'){
+          this.router.navigate(['/inicio/perfil/'+data['id_camposanto']]);
+        }
+        else{
+          localStorage.removeItem('tipo_user'); 
+          localStorage.removeItem('token'); 
+          localStorage.removeItem('user');
+          localStorage.removeItem('username');
+          localStorage.removeItem('id');
+          Swal.close();
+          Swal.fire('No está autorizado.','No tiene permitido acceder a está página.')
+          this.form_login.reset();
+        }
+      }
+    );
+  }
+  validarSesion(){
+    if(this._usuarioService.isAuthenticated()){
+      let username = localStorage.getItem('username');
+        this.usuarioSesion(username);
+    }
+  }
+
 }

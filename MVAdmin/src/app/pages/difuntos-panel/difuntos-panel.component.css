@@ -35,3 +35,7 @@ th.mat-header-cell {
     color:rgba(39, 193, 231, 0.87);
     background-color: none;
 }
+
+.punteroHand{
+    cursor:pointer; cursor: hand
+}

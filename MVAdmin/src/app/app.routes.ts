@@ -5,6 +5,7 @@ import { PagesComponent } from './pages/pages.component';
 import { LoginComponent } from './login/login/login.component';
  import{ } from './pages/pages.module'
 import { ErrorpageComponent } from './errorpage/errorpage.component';
+import { AuthGuard } from './guards/auth/auth.guard';
 
 const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },

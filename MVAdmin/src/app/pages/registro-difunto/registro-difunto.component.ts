@@ -27,7 +27,6 @@ export class RegistroDifuntoComponent implements OnInit {
   markers: Marker[] = [];
   marker: Marker;
   zoom: Number = 15;
-
   difuntoForm: FormGroup;
   responsableForm: FormGroup;
   id: any;
@@ -41,9 +40,9 @@ export class RegistroDifuntoComponent implements OnInit {
   bdayOption: string;
   bmonthOption: string;
   byearOption: string;
-
-  submitted = false;
   verPuntos = false;
+  submitted = false;
+  //verPuntos = false;
   generoOptions = ["Femenino", "Masculino"]
   monthNames = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
   numericNumberReg= '[0-9]*';
@@ -83,7 +82,7 @@ export class RegistroDifuntoComponent implements OnInit {
     this.responsableForm = new FormGroup({
       NombreRes: new FormControl(null, Validators.required),
       ApellidoRes: new FormControl(null, Validators.required),
-      telefono: new FormControl(null, [Validators.required, Validators.maxLength(9),Validators.minLength(7),Validators.pattern(this.numericNumberReg)]),
+      telefono: new FormControl(null, [Validators.required, Validators.maxLength(9),Validators.minLength(9),Validators.pattern(this.numericNumberReg)]),
       celular: new FormControl(null, [Validators.required, Validators.maxLength(10),Validators.minLength(10),Validators.pattern(this.numericNumberReg)]),
       correo: new FormControl('', [Validators.email]),
       parentesco: new FormControl(null, Validators.required),
@@ -147,8 +146,12 @@ export class RegistroDifuntoComponent implements OnInit {
       if(this.verPuntos) {this.verPuntos= false; return}
       Swal.fire("No ha escogido la ubicación del difunto");
       console.log("antes del elif")
-
-    }
+    }else
+      if(this.difuntoForm.value.yearBirth >= this.difuntoForm.value.yearDeath){
+        this.submitted = false;
+        Swal.fire('No se pudo guardar el registro','Existe un error con las fechas. Intente nuevamente')
+      }
+    
     else {if (this.difuntoForm.valid && this.responsableForm.valid) {
       Swal.showLoading();
       console.log("A punto de entrar a crear Difunto")
@@ -162,6 +165,8 @@ export class RegistroDifuntoComponent implements OnInit {
       }
     }}
   }
+
+ 
 
   crearDifunto(){
     const formData = new FormData();
@@ -228,6 +233,7 @@ export class RegistroDifuntoComponent implements OnInit {
       } 
    } 
   }
+  
   crearResponsable(id){
     
     const formData = new FormData();
@@ -236,16 +242,18 @@ export class RegistroDifuntoComponent implements OnInit {
     formData.append('telefono', this.responsableForm.value.telefono);
     formData.append('celular', this.responsableForm.value.celular);
     formData.append('direccion', this.responsableForm.value.direccion);
-    
+    formData.append('correo', this.responsableForm.value.correo);
+
     if(this.responsableForm.value.parentesco != 'Otro'){
       formData.append('parentezco', this.responsableForm.value.parentesco);
     }else{
       formData.append('parentezco', this.responsableForm.value.otro);
     }
 
-    if(this.responsableForm.value.correo != ''){
+    /* if(this.responsableForm.value.correo != ''){
       formData.append('correo', this.responsableForm.value.correo);
-    }
+    } */
+    console.log(this.responsableForm.value.correo)
     formData.append('id_difunto',id);
     this._difunto.postResponsable(formData).subscribe(
       () => {
@@ -254,7 +262,6 @@ export class RegistroDifuntoComponent implements OnInit {
       },
       error => {
         console.error('Error:' + error);
-        alert("Hubo un error al guardar los datos, intentelo de nuevo");
 
         return throwError(error);
       }

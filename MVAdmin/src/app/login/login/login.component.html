@@ -8,14 +8,12 @@
           <div class="card-body">
             <form [formGroup]="form_login" (submit)="submit()">
               <div class="form-group row">
-                <label for="email_address" class="col-md-4 col-form-label text-md-right">Correo electrónico</label>
+                <label for="username_address" class="col-md-4 col-form-label text-md-right">Nombre de usuario</label>
                 <div class="col-md-6">
-                  <input formControlName="email"  type="text" id="email_address" class="form-control" name="email-address" required autofocus>
+                  <input formControlName="username"  type="text" id="email_address" class="form-control" name="username-address" required autofocus>
                 </div>
-                <span class="text-danger small" *ngIf="form_login.controls['email'].touched && form_login.controls['email'].hasError('required')">
-                  Email es requerido! </span>
-              <span class="text-danger small" *ngIf="form_login.controls['email'].touched && form_login.controls['email'].hasError('email')">
-                  Email no valido! </span>
+                <span class="text-danger small" *ngIf="form_login.controls['username'].touched && form_login.controls['username'].hasError('required')">
+                  Username es requerido! </span>
               </div>
   
   

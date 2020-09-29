@@ -34,7 +34,7 @@
                       form_cementerio.controls['nombre'].touched &&
                       form_cementerio.controls['nombre'].hasError('required')
                     " >
-                    Nombre es requerido!
+                    <small>Nombre es requerido!</small>
                   </span>
                 </div>
               </div>
@@ -53,7 +53,7 @@
                     class="text-danger"
                     *ngIf="form_cementerio.controls['empresa'].touched && form_cementerio.controls['empresa'].hasError('required')"
                   >
-                    Empresa es requerida!
+                    <small>Empresa es requerida!</small>
                   </span>
                 </div>
               </div>
@@ -74,14 +74,14 @@
                   <div 
                   *ngIf="form_cementerio.controls['telefono'].invalid && (form_cementerio.controls['telefono'].dirty || form_cementerio.controls['telefono'].touched)">
                     <span class="text-danger"  *ngIf="form_cementerio.controls['telefono'].errors.required">
-                    Teléfono es requerido!
+                    <small>Teléfono es requerido!</small>
                   </span>
                   <span class="text-danger"
                     *ngIf="form_cementerio.controls['telefono'].errors.minlength ||form_cementerio.controls['telefono'].errors.maxlength">
-                    Solo se aceptan entre 7 y 10 caracteres.
+                    <small>Solo se aceptan entre 7 y 10 caracteres.</small>
                 </span>
                 <span class="text-danger" *ngIf="form_cementerio.controls['telefono'].errors.pattern">
-                  Ingrese un valor válido.
+                  <small> Ingrese un valor válido.</small>
                 </span>
                   </div>
                   
@@ -101,7 +101,7 @@
                       form_cementerio.controls['email'].hasError('required')
                     "
                   >
-                    Email es requerido!
+                    <small>Email es requerido!</small>
                   </span>
                   <span
                     class="text-danger"
@@ -110,7 +110,7 @@
                       form_cementerio.controls['email'].hasError('email')
                     "
                   >
-                    Email no valido!
+                    <small>Email no valido!</small>
                   </span>
                 </div>
               </div>
@@ -145,7 +145,7 @@
                       form_cementerio.controls['logo'].hasError('required')
                     "
                   >
-                    Logo es requerido!
+                    <small>Logo es requerido!</small>
                   </span>
                 </div>
               </div>
@@ -227,7 +227,7 @@
                       form_cementerio.controls['direccion'].hasError('required')
                     "
                   >
-                    Dirección es requerido!
+                    <small>Dirección es requerido!</small>
                   </span>
                 </div>
               </div>
@@ -278,7 +278,6 @@
                     type="submit"
                     class="btn btn-primary"
                     [disabled]="!form_cementerio.valid"
-                    type="submit"
                   >
                     Guardar
                   </button>

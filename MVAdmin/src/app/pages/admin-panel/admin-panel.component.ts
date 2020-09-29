@@ -4,7 +4,8 @@ import { Usuario } from '../../models/usuario.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import {MatDialog} from '@angular/material/dialog';
-
+import { PermisosService } from '../../services/permisos/permisos.service';
+import { Permiso } from '../../models/permiso.model'
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
@@ -13,6 +14,7 @@ import {MatDialog} from '@angular/material/dialog';
 export class AdminPanelComponent implements OnInit,AfterViewInit  {
   id:any;
   lista_admin: any[] = [];
+ 
   public dataSource = new MatTableDataSource<Usuario>();
   public rowID:Usuario[];
   public displayedColumns = ['first_name', 'last_name','username', 'email', 'Detalle','update','delete'];
@@ -24,12 +26,14 @@ export class AdminPanelComponent implements OnInit,AfterViewInit  {
   constructor(
     private _usuario: UsuarioService,
     public dialog: MatDialog,
+    private _permiso: PermisosService,
     ) { }
 
   ngOnInit(): void {
     this.id = this.id = JSON.parse(localStorage.getItem('camposanto'));
     this.cargarAdmin();
   }
+
 
   cargarAdmin(){
     this._usuario.getUsers(this.id.camposanto)
