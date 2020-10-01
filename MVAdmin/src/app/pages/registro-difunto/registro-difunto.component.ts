@@ -11,7 +11,10 @@ import Swal from 'sweetalert2'
 import {map, startWith} from 'rxjs/operators';
 import {catchError } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
-
+import {Difunto} from '../../models/difunto.model'
+import {DifuntoH} from '../../models/difunto_herencia.model'
+import {RenderizareditService} from '../../services/renderizaredit/renderizaredit.service'
+import {Responsable_difunto} from '../../models/responsable_difunto.model'
 @Component({
   selector: 'app-registro-difunto',
   templateUrl: './registro-difunto.component.html',
@@ -42,51 +45,75 @@ export class RegistroDifuntoComponent implements OnInit {
   byearOption: string;
   verPuntos = false;
   submitted = false;
+
+  difunto:DifuntoH = new DifuntoH();
+  fechaNacimientoInfo="";
+  fechaDefuncionInfo='';
+  
+  sector: string;
+  sepultura: string;
+  responsable:Responsable_difunto = new Responsable_difunto();
+
   //verPuntos = false;
   generoOptions = ["Femenino", "Masculino"]
   monthNames = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
   numericNumberReg= '[0-9]*';
+
 
   constructor(
     public _difunto: DifuntoService, 
     public _sector: SectorService, 
     public _sepultura: TiposepulturaService,
     private _servicioGeo : GeolocalizacionService,
-    private router:Router
+    private router:Router,
+    public _editar: RenderizareditService,
   ) { }
 
   ngOnInit(): void {
+    //Aqui se puede revisar el servicios y si aun no se han cargado los datos, entonces ponerle un wait here or something like that
     this.id = JSON.parse(localStorage.getItem('camposanto'));
     console.log(this.id);
     this.cargarSector();
     this.cargarSepultura();
+    
+    console.log("///////////////////")
+    if(this._editar.getMetodoConexion() == "PUT"){
+    console.log(this._editar.getinfoRenderizar())}
+    console.log("///////////////////")
+
+    this.obtenerInfo();
+    console.log(this.difunto.fecha_difuncion)
+    console.log((this.responsable.parentezco))
+    console.log((this.sector))
+    console.log((this.sepultura))
+    console.log(this.lista_sepultura)
 
     this.difuntoForm = new FormGroup({
-      firstName: new FormControl(null, Validators.required),
-      lastName: new FormControl(null, Validators.required),
-      generoDropdown: new FormControl(null, Validators.required),
-      cedula: new FormControl('', [Validators.required, Validators.minLength(9),Validators.maxLength(10),Validators.pattern(this.numericNumberReg)]),
-      birthPlace: new FormControl(null, Validators.required),
-      deathPlace: new FormControl(null, Validators.required),
-      dayBirth: new FormControl(null, Validators.required),
-      monBirth: new FormControl(null, Validators.required),
-      yearBirth: new FormControl(null, Validators.required),
-      dayDeath: new FormControl(null, Validators.required),
-      monDeath: new FormControl(null, Validators.required),
-      yearDeath: new FormControl(null, Validators.required),
-      tipoSepultura: new FormControl(null, Validators.required),
-      sector: new FormControl(null, Validators.required),
-      lapida: new FormControl(null, Validators.required),
+      firstName: new FormControl(this.difunto.nombre, Validators.required),
+      lastName: new FormControl(this.difunto.apellido, Validators.required),
+      generoDropdown: new FormControl(this.difunto.genero, Validators.required),
+      cedula: new FormControl(this.difunto.cedula, [Validators.required, Validators.minLength(9),Validators.maxLength(10),Validators.pattern(this.numericNumberReg)]),
+      birthPlace: new FormControl(this.difunto.lugar_nacimiento, Validators.required),
+      deathPlace: new FormControl(this.difunto.lugar_difuncion, Validators.required),
+      dayBirth: new FormControl(this.conversionFecha(new Date(Date.parse(this.difunto.fecha_nacimiento as unknown as string)).getDate()), Validators.required),
+      monBirth: new FormControl(this.conversionFecha(new Date(Date.parse(this.difunto.fecha_nacimiento as unknown as string)).getMonth()), Validators.required),
+      yearBirth: new FormControl(this.conversionFecha(new Date(Date.parse(this.difunto.fecha_nacimiento as unknown as string)).getFullYear()), Validators.required),
+      dayDeath: new FormControl(this.conversionFecha(new Date(Date.parse(this.difunto.fecha_difuncion as unknown as string)).getDate()), Validators.required),
+      monDeath: new FormControl(this.conversionFecha(new Date(Date.parse(this.difunto.fecha_difuncion as unknown as string)).getMonth()), Validators.required),
+      yearDeath: new FormControl(this.conversionFecha(new Date(Date.parse(this.difunto.fecha_difuncion as unknown as string)).getFullYear()), Validators.required),
+      tipoSepultura: new FormControl("Boveda", Validators.required),
+      sector: new FormControl("Cesped", Validators.required),
+      lapida: new FormControl(this.difunto.no_lapida, Validators.required),
     });
 
     this.responsableForm = new FormGroup({
-      NombreRes: new FormControl(null, Validators.required),
-      ApellidoRes: new FormControl(null, Validators.required),
-      telefono: new FormControl(null, [Validators.required, Validators.maxLength(9),Validators.minLength(9),Validators.pattern(this.numericNumberReg)]),
-      celular: new FormControl(null, [Validators.required, Validators.maxLength(10),Validators.minLength(10),Validators.pattern(this.numericNumberReg)]),
-      correo: new FormControl('', [Validators.email]),
-      parentesco: new FormControl(null, Validators.required),
-      direccion: new FormControl(null, Validators.required),
+      NombreRes: new FormControl(this.responsable.nombre, Validators.required),
+      ApellidoRes: new FormControl(this.responsable.apellido, Validators.required),
+      telefono: new FormControl(this.responsable.telefono, [Validators.required, Validators.maxLength(9),Validators.minLength(9),Validators.pattern(this.numericNumberReg)]),
+      celular: new FormControl(this.responsable.celular, [Validators.required, Validators.maxLength(10),Validators.minLength(10),Validators.pattern(this.numericNumberReg)]),
+      correo: new FormControl(this.responsable.correo, [Validators.email]),
+      parentesco: new FormControl(this.responsable.parentezco, Validators.required),
+      direccion: new FormControl(this.responsable.direccion, Validators.required),
       otro: new FormControl(null)
     })
 
@@ -108,6 +135,10 @@ export class RegistroDifuntoComponent implements OnInit {
       startWith(''),
       map(value => this._filter_fallecimiento(value))
     );
+
+    
+    this._editar.setMetodoConexion("POST");
+    console.log(this.lista_sepultura)
 
   }
 
@@ -135,7 +166,14 @@ export class RegistroDifuntoComponent implements OnInit {
   puntosBoton(){
     this.verPuntos = true;
   }
-
+  conversionFecha(valor: number){
+    let val = valor/10;
+    if(val <1){
+      return "0"+ valor;
+    }
+    else {
+    return valor};
+  } 
   onSubmit() {
     this.submitted = true;
     Swal.close()
@@ -166,7 +204,15 @@ export class RegistroDifuntoComponent implements OnInit {
     }}
   }
 
- 
+  obtenerInfo(){
+    if(this._editar.getMetodoConexion()=='PUT'){
+     this.difunto =this._editar.getinfoRenderizar().difunto;
+     this.sector = this._editar.getinfoRenderizar().sector;
+     this.sepultura = this._editar.getinfoRenderizar().sepultura;
+     this.responsable = this._editar.getinfoRenderizar().responsable;
+     this.fechaDefuncionInfo = this.difunto.fecha_difuncion as unknown as string;
+    }
+  }
 
   crearDifunto(){
     const formData = new FormData();
@@ -281,6 +327,7 @@ export class RegistroDifuntoComponent implements OnInit {
     this._sepultura.getSepultura(this.id.camposanto)
       .subscribe((resp: any) => {
         this.lista_sepultura = resp;
+        console.log(this.lista_sepultura)
       })
   }
 

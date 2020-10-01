@@ -16,6 +16,12 @@ getDifuntos(id) {
   return this.http.get(url);
 }
 
+getDifunto(id_difunto) {
+  let url = URL_SERVICIOS.difunto+id_difunto+'/';
+
+  return this.http.get(url);
+}
+
 postDifunto(difunto: FormData){
   let url = URL_SERVICIOS.difunto_post
   let httpOptions = {

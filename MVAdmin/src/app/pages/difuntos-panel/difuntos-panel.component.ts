@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import { TiposepulturaService } from 'src/app/services/tiposepultura/tiposepultura.service';
 import { SectorService } from 'src/app/services/sector/sector.service';
-
+import {RenderizareditService} from 'src/app/services/renderizaredit/renderizaredit.service'
 
 @Component({
   selector: 'app-difuntos-panel',
@@ -19,7 +19,8 @@ export class DifuntosPanelComponent implements OnInit, AfterViewInit {
   id:any;
   lista_difuntos: any[] = [];;
   data: any = {};
-  difunto:[]=[];
+  //difunto:[]=[];
+  difunto: Difunto;
   public rowID:Difunto[];
   sector: string;
   sepultura: string;
@@ -35,6 +36,7 @@ export class DifuntosPanelComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     public _sector: SectorService,
     public _sepultura: TiposepulturaService,
+    public _editar: RenderizareditService,
     ) { }
 
   ngOnInit(): void {
@@ -56,8 +58,26 @@ export class DifuntosPanelComponent implements OnInit, AfterViewInit {
     
     
   }
-  public redirectToUpdate = (id: string) => {
+  public redirectToUpdate = (row) => {
+    this.rowID = row as Difunto[];
+    this.cargarSector();
+    this.cargarSepultura();
+    this.cargarResponsable();
+    this._editar.setMetodoConexion('PUT');
+    this._difuntos.getDifunto(this.rowID['id_difunto'])
+    .subscribe((resp:any)=>{
+      this.difunto = resp as Difunto;
+      this._editar.setinfoRenderizar({difunto:this.difunto, sector:this.sector, sepultura:this.sepultura, responsable:this.responsable});
+      console.log("info")
+      console.log(typeof(resp.fecha_nacimiento));
+      console.log(this._editar.getinfoRenderizar());
+      this.router.navigateByUrl('inicio/registrodifunto');
+
+    })
+
     
+    
+
   }
   public redirectToDelete = (id: string) => {
     

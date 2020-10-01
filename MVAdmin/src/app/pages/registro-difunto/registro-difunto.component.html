@@ -27,7 +27,7 @@
           <div class="col-5">
             <div class="form-group">
               <label for="firstName"><i class="campo-req">*</i> Nombres</label>
-              <input type="text" formControlName="firstName" class="form-control" />
+              <input type="text" formControlName="firstName" class="form-control"  />
               <div
                 *ngIf="difuntoForm.controls['firstName'].invalid && (difuntoForm.controls['firstName'].dirty || difuntoForm.controls['firstName'].touched)">
 
@@ -42,7 +42,7 @@
           <div class="col-5">
             <div class="form-group">
               <label for="lastName"><i class="campo-req">*</i> Apellidos</label>
-              <input type="text" formControlName="lastName" class="form-control"
+              <input type="text" formControlName="lastName" class="form-control" 
                 [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
               <div
                 *ngIf="difuntoForm.controls['lastName'].invalid && (difuntoForm.controls['lastName'].dirty || difuntoForm.controls['lastName'].touched)">
@@ -59,7 +59,7 @@
           <div class="col-5">
             <div class="form-group">
               <label><i class="campo-req">*</i> Género:</label>
-              <select class="custom-select" formControlName="generoDropdown" placeholder="Seleccione un género"
+              <select class="custom-select" formControlName="generoDropdown" placeholder="Seleccione un género" 
                 [ngClass]="{ 'is-invalid': submitted && f.generoDropdown.errors }">
                 <option value=""></option>
                 <option value="Femenino">Femenino</option>
@@ -74,7 +74,7 @@
           <div class="col-5">
             <div class="form-group">
               <label for="cedula"><i class="campo-req">*</i> No. de cédula</label>
-              <input type="text" [pattern]="numericNumberReg" formControlName="cedula" class="form-control"
+              <input type="text" [pattern]="numericNumberReg" formControlName="cedula" class="form-control" value="{{difunto.cedula}}"
                 minlength="10" maxlength="10" />
               <div
                 *ngIf="difuntoForm.controls['cedula'].invalid && (difuntoForm.controls['cedula'].dirty || difuntoForm.controls['cedula'].touched)">
