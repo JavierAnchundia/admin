@@ -1,12 +1,12 @@
 export class Responsable_difunto{
 
-    public nombre:String;
-    public apellido:String;
-    public correo: String;
-    public direccion:String;
-    public telefono:String;
-    public celular:String;
-    public parentezco: String;
+    public nombre:string;
+    public apellido:string;
+    public correo: string;
+    public direccion:string;
+    public telefono:string;
+    public celular:string;
+    public parentezco: string;
     public iddifunto?: any;
 
     constructor(

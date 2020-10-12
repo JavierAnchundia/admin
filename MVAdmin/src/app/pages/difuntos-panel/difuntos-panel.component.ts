@@ -9,6 +9,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { TiposepulturaService } from 'src/app/services/tiposepultura/tiposepultura.service';
 import { SectorService } from 'src/app/services/sector/sector.service';
 import {RenderizareditService} from 'src/app/services/renderizaredit/renderizaredit.service'
+import Swal from 'sweetalert2'
+import { catchError } from 'rxjs/operators';
+import { throwError, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-difuntos-panel',
@@ -58,27 +61,26 @@ export class DifuntosPanelComponent implements OnInit, AfterViewInit {
     
     
   }
-  public redirectToUpdate = (row) => {
+  public redirectToUpdate = async (row) => {
     this.rowID = row as Difunto[];
-    this.cargarSector();
-    this.cargarSepultura();
-    this.cargarResponsable();
     this._editar.setMetodoConexion('PUT');
     this._difuntos.getDifunto(this.rowID['id_difunto'])
-    .subscribe((resp:any)=>{
+    .subscribe( async (resp:any)=>{
       this.difunto = resp as Difunto;
-      this._editar.setinfoRenderizar({difunto:this.difunto, sector:this.sector, sepultura:this.sepultura, responsable:this.responsable});
-      console.log("info")
-      console.log(typeof(resp.fecha_nacimiento));
-      console.log(this._editar.getinfoRenderizar());
-      this.router.navigateByUrl('inicio/registrodifunto');
+      await this.cargarSector();
+           this._editar.setinfoRenderizarDifunto({difunto:this.difunto, sector:this.sector, sepultura:this.sepultura, responsable:this.responsable});
 
     })
 
-    
-    
-
   }
+
+  irARegistrarDifunto(router){
+    router.navigateByUrl('inicio/registrodifunto');
+  }
+
+
+
+
   public redirectToDelete = (id: string) => {
     
   }
@@ -90,8 +92,8 @@ export class DifuntosPanelComponent implements OnInit, AfterViewInit {
   selectRow(templateRef, row) {
     this.rowID = row as Difunto[];
     this.cargarSector();
-    this.cargarSepultura();
-    this.cargarResponsable();
+   // this.cargarSepultura();
+   // this.cargarResponsable();
     const dialogRef = this.dialog.open(templateRef,{
       height: '600px',
       width: '500px',
@@ -112,37 +114,134 @@ getRecord(row){
 
 }
 
+errorTranslateHandler(error: String) {
+  switch (error) {
+    case "usuario with this email address already exists.": {
+      return "Hubo un error al guardar los datos: Ya existe este correo, intente con otro";
+    }
+    case "usuario with this nombre already exists.": {
+      return "Hubo un error al guardar los datos: Ya existe este nombre de camposanto, intente con otro"
+    }
+    default: {
+      return "Hubo un error al guardar los datos"
+    }
+  }
+}
+
 cargarSector() {
+  console.log("ENTREEEE A CREAR SECTOOOOOOOOR")
+
   this._sector.getSector(this.rowID['id_camposanto'])
-    .subscribe((resp: any) => {
+    .pipe(
+      catchError(err => {
+
+        Swal.close()
+        Swal.fire(this.errorTranslateHandler(err.error[Object.keys(err.error)[0]][0]));
+        console.log(err.error);
+        console.log("estoy en el pipe")
+        return throwError(err);
+      }))
+    .subscribe(
+      
+      
+      (resp: any) => {
       console.log(resp);
       for (var i = 0; i < resp.length; i++) {
         if (resp[i]['id_sector'] == this.rowID['id_sector']) {
           this.sector = resp[i]['nombre'];
-          console.log(resp)
+          console.log("SEEEEECCTOOOOOOORR")
+          console.log(resp[i]['nombre'])
+          console.log(this.sector)
+
         }
       }
-    })
+      this.cargarSepultura();
+
+      //return new Promise(resolve {})
+    },
+
+      error => {
+        console.error('Error:' + error);
+            console.log("estoy en el error")
+
+
+            return throwError(error);
+      }
+    
+    )
 }
 
 cargarSepultura() {
-  this._sepultura.getSepultura(this.rowID['id_camposanto'])
-    .subscribe((resp: any) => {
-      for (var i = 0; i < resp.length; i++) {
+  console.log("ENTREEEE A CREAR SEPULTUUUURRAAAAA")
 
-      if (resp[i]['id_tip_sepultura'] == this.rowID['id_tip_sepultura']) {
-        this.sepultura = resp[i]['nombre'];
-      }
-    }
-    })
+  this._sepultura.getSepultura(this.rowID['id_camposanto'])
+    .pipe(
+      catchError(err => {
+
+        Swal.close()
+        Swal.fire(this.errorTranslateHandler(err.error[Object.keys(err.error)[0]][0]));
+        console.log(err.error);
+        console.log("estoy en el pipe")
+        return throwError(err);
+      }))
+    .subscribe(
+      (resp: any) => {
+        for (var i = 0; i < resp.length; i++) {
+
+        if (resp[i]['id_tip_sepultura'] == this.rowID['id_tip_sepultura']) {
+          this.sepultura = resp[i]['nombre'];
+          console.log("SEPULTUUUURAAAAAAAAAAAAAAAA")
+          console.log(resp[i]['nombre'])
+          console.log(this.sepultura)}
+          this.cargarResponsable();
+      }},
+
+        error => {
+          console.error('Error:' + error);
+              console.log("estoy en el error")
+
+
+              return throwError(error);
+        }
+    
+    
+    )
 }
 
 cargarResponsable(){
+  console.log("ENTREEEE A CREAR RESPONABLEEEEEEEEE")
   this._difuntos.getResponsable(this.rowID['id_difunto'])
-  .subscribe((resp:any)=>{
-    console.log(resp);
-    this.responsable = resp;
-  })
+  .pipe(
+    catchError(err => {
+
+      Swal.close()
+      Swal.fire(this.errorTranslateHandler(err.error[Object.keys(err.error)[0]][0]));
+      console.log(err.error);
+      console.log("estoy en el pipe")
+      return throwError(err);
+    }))
+  .subscribe(
+    
+    
+    (resp:any)=>{
+      console.log(resp);
+      this.responsable = resp;
+      console.log("REPSONAAAAABLEEEEEEEEEEEEES")
+      console.log(resp)
+      console.log(this.responsable)
+      if(this._editar.getMetodoConexion()=='PUT'){
+         this._editar.setinfoRenderizarDifunto({difunto:this.difunto, sector:this.sector, sepultura:this.sepultura, responsable:this.responsable});
+         this.router.navigateByUrl('inicio/registrodifunto');
+      }
+    },
+
+    error => {
+      console.error('Error:' + error);
+          console.log("estoy en el error")
+
+
+          return throwError(error);
+    })
 }
 
 }

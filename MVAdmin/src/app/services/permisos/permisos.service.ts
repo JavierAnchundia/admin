@@ -30,11 +30,21 @@ export class PermisosService {
     return this.http.get<Permiso[]>(url);
   }
 
+  async getInfoPermiso(id_permiso){
+
+    let url = URL_SERVICIOS.info_permiso + id_permiso+ '/';
+    console.log(url)
+    return await this.http.get(url).toPromise();
+  }
   async getMisPermisos(id_user){
     let url = URL_SERVICIOS.mis_user_permisos + id_user + "/";
     return await this.http.get<User_permiso[]>(url).toPromise();
   }
 
+  async deleteMisPermisos(id_user){
+    let url = URL_SERVICIOS.mis_user_permisos + id_user + "/";
+    return await this.http.delete<User_permiso[]>(url).toPromise();
+  }
   async postUser_permisos(permiso: User_permiso){
     let url = URL_SERVICIOS.user_permisos_post;
     let httpOptions = {

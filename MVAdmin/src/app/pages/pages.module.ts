@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 // import { PagesComponent } from './pages.component';
 
@@ -74,6 +75,7 @@ import {MatDialogModule } from '@angular/material/dialog';
     imports: [
         MatAutocompleteModule,
         CommonModule,
+        NgxSkeletonLoaderModule,
         SharedModule,
         ServicioModules,
         PAGES_ROUTES,

@@ -147,12 +147,23 @@ export class UsuarioService {
 
   crearUsuario(usuario) {
     let url = URL_SERVICIOS.usuario;
+    console.log(url);
     let httpOptions = {
       headers: new HttpHeaders({
         'Access-Control-Allow-Origin': "*",
       })
     }
     return this.http.post(url, usuario, httpOptions);
+  }
+
+  actualizarAdmin(admin:FormData, username){
+    let url = URL_SERVICIOS.datosUsuario + username + '/';
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.put(url, admin, httpOptions);
   }
 
   getUsers(id) {
