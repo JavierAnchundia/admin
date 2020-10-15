@@ -110,7 +110,7 @@ export class AdminPanelComponent implements OnInit,AfterViewInit  {
     this.rowID = row as Usuario[];  
     const formData = new FormData();
     formData.append('is_active', String(!Boolean(JSON.parse(this.rowID["is_active"]))));
-
+    
     this._usuario
     .actualizarAdmin(formData, this.rowID['username'])
     .pipe(

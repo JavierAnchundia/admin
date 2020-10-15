@@ -7,11 +7,18 @@
     </ol>
   </nav>
   
-  <div class="row" >
+  <div *ngIf="!editando"class="row" >
     <div class="col-12">
       <h1>Registro de administrador</h1>
     </div>
   </div>
+
+  <div *ngIf="editando" class="row" >
+    <div class="col-12">
+      <h1>Editar administrador</h1>
+    </div>
+  </div>
+
   <br>
   <div class="container-fluid">
     

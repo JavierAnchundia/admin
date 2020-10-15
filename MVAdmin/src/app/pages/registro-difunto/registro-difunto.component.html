@@ -7,9 +7,15 @@
   </ol>
 </nav>
 
-<div class="row">
+<div *ngIf="!editando" class="row">
   <div class="col-12">
     <h1> Registro de difuntos</h1>
+  </div>
+</div>
+
+<div *ngIf="editando" class="row">
+  <div class="col-12">
+    <h1> Editar difuntos</h1>
   </div>
 </div>
 

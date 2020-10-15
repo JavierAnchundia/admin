@@ -58,7 +58,7 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
   sepultura: string;
   responsable: Responsable_difunto = new Responsable_difunto();
   skeletonloader = true;
-
+  editando = false;
   //verPuntos = false;
   generoOptions = ["Femenino", "Masculino"]
   monthNames = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
@@ -241,7 +241,7 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
 
    obtenerInfo() {
     if (this._editar.getMetodoConexion() == 'PUT') {
-      
+        this.editando = true;
         this.difunto =  this._editar.getinfoRenderizarDifunto().difunto;
         this.sector =  this._editar.getinfoRenderizarDifunto().sector;
         this.sepultura =  this._editar.getinfoRenderizarDifunto().sepultura;

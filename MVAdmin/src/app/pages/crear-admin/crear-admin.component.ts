@@ -55,7 +55,7 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
   admin_permisos: Array<Permiso>;
   bool_permisos: Array<boolean>=[];
   mostrar_contrasena: Boolean = true;
-
+  editando= false;
   constructor(
     private fb: FormBuilder,
     public mustMatchService: MustMatchService,
@@ -148,6 +148,7 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
   
   async obtenerInfo(){
     if(this._editar.getMetodoConexion()=='PUT'){
+     this.editando = true;
      this.administrador =this._editar.getinfoRenderizarAdmin().admin;
      this.admin_permisos = await this._editar.getinfoRenderizarAdmin().permisos;
      console.log(this.admin_permisos);
@@ -330,7 +331,7 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
     formData.append('telefono', this.adminForm.value.telefono);
     formData.append('genero', '');
     formData.append('direccion', '');
-    formData.append('estado', 'True');
+    formData.append('is_active', 'True');
     formData.append('id_camposanto', this.id.camposanto);
     formData.append('tipo_usuario', this.adminForm.value.tipoAdmin);
 
@@ -384,6 +385,7 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (resp: any) => {
+          console.log(resp)
           this.registrarPermisos(resp['id']);
           
           return true;
@@ -396,6 +398,7 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
       );
     }
   }
+  
   async deletePermisos(id_user){
     
     await this._permisoService.deleteMisPermisos(id_user)

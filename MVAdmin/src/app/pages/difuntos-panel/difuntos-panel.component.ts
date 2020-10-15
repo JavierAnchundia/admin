@@ -68,7 +68,7 @@ export class DifuntosPanelComponent implements OnInit, AfterViewInit {
     .subscribe( async (resp:any)=>{
       this.difunto = resp as Difunto;
       await this.cargarSector();
-           this._editar.setinfoRenderizarDifunto({difunto:this.difunto, sector:this.sector, sepultura:this.sepultura, responsable:this.responsable});
+       this._editar.setinfoRenderizarDifunto({difunto:this.difunto, sector:this.sector, sepultura:this.sepultura, responsable:this.responsable});
 
     })
 
