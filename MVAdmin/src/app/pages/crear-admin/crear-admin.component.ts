@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ɵConsole } from '@angular/core';
 import { FormControl, FormGroup, FormArray } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
@@ -13,12 +13,15 @@ import { map, catchError } from 'rxjs/operators';
 import { PermisosService } from '../../services/permisos/permisos.service';
 import { Permiso } from '../../models/permiso.model';
 import { User_permiso } from '../../models/user_permisos.model'
+import {RenderizareditService} from '../../services/renderizaredit/renderizaredit.service'
+import {Usuario} from '../../models/usuario.model'
+import {UsuarioH} from '../../models/usuario_herencia.model'
 @Component({
   selector: 'app-crear-admin',
   templateUrl: './crear-admin.component.html',
   styleUrls: ['./crear-admin.component.css'],
 })
-export class CrearAdminComponent implements OnInit {
+export class CrearAdminComponent implements OnInit, OnDestroy {
   adminForm: FormGroup;
   submitted = false;
   cementerios: Array<Camposanto>;
@@ -48,34 +51,47 @@ export class CrearAdminComponent implements OnInit {
   lista_permisos: Permiso[] = [];
   permisos_admin = [];
   user_permi: User_permiso;
+  administrador: UsuarioH = new UsuarioH();
+  admin_permisos: Array<Permiso>;
+  bool_permisos: Array<boolean>=[];
+  mostrar_contrasena: Boolean = true;
+  editando= false;
   constructor(
     private fb: FormBuilder,
     public mustMatchService: MustMatchService,
     public dashboardService: DashboardService,
     public _usuario: UsuarioService,
     public router: Router,
-    private _permisoService: PermisosService
+    private _permisoService: PermisosService,
+    private _editar: RenderizareditService,
   ) {
     this.cementerios = dashboardService.cementerios;
-    this.obtenerPermisos();
   }
 
-  ngOnInit(): void {
+  ngOnDestroy():void{
+    this._editar.setMetodoConexion("POST");
+  }
+
+  async ngOnInit(): Promise<void> {
+    await this.obtenerInfo();
+    await this.obtenerPermisos();
+    console.log(this._editar.getinfoRenderizarAdmin());
+    console.log(this._editar.getMetodoConexion())
+    console.log(this.administrador)
+    console.log(this.admin_permisos)
     this.id = JSON.parse(localStorage.getItem('camposanto'));
     this.obtenerUsuarios();
+    
     this.adminForm = this.fb.group(
       {
-        usuario: [null, Validators.compose([Validators.required])],
-        correo: [
-          null,
-          Validators.compose([Validators.required, Validators.email]),
-        ],
-        firstName: [null, Validators.required],
-        lastName: [null, Validators.required],
+        usuario: [this.administrador.username, Validators.compose([Validators.required])],
+        correo: [this.administrador.email, Validators.compose([Validators.required, Validators.email]),],
+        firstName: [this.administrador.first_name, Validators.required],
+        lastName: [this.administrador.last_name, Validators.required],
         contrasena: [null, [Validators.required, Validators.minLength(6)]],
         repetirContrasena: [null, Validators.required],
         telefono: [
-          null,
+          this.administrador.telefono,
           [
             Validators.required,
             Validators.minLength(7),
@@ -83,8 +99,8 @@ export class CrearAdminComponent implements OnInit {
             Validators.pattern(this.numericNumberReg),
           ],
         ],
-        tipoAdmin: [null, Validators.required],
-        permisoToggle: [null],
+        tipoAdmin: [this.administrador.tipo_usuario, Validators.required],
+        //permisoToggle: [null],
       },
       {
         validator:[ this.mustMatchService.MustMatch(
@@ -96,11 +112,62 @@ export class CrearAdminComponent implements OnInit {
         ],
       }
     );
+    
+    if(this._editar.getMetodoConexion()=="PUT"){
+      this.adminForm.get('contrasena').disable();
+      this.adminForm.get('repetirContrasena').disable();
+
+      this.mostrar_contrasena = false;
+    }
+    if(this._editar.getMetodoConexion()=="PUT" && this.admin_permisos.length > 0){
+      this.adminForm.addControl('permisoToggle', new FormControl(true));
+    }
+    else{this.adminForm.addControl('permisoToggle', new FormControl(null));}
+
+    this.onChange();
+    
   }
 
+  //Lo que va a hacer esta funcion es que va ver los ids de la lista de permisos que tiene un usuario y aparte de alli va a crear
+  // un array booleano que tomara los valores de true justo en las paginas que el usuario tiene permiso
+  permisosBool(lista_permisos:Permiso[], admin_permisos:Array<Permiso>){
+    console.log(lista_permisos)
+    console.log(this.lista_permisos)
+    console.log(this.admin_permisos)
+    for(let i in admin_permisos){
+      let index = admin_permisos[i].id_permiso as number
+      
+      this.bool_permisos[index - 1] = true;
+    }
+    console.log(this.bool_permisos);
+  }
+
+
+
+
+  
+  async obtenerInfo(){
+    if(this._editar.getMetodoConexion()=='PUT'){
+     this.editando = true;
+     this.administrador =this._editar.getinfoRenderizarAdmin().admin;
+     this.admin_permisos = await this._editar.getinfoRenderizarAdmin().permisos;
+     console.log(this.admin_permisos);
+    }
+  }
+
+
+  
   async obtenerPermisos() {
-    await this._permisoService.getPermisos().subscribe((data) => {
-      this.lista_permisos = data;
+    await this._permisoService.getPermisos().subscribe(async (data) => {
+      this.lista_permisos = await data;
+
+      //Esta parte del codigo deberia haber sido llamada desde el metodo OnInit, pero si se lo ponoe ahi no se obtienen los datos "a tiempo"
+      //A partir de la funcion asincronica, entonces para asegurarse que se van obtener las dos listas se los pone justamente aqui
+      if(this._editar.getMetodoConexion()=='PUT'){
+        this.bool_permisos = new Array<boolean>(this.lista_permisos.length).fill(false);
+        this.permisosBool(this.lista_permisos,this.admin_permisos);
+        console.log(this.bool_permisos);}
+        
     });
   }
   async obtenerUsuarios() {
@@ -122,6 +189,9 @@ export class CrearAdminComponent implements OnInit {
     // let username = this.adminForm.value.usuario;
     // username = String(username);
     return (formGroup: FormGroup) =>{
+      if(this._editar.getMetodoConexion()=="PUT"){
+        return;
+      }
       let list_username = this.usernameLista;
       const usernameControl = formGroup.controls['usuario'];
       if (usernameControl.errors && ! usernameControl.errors.match_username) {
@@ -140,6 +210,9 @@ export class CrearAdminComponent implements OnInit {
     // let correo_u = this.adminForm.value.correo;
     // correo_u = String(correo_u);
     return (formGroup: FormGroup) =>{
+      if(this._editar.getMetodoConexion()=="PUT"){
+        return;
+      }
       let list_correo = this.emailLista;
       const correoControl = formGroup.controls['correo'];
       if (correoControl.errors && ! correoControl.errors.match_email) {
@@ -255,14 +328,50 @@ export class CrearAdminComponent implements OnInit {
     formData.append('last_name', this.adminForm.value.lastName);
     formData.append('email', this.adminForm.value.correo);
     formData.append('username', this.adminForm.value.usuario);
-    formData.append('password', this.adminForm.value.repetirContrasena);
     formData.append('telefono', this.adminForm.value.telefono);
     formData.append('genero', '');
     formData.append('direccion', '');
-    formData.append('estado', 'True');
+    formData.append('is_active', 'True');
     formData.append('id_camposanto', this.id.camposanto);
     formData.append('tipo_usuario', this.adminForm.value.tipoAdmin);
 
+    if(this._editar.getMetodoConexion()=="POST"){formData.append('password', this.adminForm.value.repetirContrasena);
+  }
+  
+    
+  if(this._editar.getMetodoConexion()=="PUT"){
+    this._usuario
+       .actualizarAdmin(formData, this._editar.getinfoRenderizarAdmin().admin.username)
+       .pipe(
+        catchError((err) => {
+          Swal.close();
+          Swal.fire(
+            this.errorTranslateHandler(err.error[Object.keys(err.error)[0]][0])
+          );
+          return throwError(err);
+        })
+      )
+      .subscribe(
+        async (resp: any) => {
+         await this.deletePermisos(resp['id'])
+         console.log(this.permisos_admin)
+          this.registrarPermisos(resp['id'])
+          //this._permisoService.deleteMisPermisos(resp['id'])
+          //this.registrarPermisos(resp['id']);
+          
+          return true;
+        },
+        (error) => {
+          console.error('Error:' + error);
+          return throwError(error);
+        },
+        () => console.log('HTTP request completed.')
+      );
+    
+
+  }
+
+  else{
     this._usuario
       .crearUsuario(formData)
       .pipe(
@@ -276,7 +385,9 @@ export class CrearAdminComponent implements OnInit {
       )
       .subscribe(
         (resp: any) => {
+          console.log(resp)
           this.registrarPermisos(resp['id']);
+          
           return true;
         },
         (error) => {
@@ -285,6 +396,19 @@ export class CrearAdminComponent implements OnInit {
         },
         () => console.log('HTTP request completed.')
       );
+    }
+  }
+  
+  async deletePermisos(id_user){
+    
+    await this._permisoService.deleteMisPermisos(id_user)
+    .then((resp:any) =>{
+      console.log("Esto ha sido eliminado")
+      console.log(resp);})
+    .catch(function(error){
+      console.log(error)
+    })
+
   }
 
   async registrarPermisos(id_user){

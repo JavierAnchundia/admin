@@ -7,9 +7,15 @@
   </ol>
 </nav>
 
-<div class="row">
+<div *ngIf="!editando" class="row">
   <div class="col-12">
     <h1> Registro de difuntos</h1>
+  </div>
+</div>
+
+<div *ngIf="editando" class="row">
+  <div class="col-12">
+    <h1> Editar difuntos</h1>
   </div>
 </div>
 
@@ -27,7 +33,7 @@
           <div class="col-5">
             <div class="form-group">
               <label for="firstName"><i class="campo-req">*</i> Nombres</label>
-              <input type="text" formControlName="firstName" class="form-control" />
+              <input type="text" formControlName="firstName" class="form-control"  />
               <div
                 *ngIf="difuntoForm.controls['firstName'].invalid && (difuntoForm.controls['firstName'].dirty || difuntoForm.controls['firstName'].touched)">
 
@@ -42,7 +48,7 @@
           <div class="col-5">
             <div class="form-group">
               <label for="lastName"><i class="campo-req">*</i> Apellidos</label>
-              <input type="text" formControlName="lastName" class="form-control"
+              <input type="text" formControlName="lastName" class="form-control" 
                 [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
               <div
                 *ngIf="difuntoForm.controls['lastName'].invalid && (difuntoForm.controls['lastName'].dirty || difuntoForm.controls['lastName'].touched)">
@@ -59,7 +65,7 @@
           <div class="col-5">
             <div class="form-group">
               <label><i class="campo-req">*</i> Género:</label>
-              <select class="custom-select" formControlName="generoDropdown" placeholder="Seleccione un género"
+              <select class="custom-select" formControlName="generoDropdown" placeholder="Seleccione un género" 
                 [ngClass]="{ 'is-invalid': submitted && f.generoDropdown.errors }">
                 <option value=""></option>
                 <option value="Femenino">Femenino</option>
@@ -74,7 +80,7 @@
           <div class="col-5">
             <div class="form-group">
               <label for="cedula"><i class="campo-req">*</i> No. de cédula</label>
-              <input type="text" [pattern]="numericNumberReg" formControlName="cedula" class="form-control"
+              <input type="text" [pattern]="numericNumberReg" formControlName="cedula" class="form-control" value="{{difunto.cedula}}"
                 minlength="10" maxlength="10" />
               <div
                 *ngIf="difuntoForm.controls['cedula'].invalid && (difuntoForm.controls['cedula'].dirty || difuntoForm.controls['cedula'].touched)">
@@ -293,7 +299,7 @@
                   
                   (change)="onChangeSepultura($event.target.value)">
                   <option style="display:none" value=null default>Seleccione un tipo</option>
-                  <option [value]="sep.id_tip_sepultura" *ngFor="let sep of lista_sepultura">{{sep.nombre}}</option>
+                  <option [value]="sep.nombre" *ngFor="let sep of lista_sepultura" >{{sep.nombre}}</option>
                 </select>
               </div>
               <div
@@ -311,7 +317,7 @@
                 (change)="onChangeSector($event.target.value)"
                 >
                 <option style="display:none" value=null>Seleccione un sector</option>
-                <option *ngFor="let sec of lista_sector" [value]=sec.id_sector>{{sec.nombre}}</option>
+                <option *ngFor="let sec of lista_sector" [value]=sec.nombre>{{sec.nombre}}</option>
               </select>
               <div
                   *ngIf="difuntoForm.controls['sector'].invalid && (difuntoForm.controls['sector'].dirty || difuntoForm.controls['sector'].touched)">

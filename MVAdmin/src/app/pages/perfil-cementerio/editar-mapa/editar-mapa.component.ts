@@ -57,6 +57,7 @@ export class EditarMapaComponent implements OnInit {
   }
 
   actualizarPuntos(){
+    Swal.showLoading();
     console.log(this.puntosGeo)
     Swal.showLoading()
     this.cargarPuntosGeoMapa(this.id.camposanto);

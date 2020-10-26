@@ -30,6 +30,7 @@ const URL_SERVICIOS = {
     user_permisos_post: URL_ROOT + '/user_permisos_post/',
     listar_permisos_general: URL_ROOT + '/listar_permisos_general/',
     mis_user_permisos: URL_ROOT + '/mis_user_permisos/',
+    info_permiso : URL_ROOT + '/permiso/',
 }
 
 export default URL_SERVICIOS

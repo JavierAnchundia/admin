@@ -16,6 +16,20 @@ getDifuntos(id) {
   return this.http.get(url);
 }
 
+getDifunto(id_difunto) {
+  let url = URL_SERVICIOS.difunto+id_difunto+'/';
+
+  return this.http.get(url);
+}
+
+putDifunto(difunto:FormData, id_difunto){
+  let url = URL_SERVICIOS.difunto+id_difunto+'/';
+  let httpOptions = {
+    headers: new HttpHeaders({
+    })
+  }
+  return this.http.put(url,difunto,httpOptions);
+}
 postDifunto(difunto: FormData){
   let url = URL_SERVICIOS.difunto_post
   let httpOptions = {
@@ -24,7 +38,15 @@ postDifunto(difunto: FormData){
   }
   return this.http.post(url, difunto, httpOptions)
 }
+putResponable(responsable:FormData, id_difunto){
+  let url= URL_SERVICIOS.responsable_get+id_difunto+'/';
+  let httpOptions = {
+    headers: new HttpHeaders({
+    })
+  }
+  return this.http.put(url,responsable,httpOptions);
 
+}
 postResponsable(responsable: FormData){
   let url = URL_SERVICIOS.responsable_post
   let httpOptions = {
