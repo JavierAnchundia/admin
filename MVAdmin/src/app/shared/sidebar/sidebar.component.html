@@ -1,30 +1,44 @@
 <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
-    <div class="logo"></div>
+    <div class="logo">
+        <span>{{emailUser}}</span>
+    </div>
 
-    <ul nz-menu nzTheme="dark" nzMode="inline" *ngIf="rolSuperAdmin; else elseSuperAdmin">
-        <li nz-menu-item routerLink="/inicio/dashboard">
-            <i nz-icon nzType="home"></i>
+    <ul nz-menu nzTheme="dark" nzMode="inline">
+        <li nz-menu-item routerLink="/dashboard" *ngIf="isHyperAdmin">
+            <i nz-icon><fa-icon [icon]="faAnkh"></fa-icon></i>
             <span>Cementerios</span>
         </li>
+        <li nz-menu-item (click)="inicioPage()">
+            <i nz-icon nzType="home"></i>
+            <span>Inicio</span>
+        </li>
+        <li nz-submenu nzTitle="Difuntos" nzIcon="user-add">
+            <ul>
+               <li nz-menu-item routerLink="/inicio/registrodifunto">Registrar</li>
+               <li nz-menu-item routerLink="/inicio/difuntos">Buscar</li>
+           </ul> 
+        </li>
+        <li nz-menu-item routerLink="/404">
+            <i nz-icon><fa-icon [icon]="faBoxOpen"></fa-icon></i>
+            <span>Paquetes</span>
+        </li>
+        <li nz-menu-item routerLink="/404">
+            <i nz-icon><fa-icon [icon]="faListAlt"></fa-icon></i>
+            <span>Homenajes</span>
+        </li>
+        <li nz-menu-item routerLink="/404">
+            <i nz-icon><fa-icon [icon]="faBell"></fa-icon></i>
+            <span>Notificaciones</span>
+        </li>
+        <li nz-submenu nzTitle="Administradores" nzIcon="team">
+            <ul>
+                <li nz-menu-item routerLink="/inicio/create">Registrar</li>
+                <li nz-menu-item routerLink="/inicio/administradores">Buscar</li>
+            </ul>
+        </li>
+        <li nz-menu-item routerLink="/inicio/configuracion">
+            <i nz-icon><fa-icon [icon]="faUserCircle"></fa-icon></i>
+            <span>Perfil</span>
+        </li>
     </ul>
-    <ng-template #elseSuperAdmin>
-        <ul nz-menu nzTheme="dark" nzMode="inline">
-            <li nz-submenu nzTitle="Difuntos" nzIcon="user-add">
-             <ul>
-                <li nz-menu-item>Registrar</li>
-                <li nz-menu-item>Buscar</li>
-            </ul> 
-            </li>
-            <li nz-submenu nzTitle="Empleados" nzIcon="team">
-                <ul>
-                    <li nz-menu-item>Registrar</li>
-                    <li nz-menu-item>Buscar</li>
-                </ul>
-            </li>
-            <li nz-menu-item>
-                <i nz-icon nzType="file"></i>
-                <span>Paquetes</span>
-            </li>
-        </ul>
-    </ng-template>
 </nz-sider>

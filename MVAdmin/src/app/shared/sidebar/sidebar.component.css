@@ -1,13 +1,17 @@
 .logo {
-    height: 32px;
+    height: 25%;
     background: rgba(255, 255, 255, 0.2);
     margin: 16px;
-  }
+}
   
 nz-sider {
     overflow: auto;
     height: 100%;
-    margin-top: 64px;
+    /* margin-top: 64px; */
     position: fixed;
     left: 0;
 }
+  /* ul{
+    overflow-y: scroll;
+    overflow: hidden;
+  } */

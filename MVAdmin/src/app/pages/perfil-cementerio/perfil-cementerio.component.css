@@ -1,5 +1,5 @@
 #cemetery-title {
-    padding: 2em 0;
+    padding: 5px 0;
   }
   
   #cemetery-title h1.section-title {
@@ -12,7 +12,7 @@
     text-align: center;
     margin-bottom: 0;
     text-transform: capitalize;
-    padding: 0.5em;
+    /* padding: 0.5em; */
   }
   
   p {

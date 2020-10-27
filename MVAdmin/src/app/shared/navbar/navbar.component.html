@@ -1,5 +1,5 @@
 <nz-header>
-  <ul nz-menu nzTheme="dark" nzMode="horizontal">
+  <ul nz-menu nzTheme="dark" nzMode="horizontal" id="ulGeneral">
     <li nz-menu-item>
       <i
         class="trigger"
@@ -9,7 +9,12 @@
         (click)="cambiar()"
       ></i>
     </li>
-
+    <li>
+      <h4>Camposanto</h4>
+    </li>
+    <li>
+      <h6>{{nombreEmpresa}} {{nombreCamposanto}}</h6>
+    </li>
     <li class="alinear">
       <!-- <span class="paddingCont">{{nameUsuario}}</span>
             <button nz-button nzType="primary" class="paddingCont">Salir</button> -->
