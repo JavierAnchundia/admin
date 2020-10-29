@@ -1,6 +1,12 @@
 <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
-    <div class="logo">
-        <span>{{emailUser}}</span>
+    <div id="logoDivAvatar">
+        <div>
+            <img src="assets/icons/AVATAR.png" alt="" id="avatar">
+            <div id="divSpan">
+                <span class="spanLogo">{{emailUser}}</span>
+                <span class="spanLogo">{{ tipoUsuario }}</span>
+            </div>
+        </div>
     </div>
 
     <ul nz-menu nzTheme="dark" nzMode="inline">
@@ -12,12 +18,16 @@
             <i nz-icon nzType="home"></i>
             <span>Inicio</span>
         </li>
-        <li nz-submenu nzTitle="Difuntos" nzIcon="user-add">
+        <li nz-menu-item routerLink="/inicio/difuntos">
+            <i nz-icon nzType="user-add"></i>
+            <span>Fallecidos</span>
+        </li>
+        <!-- <li nz-submenu nzTitle="Difuntos" nzIcon="user-add" class="itemSeleccion">
             <ul>
                <li nz-menu-item routerLink="/inicio/registrodifunto">Registrar</li>
                <li nz-menu-item routerLink="/inicio/difuntos">Buscar</li>
            </ul> 
-        </li>
+        </li> -->
         <li nz-menu-item routerLink="/404">
             <i nz-icon><fa-icon [icon]="faBoxOpen"></fa-icon></i>
             <span>Paquetes</span>
@@ -30,12 +40,16 @@
             <i nz-icon><fa-icon [icon]="faBell"></fa-icon></i>
             <span>Notificaciones</span>
         </li>
-        <li nz-submenu nzTitle="Administradores" nzIcon="team">
+        <li nz-menu-item routerLink="/inicio/administradores">
+            <i nz-icon nzType="user-add"></i>
+            <span>Administradores</span>
+        </li>
+        <!-- <li nz-submenu nzTitle="Administradores" nzIcon="team">
             <ul>
                 <li nz-menu-item routerLink="/inicio/create">Registrar</li>
                 <li nz-menu-item routerLink="/inicio/administradores">Buscar</li>
             </ul>
-        </li>
+        </li> -->
         <li nz-menu-item routerLink="/inicio/configuracion">
             <i nz-icon><fa-icon [icon]="faUserCircle"></fa-icon></i>
             <span>Perfil</span>

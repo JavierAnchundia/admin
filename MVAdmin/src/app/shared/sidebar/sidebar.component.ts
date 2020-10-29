@@ -21,7 +21,8 @@ export class SidebarComponent implements OnInit {
   faListAlt = faListAlt;
   faUserCircle = faUserCircle;
   faAnkh = faAnkh;
-  emailUser: String = ""
+  emailUser: String = "";
+  tipoUsuario: String = "admin";
   constructor(
     private comunicateNSService: ComunicateNavSiderService,
     private router: Router,
@@ -42,9 +43,16 @@ export class SidebarComponent implements OnInit {
   validateHyper(username){
     this._serviceUser.getDatosUser(username).subscribe(
       (resp) => {
-        this.emailUser = resp['email']
+        this.emailUser = resp['email'];
         if(resp['tipo_usuario'] == 'ha'){
+          this.tipoUsuario = 'Hyper Admin';
           this.isHyperAdmin = true;
+        }
+        else if(resp['tipo_usuario'] == 'su'){
+          this.tipoUsuario = 'Super Admin'
+        }
+        else if(resp['tipo_usuario'] == 'ad'){
+          this.tipoUsuario = 'Admin'
         }
       }
     )
