@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { faExclamationCircle, faPlusCircle, faMinusCircle, faMapMarkedAlt } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationCircle, faPlusCircle, faMinusCircle, faMapMarkedAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { CargarGeolocalizacionSadminService } from '../../services/cargar-geolocalizacion-sadmin/cargar-geolocalizacion-sadmin.service'
 import { CamposantoService } from '../../services/camposanto/camposanto.service';
 import { GeolocalizacionService } from '../../services/geolocalizacion/geolocalizacion.service';
@@ -8,6 +8,7 @@ import { RedsocialService } from '../../services/redsocial/redsocial.service'
 import { Punto_geolocalizacion } from '../../models/punto_geolocalizacion.model';
 import { Empresa } from '../../models/empresa.model';
 import { Red_social } from '../../models/red_social.model';
+
 declare var $: any;
 import Swal from 'sweetalert2'
 import { Router } from '@angular/router';
@@ -27,6 +28,7 @@ export class SadminCrearCementerioComponent implements OnInit {
   faMinusCircle = faMinusCircle;
   faMapMarkedAlt = faMapMarkedAlt;
   faExclamationCircle = faExclamationCircle;
+  faTimes = faTimes;
   id_camposanto: Number = 0;
   id_empresa: Number;
   puntosL: { lat: number; lng: number }[] = [];
@@ -177,35 +179,39 @@ export class SadminCrearCementerioComponent implements OnInit {
   }
 
   postRedesSociales() {
-    if(this.redList.length == 0){
+    if(this.redList == null){
       this.delay(400);
-      this.router.navigate(['/inicio/dashboard']);
     }
-    for (let i = 0; i < this.redList.length; i++) {
-      let link = String(this.redList.value[i].redSocial);
-      let linkMins = link.toLowerCase();
-      for (let j = 0; j < this.redes_sociales.length; j++) {
-        let red = String(this.redes_sociales[j]);
-        if (linkMins.includes(red)) {
-          this.redes = {
-            nombre: red,
-            link: link,
-            estado: true,
-            id_camposanto: this.id_camposanto
-          }
-          this._servicioRed.postRedes(this.redes).subscribe(
-            (data) => {
-              if(i == this.redList.length -1 ){
-                this.delay(400);
-                this.router.navigate(['/inicio/dashboard']);
-              }
-              console.log(data);
+    else{
+      for (let i = 0; i < this.redList.length; i++) {
+        let link = String(this.redList.value[i].redSocial);
+        let linkMins = link.toLowerCase();
+        for (let j = 0; j < this.redes_sociales.length; j++) {
+          let red = String(this.redes_sociales[j]);
+          if (linkMins.includes(red)) {
+            this.redes = {
+              nombre: red,
+              link: link,
+              estado: true,
+              id_camposanto: this.id_camposanto
             }
-          )
+            this._servicioRed.postRedes(this.redes).subscribe(
+              (data) => {
+                if(i == this.redList.length -1 ){
+                  this.delay(400);
+                  this.router.navigate(['/dashboard']);
+                }
+                console.log(data);
+              }
+            )
+          }
         }
       }
-      
     }
+    this.router.navigate(['/dashboard']);
+  }
+  regresarDashboard(){
+    this.router.navigate(['/dashboard']);
   }
   //sleep para mostrar el mensaje de actualizaion de los puntos
   delay(ms: number) {

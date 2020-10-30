@@ -1,12 +1,292 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a routerLink="/dashboard">Cementerios</a></li>
-    <li class="breadcrumb-item active" aria-current="page">
-      Registrar Camposanto
-    </li>
-  </ol>
-</nav>
-<div class="container">
+<div id="divFondo">
+  <img src="assets/fondo.png" alt="" id="fondoDiv">
+  <div id="containerLogo">
+    <div id="formCol">
+      <div id="closeIconTimes">
+        <fa-icon [icon]="faTimes" (click)="regresarDashboard()" id="faIconClose"></fa-icon>
+      </div>
+      <div id="divImg">
+        <img src="assets/icons/LOGO.png" alt="" id="fondoImg">
+      </div>
+      <div id="divForm">
+        <label id="addCementerioLabel">AGREGAR CEMENTERIO</label>
+        <form [formGroup]="form_cementerio" (submit)="submit()" enctype="multipart/form-data">
+            <div class="row">
+              <div class="col-6">
+                <div class="col-5">
+                  <label for="nombre" class="col-form-label col-form-label-sm"
+                    ><i class="campo-req">*</i> Nombre:</label>
+                </div>
+                <div class="col-10">
+                  <input
+                    formControlName="nombre"
+                    type="text"
+                    class="form-control form-control-sm"
+                  />
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      form_cementerio.controls['nombre'].touched &&
+                      form_cementerio.controls['nombre'].hasError('required')
+                    " >
+                    <small>Nombre es requerido!</small>
+                  </span>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="col-5">
+                  <label for="ruc" class="col-form-label col-form-label-sm"
+                    ><i class="campo-req">*</i> Empresa:</label
+                  >
+                </div>
+                <div class="col-10">
+                  <select class="custom-select form-control form-control-sm"
+                    formControlName="empresa" type="text">
+                    <option *ngFor="let empre of empresas; let i = index" [value]="empre.id_empresa">{{ empre.nombre }}</option>
+                  </select>
+                  <span
+                    class="text-danger"
+                    *ngIf="form_cementerio.controls['empresa'].touched && form_cementerio.controls['empresa'].hasError('required')"
+                  >
+                    <small>Empresa es requerida!</small>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="col-5">
+                  <label for="telefono" class="col-form-label col-form-label-sm">
+                    <i class="campo-req">*</i>
+                    Teléfono:
+                  </label>
+                </div>
+                <div class="col-10">
+                  <input formControlName="telefono" [pattern]="numericNumberReg" type="text" 
+                  minlength="7" maxlength="10"  class="form-control form-control-sm"
+                  />
+                  <div 
+                  *ngIf="form_cementerio.controls['telefono'].invalid && (form_cementerio.controls['telefono'].dirty || form_cementerio.controls['telefono'].touched)">
+                    <span class="text-danger"  *ngIf="form_cementerio.controls['telefono'].errors.required">
+                    <small>Teléfono es requerido!</small>
+                  </span>
+                  <span class="text-danger"
+                    *ngIf="form_cementerio.controls['telefono'].errors.minlength ||form_cementerio.controls['telefono'].errors.maxlength">
+                    <small>Solo se aceptan entre 7 y 10 caracteres.</small>
+                </span>
+                <span class="text-danger" *ngIf="form_cementerio.controls['telefono'].errors.pattern">
+                  <small> Ingrese un valor válido.</small>
+                </span>
+                  </div>
+                  
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="col-5">
+                  <label for="email" class="col-form-label col-form-label-sm"
+                    ><i class="campo-req">*</i> Correo:</label
+                  >
+                </div>
+                <div class="col-10">
+                  <input formControlName="email"  type="email"  class="form-control form-control-sm" />
+                  <span class="text-danger" 
+                    *ngIf="
+                      form_cementerio.controls['email'].touched &&
+                      form_cementerio.controls['email'].hasError('required')
+                    "
+                  >
+                    <small>Email es requerido!</small>
+                  </span>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      form_cementerio.controls['email'].touched &&
+                      form_cementerio.controls['email'].hasError('email')
+                    "
+                  >
+                    <small>Email no valido!</small>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="col-5">
+                  <label for="logo" class="col-form-label col-form-label-sm"
+                    ><i class="campo-req">*</i> Logo:</label
+                  >
+                </div>
+                <div class="col-10">
+                  <div class="custom-file">
+                    <input
+                      formControlName="logo"
+                      type="file"
+                      class="custom-file-input form-control form-control-sm"
+                      (change)="selectFile($event)"
+                      lang="es"
+                    />
+                    <label
+                      class="custom-file-label col-form-label col-form-label-sm"
+                      for="customFileLang"
+                      >{{ nameLogo }}</label
+                    >
+                  </div>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      form_cementerio.controls['logo'].touched &&
+                      form_cementerio.controls['logo'].hasError('required')
+                    "
+                  >
+                    <small>Logo es requerido!</small>
+                  </span>
+                </div>
+              </div>
+              <div class="col-6" formArrayName="redes">
+                <div class="row col-12">
+                  <div class="col-5">
+                    <label
+                      for="red_social"
+                      class="col-form-label col-form-label-sm"
+                      >Red Social:</label
+                    >
+                  </div>
+                  <div class="col-12 form-row" id="colPlusMinus">
+                    <div
+                      class="col-8"
+                      *ngFor="
+                        let red_social of red_socialFormGroup.controls;
+                        let i = index
+                      "
+                    >
+                      <div [formGroupName]="i" class="row" class="rowRS">
+                        <div class="row">
+                          <div class="col-10" class="rowRed">
+                            <input
+                              class="form-control form-control-sm"
+                              formControlName="redSocial"
+                              type="text"
+                            />
+                            
+                          </div>
+                          <div class="col-2">
+                            <fa-icon [icon]="faMinusCircle" (click)="removeRedSocial(i)"></fa-icon>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-1 d-flex justify-content-center">
+                      <fa-icon [icon]="faPlusCircle" (click)="addRedSocial()"></fa-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-6">
+                <div class="col-5">
+                  <label
+                    for="direccion"
+                    class="col-form-label col-form-label-sm"
+                    ><i class="campo-req">*</i> Dirección:</label
+                  >
+                </div>
+                <div class="col-10">
+                  <input
+                    formControlName="direccion"
+                    type="text"
+                    class="form-control form-control-sm"
+                  />
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      form_cementerio.controls['direccion'].touched &&
+                      form_cementerio.controls['direccion'].hasError('required')
+                    "
+                  >
+                    <small>Dirección es requerido!</small>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group col-6">
+                <div class="col-3">
+                  <label for="mapa" class="col-form-label col-form-label-sm"
+                    ><i class="campo-req">*</i> Mapa:</label
+                  >
+                </div>
+                <div class="col-10">
+                  <div class="form-row">
+                    <div class="card col-9" style="width: 18rem;">
+                      <div *ngIf="this.puntosL.length != 0">
+                        <span class="lNegrita">Mapa cargado</span>
+                      </div>
+                      <div *ngIf="this.puntosL.length == 0">
+                        <span class="lNegrita">Por favor cargue mapa</span>
+                      </div>
+                    </div>
+                    <div class="col-3 text-center">
+                      <button
+                        id="cargarMapaButton"
+                        class="btn btn-warning btn-sm"
+                        type="button"
+                        data-toggle="modal"
+                        data-target="#mapaModal"
+                      >
+                        <fa-icon [icon]="faMapMarkedAlt"></fa-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="container">
+              <div class="row" id="rowButton">
+                <div class="ml-auto">
+                  <button
+                    id="agregarButton"
+                    type="submit"
+                    class="btn"
+                    [disabled]="!form_cementerio.valid"
+                  >
+                    <span>AGREGAR</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" tabindex="-1" id="modalPuntosGeo">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <fa-icon [icon]="faExclamationCircle" class="dangerColor"></fa-icon>
+          Error
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>No ha Cargado puntos del poligono del en el mapa.</p>
+        <p>Por favor llene.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-poligono-map></app-poligono-map>
+
+<!-- <div class="container">
   <div class="about-heading-content">
     <div class="row">
       <div class="col-xl-11 col-lg-11 mx-auto">
@@ -265,8 +545,6 @@
                       </button>
                     </div>
                   </div>
-                  <!-- <span class="text-danger" *ngIf="form_cementerio.controls['mapa'].touched && form_cementerio.controls['mapa'].hasError('required')">
-                              Mapa es requerido! </span> -->
                 </div>
               </div>
             </div>
@@ -314,5 +592,5 @@
     </div>
   </div>
 </div>
-<!-- Modal -->
-<app-poligono-map></app-poligono-map>
+
+<app-poligono-map></app-poligono-map> -->
