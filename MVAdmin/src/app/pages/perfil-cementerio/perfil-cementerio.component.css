@@ -225,3 +225,15 @@
   -moz-border-radius-bottomright: 4px;
   border-bottom-right-radius: 4px;
 }
+
+button {
+  background-color: #a3c442;
+  border: none;
+  color: white;
+  padding: 15px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+
+}

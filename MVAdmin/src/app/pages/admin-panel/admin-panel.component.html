@@ -1,69 +1,58 @@
-<nav aria-label="breadcrumb">
+<!-- <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <!-- <li class="breadcrumb-item"><a routerLink="/inicio/dashboard">Cementerios</a></li> -->
     <li class="breadcrumb-item"><a routerLink="/inicio/perfil/{{this.id.camposanto}}">Inicio</a></li>
     <li class="breadcrumb-item active" aria-current="page">Administradores</li>
   </ol>
-</nav>
-  <div class="row">
-    <div class="col-6">
-      <h1> Listado de administradores</h1>
+</nav> -->
+  <div class="row ml-1 mr-1 align-items-center">
+    <div class="col-md-7 col-xs-12  col-sm-12">
+      <h1>ADMINISTRADORES</h1>
     </div>
-    
-  </div>
-  <div class="btn-toolbar">
-    <button class="btn btn-primary" routerLink="/inicio/create">Agregar administrador</button>
-  </div>
-  <div class="container-fluid">
-    <div>
-      <mat-form-field fxFlex="70%">
-        <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar">
+    <div class="col-md-1 col-xs-12 col-sm-12">
+      <img class="add-icon" src="../../../assets/icons/PUBLICAR.png" routerLink="/inicio/create">
+    </div>
+    <div class="col-md-4 col-xs-12 col-sm-12" style="font-size: 12px; margin-top: 1px;">
+      <mat-form-field appearance="fill">
+        <input matInput type="text" (keyup)="doFilter($event.target.value)"  placeholder="Buscar">
+        <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
     </div>
+  </div>
+  <div class="container-fluid">
+    
   
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 punteroHand">
-      <ng-container matColumnDef="first_name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-        <td mat-cell *matCellDef="let element"> {{element.first_name}} </td>
-      </ng-container>
-      <ng-container matColumnDef="last_name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos </th>
-        <td mat-cell *matCellDef="let element"> {{element.last_name}} </td>
+      <ng-container matColumnDef="names">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
+        <td mat-cell *matCellDef="let element"> {{element.first_name}} {{element.last_name}}</td>
       </ng-container>
       <ng-container matColumnDef="username">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
+        <th mat-header-cell *matHeaderCellDef > USERNAME </th>
         <td mat-cell *matCellDef="let element"> {{element.username}} </td>
       </ng-container>
       <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo </th>
+        <th mat-header-cell *matHeaderCellDef> CORREO </th>
         <td mat-cell *matCellDef="let element"> {{element.email}} </td>
       </ng-container>
       
       <ng-container matColumnDef="Detalle">
-        <th mat-header-cell *matHeaderCellDef> Detalle </th>
+        <th mat-header-cell *matHeaderCellDef> DETALLE </th>
         <td mat-cell *matCellDef="let element">
-          <button mat-icon-button (click)="selectRow(mytemplate, element)" style="outline: none; border: 0;">
-            <mat-icon class="details-icon">info</mat-icon>
-          </button>
+            <mat-icon matSuffix (click)="selectRow(mytemplate, element)" >info</mat-icon>
         </td>
   
       </ng-container>
       <ng-container matColumnDef="update">
-        <th mat-header-cell *matHeaderCellDef> Update </th>
+        <th mat-header-cell *matHeaderCellDef> EDITAR </th>
         <td mat-cell *matCellDef="let element">
-          <button mat-icon-button style="outline: none; border: 0;" (click)="redirectToUpdate(element)">
-            <mat-icon class="update-icon">edit</mat-icon>
-          </button>
+            <img (click)="redirectToUpdate(element)" src="../../../assets/icons/EDITAR.png">
         </td>
       </ng-container>
       <ng-container matColumnDef="delete">
-        <th mat-header-cell *matHeaderCellDef> Delete </th>
+        <th mat-header-cell *matHeaderCellDef> ELIMINAR </th>
         <td mat-cell *matCellDef="let element">
-          
-          <button mat-icon-button style="outline: none; border: 0;" (click)="redirectToDelete(element)">
-            <mat-icon *ngIf="element.is_active==true"class="delete-icon">block</mat-icon>
-            <mat-icon *ngIf="element.is_active==false"class="delete-icon">check_circle</mat-icon>
-          </button>
+            <mat-icon *ngIf="element.is_active==true"class="delete-icon"(click)="redirectToDelete(element)"  matSuffix>delete</mat-icon>
+            <mat-icon *ngIf="element.is_active==false"class="delete-icon" (click)="redirectToDelete(element)" matSuffix>check_circle</mat-icon>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
