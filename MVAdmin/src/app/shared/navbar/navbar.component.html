@@ -1,6 +1,6 @@
 <nz-header>
-  <ul nz-menu nzTheme="dark" nzMode="horizontal">
-    <li nz-menu-item>
+  <ul nz-menu nzTheme="dark" nzMode="horizontal" id="ulGeneral">
+    <li id="buttonColapse">
       <i
         class="trigger"
         nz-icon
@@ -9,11 +9,17 @@
         (click)="cambiar()"
       ></i>
     </li>
-
+    <li>
+      <img src="assets/icons/LOGO.png" alt="" id="logo">
+    </li>
+    <li>
+      <h6>{{nombreEmpresa}} {{nombreCamposanto}}</h6>
+    </li>
     <li class="alinear">
+      <span (click)="logout()" id="spanLogout" ><img src="assets/icons/INICIO.png" alt="" id="imgInicio"> <b>Cerrar Sesión</b></span>
       <!-- <span class="paddingCont">{{nameUsuario}}</span>
             <button nz-button nzType="primary" class="paddingCont">Salir</button> -->
-      <nz-button-group>
+      <!-- <nz-button-group>
         <button nz-button>{{ nameUsuario }}</button>
         <button
           nz-button
@@ -39,7 +45,7 @@
             <span>Salir</span>
           </li>
         </ul>
-      </nz-dropdown-menu>
+      </nz-dropdown-menu> -->
     </li>
   </ul>
 </nz-header>

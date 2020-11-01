@@ -1,43 +1,42 @@
-<div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header card-title text-center" style="font-weight: 400;">
-            <h1> Inicio de sesión</h1>
+<div id="divFondo">
+  <img src="assets/fondo1.png" alt="" id="fondoDiv">
+    <div class="" id="containerLogo">
+      <div id="formCol">
+          <div id="divImg">
+            <img src="assets/icons/LOGO.png" alt="" id="fondoImg">
           </div>
-          <div class="card-body">
+          <div id="divForm">
             <form [formGroup]="form_login" (submit)="submit()">
-              <div class="form-group row">
-                <label for="username_address" class="col-md-4 col-form-label text-md-right">Nombre de usuario</label>
-                <div class="col-md-6">
-                  <input formControlName="username"  type="text" id="email_address" class="form-control" name="username-address" required autofocus>
+              <div class="divInput">
+                <div class="form-group">
+                  <input formControlName="username" placeholder="nombre de usuario"  type="text" id="email_address" class="form-control" name="username-address" required autofocus>
                 </div>
                 <span class="text-danger small" *ngIf="form_login.controls['username'].touched && form_login.controls['username'].hasError('required')">
                   Username es requerido! </span>
-              </div>
-  
-  
-              <div class="form-group row">
-                <label for="password" class="col-md-4 col-form-label text-md-right">Contraseña</label>
-                <div class="col-md-6">
-                  <input formControlName="contrasena" type="password" id="password" class="form-control" name="password" required>
+
+                <div class="form-group">
+                  <input formControlName="contrasena" placeholder="contraseña" type="password" id="password" class="form-control" name="password" required>
                 </div>
                 <span class="text-danger small" *ngIf="form_login.controls['contrasena'].touched && form_login.controls['contrasena'].hasError('required')">
                   Contraseña es requerida! </span>
               </div>
-  
-              
-              <div class="col-md-6 offset-md-4">
-                <button [disabled]="!this.form_login.valid" type="submit" class="btn btn-primary">
-                  Ingresar
-                </button>
-                <a href="#" class="btn btn-link">
-                  ¿Olvidaste la contraseña?
-                </a>
+              <div id="divContrasena">
+                <small> 
+                  <b>
+                    <a href="#" class="btn btn-link">
+                      ¿Olvidaste la contraseña?
+                    </a>
+                  </b>
+                </small>
               </div>
-            </form>
-          </div>
+              <div id="divButton">
+                <button [disabled]="!this.form_login.valid" type="submit" class="btn">
+                  Iniciar Sesión
+                </button>
+              </div>
+          </form>
         </div>
-      </div>
     </div>
+  </div>
+</div>
   

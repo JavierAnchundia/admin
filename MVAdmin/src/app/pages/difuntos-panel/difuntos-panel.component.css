@@ -1,41 +1,113 @@
-i{
-    font-size: 20px;
-    padding: 10px;
-    color:rgba(6, 111, 231, 0.87);
-}
-
-.btn-toolbar{
-    padding: 10px;
-}
-
 table {
     width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
     min-width: 500px;
 }
-th.mat-header-cell {
-    text-align: left;
-    max-width: 300px;
-}
-
-.details-icon {
-    color:rgba(6, 111, 231, 0.87);
-    outline: none; 
-    border: 0;
-}
-
-.delete-icon {
-    color:rgba(236, 50, 3, 0.966);
-    outline: none; 
-    border: 0;
-}
-
-.update-icon {
-    color:rgba(39, 193, 231, 0.87);
-    background-color: none;
-}
 
 .punteroHand{
     cursor:pointer; cursor: hand
 }
+
+th.mat-header-cell {
+  font-size: 14px;
+  text-align: center !important;
+  background: #a3c442 !important;
+  color: white;
+  font-weight: normal;
+  justify-content: center !important;
+  align-items: center !important;
+
+}
+
+th.mat-header-cell.mat-sort-header {
+  font-size: 14px;
+  text-align: center !important;
+  background: #a3c442 !important;
+  color: white;
+  justify-content: center !important;
+  font-weight: normal;
+  align-items: center !important;
+}
+
+.add-icon {
+    width: 40px;
+    height: auto;
+    cursor: pointer;
+    align-items: center;
+    padding-top: 0px;
+    margin-top: 0px;
+  }
+  
+  img{
+    width: 20px;
+    height: auto;
+  }
+
+  h1 {
+    font-weight: bolder;
+    font-size: x-large;
+  }
+
+  .title {
+    font-weight: bolder;
+  }
+  
+  input.matInput {
+    box-shadow: none;
+    border: none;
+    font-weight: normal;
+    font-size: 12px;
+    background-color: #edeef0;
+    color: #87868a;
+    height: 40px;
+    width: 100%;
+    margin: 2px;
+    text-align: center;
+    align-items: center;
+  }
+
+  th.mat-row {
+    padding: 15px 5px;
+    text-align: center !important;
+
+    
+  }
+
+  .mat-row:nth-child(even) {
+    background-color: #edeef0;
+    text-align: center !important;
+    
+  }
+  
+  .mat-row:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.952);
+    text-align: center !important;
+
+  }
+
+  mat-form-field {
+    width: 100%;
+    height: 50% !important;
+  }
+
+::ng-deep .mat-form-field-underline {
+    display: none;
+}
+
+button {
+  background-color: #a3c442;
+  border: none;
+  color: white;
+  padding: 15px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+
+}
+
+.mat-cell, .mat-header-cell {
+  border: none !important;
+}
+

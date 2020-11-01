@@ -1,44 +1,90 @@
-body{
-    margin: 0;
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 1.6;
-    color: #0a0a0a;
-    text-align: left;
-    background-color: #f5f8fa;
+#divFondo{
+    width: 100%;
+    height: 100%;
+}
+#fondoDiv{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+#containerLogo{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#formCol{
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 35%;
+    height: 68%;
+    background: white;
+    border-radius: 15px;
+}
+#divImg{
+    text-align: center;
+    margin: 15% 0 10%;
+}
+#fondoImg{
+    width: 60%;
 }
 
-h1 {
-    font-size: 2.2em;
-    margin-bottom: 0;
-    color: rgb(35, 98, 180);
-  }
-
-label{
-    font-size: 20px;
+#divForm{
+    width: 100%;
+    height: 100%;
+}
+form{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.divInput{
+    width: 100%;
+    height: 100%;
+    padding: 0 20% 0;
+    margin-top: 25px;
+}
+input{
+    background: #edeef0;
+    color: #87868a;
+    font-size: 0.8em;
 }
 
-.my-form
-{
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+#divContrasena{
+    width: 100%;
+    height: 100%;
+    padding: 0 20% 0;
+    text-align: end;
+}
+.form-group{
+    margin-bottom: 20px;
+}
+a{
+    color: #000000;
+    font-size: 0.8em;
+}
+#divButton{
+    padding: 0 15% 0;
+    width: 100%;
 }
 
-.my-form .row
-{
-    margin-left: 0;
-    margin-right: 0;
+button{
+    width: 100%;
+    margin-bottom: 30px;
+    font-size: 0.85em;
+    background: #a3c442;
+    color: #ffffff;
+    border-radius: 0px;
 }
-
-.login-form
-{
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+#cruz{
+    width: 100%;
+    height: 100%;
+    position: absolute;
 }
-
-.login-form .row
-{
-    margin-left: 0;
-    margin-right: 0;
-}
-

@@ -25,7 +25,7 @@ export class AdminPanelComponent implements OnInit,AfterViewInit  {
  
   public dataSource = new MatTableDataSource<Usuario>();
   public rowID:Usuario[];
-  public displayedColumns = ['first_name', 'last_name','username', 'email', 'Detalle','update','delete'];
+  public displayedColumns = ['names','username', 'email', 'Detalle','update','delete'];
 
 
 

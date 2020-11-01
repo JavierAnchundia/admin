@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 })
 export class CrearAdminGuard implements CanActivate {
   user: any;
-  permiso_pagina: String = 'registrar_admi';
+  permiso_pagina: String = 'registrar_admin';
   constructor(
     private auth: UsuarioService,
     private _permiso: PermisosService,

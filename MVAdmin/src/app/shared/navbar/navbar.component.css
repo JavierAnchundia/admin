@@ -5,22 +5,67 @@
     transition: color 0.3s;
 }
 .trigger:hover {
-    color: #1890ff;
+    color:  #819b35;
 }
+.ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+    background-color: #f7f7f8;
+    color: #819b35;
+}
+
 .alinear{
-    margin-right: 10px;
-    float: right;
+    margin-right: 50px;
 }
-.paddingCont{
-    margin-right: 25px;
-}
+
 nz-header {
-    background: #fff;
+    height: 95px;
+    background: #f7f7f8;
     padding: 0;
-    position: fixed;
-    width: 100%;
     z-index: 999;
+}
+#buttonColapse{
+    margin: 0 25px 0;
+    color:  #a3c442;
+}
+.trigger{
+    font-size: 1.5em;
+}
+
+ul li:nth-child(2){
+    width: 90%;
+}
+
+#logo{
+    width: 65%;
+}
+
+h6{
+    font: 1.2em;
+    font-weight: 900;
+}
+.ant-menu.ant-menu-dark, .ant-menu-dark .ant-menu-sub {
+    color:  #000000;
+    background: #f7f7f8;
+}
+
+#imgInicio{
+    width: 15px;
+    margin-right: 10px;
+}
+#spanLogout:hover{
+    cursor: pointer;
+}
+
+#ulGeneral{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 nz-button-group {
     margin: 0 8px 8px 0;
+}
+
+li:nth-child(4){
+    width: 100%;
+    text-align: end;
 }

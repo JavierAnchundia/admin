@@ -3,6 +3,7 @@ import { ComunicateNavSiderService } from '../../services/comunicatens/comunicat
 import { UsuarioService } from '../../services/usuario/usuario.service';
 import Swal from 'sweetalert2'
 import { Router } from '@angular/router';
+import { CamposantoService } from 'src/app/services/servicios.index';
 
 @Component({
   selector: 'app-navbar',
@@ -15,27 +16,26 @@ export class NavbarComponent implements OnInit {
   id: any;
   isCollapsed = false;
   loggeduser = false;
-
-
+  nombreCamposanto: String = "";
+  nombreEmpresa: String = "";
   constructor(
     private comunicateNSService: ComunicateNavSiderService,
     private _usuario: UsuarioService,
-    public router: Router
+    private router: Router,
+    private _servCamposanto: CamposantoService
   ) { }
 
-
-  cambiar() {
-    this.comunicateNSService.toggle();
-    let shand = document.getElementsByClassName('contenido') as HTMLCollectionOf<HTMLElement>;
-    if (this.isCollapsed == true) {
-      shand[0].style.marginLeft = "100px";
-    } else {
-      shand[0].style.marginLeft = "218px";
-    }
-  }
   ngOnInit(): void {
     this.id = JSON.stringify(localStorage.getItem('id'));
+    let camposanto = JSON.parse(localStorage.getItem('camposanto'))
+    this.setNombreCamposanto(camposanto);
+    this.setNombreEmpresa(camposanto);
+    this.setRolUser();
     //this.getUser();
+    
+  }
+
+  setRolUser(){
     let tipo = localStorage.getItem('tipo_user');
     if(tipo == 'ha'){
       this.tipoUsuario = 'Hyper Administrador';
@@ -50,7 +50,39 @@ export class NavbarComponent implements OnInit {
     this.nameUsuario = localStorage.getItem('username');
     console.log(this.loggeduser)
   }
+  cambiar() {
+    this.comunicateNSService.toggle();
+    let shand = document.getElementsByClassName('contenido') as HTMLCollectionOf<HTMLElement>;
+    let divSpan = document.getElementById('divSpan');
+    let logoDivAvatar = document.getElementById('logoDivAvatar');
+    if (this.isCollapsed == true) {
+      divSpan.style.display = "none";
+      shand[0].style.marginLeft = "80px";
+      logoDivAvatar.style.height = "95px";
+    } else {
+      shand[0].style.marginLeft = "200px";
+      divSpan.style.display = "block";
+      logoDivAvatar.style.height = "25%";
+    }
+  }
 
+  setNombreCamposanto(camposanto){
+    let idCamposanto = camposanto['camposanto'];
+    this._servCamposanto.getCamposantoByID(idCamposanto).subscribe(
+      (resp) => {
+        this.nombreCamposanto = resp['nombre'];
+      }
+    )
+  }
+
+  setNombreEmpresa(camposanto){
+    let idEmpresa = camposanto['empresa'];
+    this._servCamposanto.getEmpresa(idEmpresa).subscribe(
+      (resp) => {
+        this.nombreEmpresa = resp['nombre'];
+      }
+    )
+  }
   getUser() {
     this._usuario.getUserId(this.id.user_id)
       .subscribe((resp: any) => {

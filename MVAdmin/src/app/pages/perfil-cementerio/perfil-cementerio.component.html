@@ -1,8 +1,8 @@
-<section id="cemetery-title">
+<!-- <section id="cemetery-title">
   <div class="container">
     <h1 class="section-title">{{empresa.nombre}}</h1>
   </div>
-</section>
+</section> -->
 <div class="container">
   <div class="row">
     <div class="col-6 col-xs-4 item-photo">
@@ -17,11 +17,11 @@
       <div class="justify-content-center;">
         <table class="">
           <tbody>
-            <tr>
+            <!-- <tr>
               <td class="h6"><strong>Nombre cementerio: </strong></td>
               <td></td>
               <td class="p">{{ camposanto.nombre }}</td>
-            </tr>
+            </tr> -->
 
             <tr>
               <td class="h6"><strong>Dirección:</strong></td>
@@ -91,30 +91,38 @@
         <div class="col">
           <button
             type="button"
-            class="btn btn-secondary btn-sm"
             data-toggle="modal"
             data-target="#verMapa"
           >
           <fa-icon [icon]="faMapMarkedAlt"></fa-icon>
-            Ver mapa
+            VER MAPA
           </button>
         </div>
         <div class="col">
           <button
             type="button"
-            class="btn btn-secondary btn-sm"
+            data-toggle="modal"
+            data-target="#exampleModalCenter"
+          >
+            EDITAR PERFIL
+          </button>
+        </div>
+        <div class="col">
+          <button
+            type="button"
+            
             data-toggle="modal"
             data-target="#mapaModalEditar"
           >
           <fa-icon [icon]="faMapMarker"></fa-icon>
-            Editar
+            EDITAR MAPA
           </button>
         </div>
       </div>
     </div>
   </div>
 </div>
-<br>
+<!-- <br>
 <div class="row btn-group-wrap">
   <div class="btn-group">
     <button
@@ -139,7 +147,7 @@
       Editar perfil
     </button>
   </div>
-</div>
+</div> -->
 <!-- Modal -->
 <div
   class="modal fade"

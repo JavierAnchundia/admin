@@ -6,7 +6,8 @@ import { LoginComponent } from './login/login/login.component';
  import{ } from './pages/pages.module'
 import { ErrorpageComponent } from './errorpage/errorpage.component';
 import { AuthGuard } from './guards/auth/auth.guard';
-
+import { DashboardComponent } from 'src/app/pages/dashboard/dashboard.component';
+import { SadminCrearCementerioComponent } from 'src/app/pages/sadmin-crear-cementerio/sadmin-crear-cementerio.component'
 const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     {
@@ -14,6 +15,11 @@ const appRoutes: Routes = [
         component: PagesComponent,
         loadChildren: './pages/pages.module#PagesModule'
     },
+    {
+        path: 'dashboard' , component:DashboardComponent, data:{ titulo:' DashBoard '},
+        canActivate: [AuthGuard] 
+    },
+    { path: 'crear', component: SadminCrearCementerioComponent, data: { titulo: 'CrearCementerio' }},
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     {path: '404', component: ErrorpageComponent},
     {path: '**', redirectTo: '/404'}

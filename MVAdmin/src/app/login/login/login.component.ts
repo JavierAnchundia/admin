@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit {
         // console.log('///',data['id_camposanto'])
         // this.cargarCamposanto(data['id_camposanto']);
         if(data['tipo_usuario'] == 'ha'){
-          this.router.navigate(['/inicio/dashboard']);
+          this.router.navigate(['/dashboard']);
         }
         else if(data['tipo_usuario'] == 'su'){
           this.router.navigate(['/inicio/perfil/'+data['id_camposanto']]);

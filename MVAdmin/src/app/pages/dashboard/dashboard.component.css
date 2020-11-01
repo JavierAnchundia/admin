@@ -23,5 +23,21 @@ p.descripcionCementerio{
 }
 
 .punteroHand{
-    cursor:pointer; cursor: hand
+    cursor:pointer; 
+    cursor: hand;
+}
+
+nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    background-color: transparent !important;
+}
+
+li:nth-child(1){
+    margin-right: 25px;
+}
+
+li:nth-child(2){
+    margin-right: 10px;
 }

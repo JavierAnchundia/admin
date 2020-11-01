@@ -1,28 +1,23 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a routerLink="/inicio/dashboard">Cementerios</a></li>
-    <li class="breadcrumb-item active" aria-current="page">
-      Registrar Camposanto
-    </li>
-  </ol>
-</nav>
-<div class="container">
-  <div class="about-heading-content">
-    <div class="row">
-      <div class="col-xl-11 col-lg-11 mx-auto">
-        <div class="bg-faded rounded p-2">
-          <h2 class="section-heading mb-4">
-            <span class="section-heading-lower">Registrar Camposanto</span>
-          </h2>
-          <br />
-          <form [formGroup]="form_cementerio" (submit)="submit()" enctype="multipart/form-data">
-            <div class="form-row">
-              <div class="form-group row col-6">
-                <div class="col-3">
+<div id="divFondo">
+  <img src="assets/fondo.png" alt="" id="fondoDiv">
+  <div id="containerLogo">
+    <div id="formCol">
+      <div id="closeIconTimes">
+        <fa-icon [icon]="faTimes" (click)="regresarDashboard()" id="faIconClose"></fa-icon>
+      </div>
+      <div id="divImg">
+        <img src="assets/icons/LOGO.png" alt="" id="fondoImg">
+      </div>
+      <div id="divForm">
+        <label id="addCementerioLabel">AGREGAR CEMENTERIO</label>
+        <form [formGroup]="form_cementerio" (submit)="submit()" enctype="multipart/form-data">
+            <div class="row">
+              <div class="col-6">
+                <div class="col-5">
                   <label for="nombre" class="col-form-label col-form-label-sm"
                     ><i class="campo-req">*</i> Nombre:</label>
                 </div>
-                <div class="col-8">
+                <div class="col-10">
                   <input
                     formControlName="nombre"
                     type="text"
@@ -38,13 +33,13 @@
                   </span>
                 </div>
               </div>
-              <div class="form-group row col-6">
-                <div class="col-3">
+              <div class="col-6">
+                <div class="col-5">
                   <label for="ruc" class="col-form-label col-form-label-sm"
                     ><i class="campo-req">*</i> Empresa:</label
                   >
                 </div>
-                <div class="col-8">
+                <div class="col-10">
                   <select class="custom-select form-control form-control-sm"
                     formControlName="empresa" type="text">
                     <option *ngFor="let empre of empresas; let i = index" [value]="empre.id_empresa">{{ empre.nombre }}</option>
@@ -58,16 +53,15 @@
                 </div>
               </div>
             </div>
-            <br />
-            <div class="form-row">
-              <div class="form-group row col-6">
-                <div class="col-3">
+            <div class="row">
+              <div class="col-6">
+                <div class="col-5">
                   <label for="telefono" class="col-form-label col-form-label-sm">
                     <i class="campo-req">*</i>
                     Teléfono:
                   </label>
                 </div>
-                <div class="col-8">
+                <div class="col-10">
                   <input formControlName="telefono" [pattern]="numericNumberReg" type="text" 
                   minlength="7" maxlength="10"  class="form-control form-control-sm"
                   />
@@ -87,13 +81,13 @@
                   
                 </div>
               </div>
-              <div class="form-group row col-6">
-                <div class="col-3">
+              <div class="col-6">
+                <div class="col-5">
                   <label for="email" class="col-form-label col-form-label-sm"
                     ><i class="campo-req">*</i> Correo:</label
                   >
                 </div>
-                <div class="col-8">
+                <div class="col-10">
                   <input formControlName="email"  type="email"  class="form-control form-control-sm" />
                   <span class="text-danger" 
                     *ngIf="
@@ -115,15 +109,14 @@
                 </div>
               </div>
             </div>
-            <br />
-            <div class="form-row">
-              <div class="form-group row col-6">
-                <div class="col-3">
+            <div class="row">
+              <div class="col-6">
+                <div class="col-5">
                   <label for="logo" class="col-form-label col-form-label-sm"
                     ><i class="campo-req">*</i> Logo:</label
                   >
                 </div>
-                <div class="col-8">
+                <div class="col-10">
                   <div class="custom-file">
                     <input
                       formControlName="logo"
@@ -149,72 +142,56 @@
                   </span>
                 </div>
               </div>
-              <div class="form-group row col-6" formArrayName="redes">
+              <div class="col-6" formArrayName="redes">
                 <div class="row col-12">
-                  <div class="col-3">
+                  <div class="col-5">
                     <label
                       for="red_social"
                       class="col-form-label col-form-label-sm"
                       >Red Social:</label
                     >
                   </div>
-                  <div class="form-group col-9">
+                  <div class="col-12 form-row" id="colPlusMinus">
                     <div
-                      class="col"
+                      class="col-8"
                       *ngFor="
                         let red_social of red_socialFormGroup.controls;
                         let i = index
                       "
                     >
-                      <div [formGroupName]="i" class="row">
-                        <div class="form-group row col">
-                          <div class="col-10">
+                      <div [formGroupName]="i" class="row" class="rowRS">
+                        <div class="row">
+                          <div class="col-10" class="rowRed">
                             <input
                               class="form-control form-control-sm"
                               formControlName="redSocial"
                               type="text"
                             />
+                            
                           </div>
                           <div class="col-2">
-                            <button
-                              class="btn btn-danger btn-sm"
-                              type="button"
-                              (click)="removeRedSocial(i)"
-                            >
-                              <fa-icon [icon]="faMinusCircle"></fa-icon>
-                            </button>
+                            <fa-icon [icon]="faMinusCircle" (click)="removeRedSocial(i)"></fa-icon>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div class="container">
-                  <div class="row">
-                    <div class="mx-auto">
-                      <button
-                        class="btn btn-success btn-sm"
-                        type="button"
-                        (click)="addRedSocial()"
-                      >
-                        <fa-icon [icon]="faPlusCircle"></fa-icon>
-                      </button>
+                    <div class="col-1 d-flex justify-content-center">
+                      <fa-icon [icon]="faPlusCircle" (click)="addRedSocial()"></fa-icon>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <br />
-            <div class="form-row">
-              <div class="form-group row col-6">
-                <div class="col-3">
+            <div class="row">
+              <div class="form-group col-6">
+                <div class="col-5">
                   <label
                     for="direccion"
                     class="col-form-label col-form-label-sm"
                     ><i class="campo-req">*</i> Dirección:</label
                   >
                 </div>
-                <div class="col-8">
+                <div class="col-10">
                   <input
                     formControlName="direccion"
                     type="text"
@@ -231,31 +208,25 @@
                   </span>
                 </div>
               </div>
-              <div class="form-group row col-6">
+              <div class="form-group col-6">
                 <div class="col-3">
                   <label for="mapa" class="col-form-label col-form-label-sm"
                     ><i class="campo-req">*</i> Mapa:</label
                   >
                 </div>
-                <div class="col-8">
+                <div class="col-10">
                   <div class="form-row">
                     <div class="card col-9" style="width: 18rem;">
-                      <ul class="list-group list-group-flush">
-                        <li
-                          class="list-group-item sizeFont"
-                          *ngFor="let punto of puntosL; let i = index"
-                        >
-                          <div>
-                            <span class="lNegrita">Lat: </span>{{ punto.lat }}
-                          </div>
-                          <div>
-                            <span class="lNegrita">Lng: </span>{{ punto.lng }}
-                          </div>
-                        </li>
-                      </ul>
+                      <div *ngIf="this.puntosL.length != 0">
+                        <span class="lNegrita">Mapa cargado</span>
+                      </div>
+                      <div *ngIf="this.puntosL.length == 0">
+                        <span class="lNegrita">Por favor cargue mapa</span>
+                      </div>
                     </div>
                     <div class="col-3 text-center">
                       <button
+                        id="cargarMapaButton"
                         class="btn btn-warning btn-sm"
                         type="button"
                         data-toggle="modal"
@@ -265,27 +236,25 @@
                       </button>
                     </div>
                   </div>
-                  <!-- <span class="text-danger" *ngIf="form_cementerio.controls['mapa'].touched && form_cementerio.controls['mapa'].hasError('required')">
-                              Mapa es requerido! </span> -->
                 </div>
               </div>
             </div>
             <br />
             <div class="container">
-              <div class="row">
-                <div class="mx-auto">
+              <div class="row" id="rowButton">
+                <div class="ml-auto">
                   <button
+                    id="agregarButton"
                     type="submit"
-                    class="btn btn-primary"
+                    class="btn"
                     [disabled]="!form_cementerio.valid"
                   >
-                    Guardar
+                    <span>AGREGAR</span>
                   </button>
                 </div>
               </div>
             </div>
           </form>
-        </div>
       </div>
     </div>
   </div>
@@ -314,5 +283,5 @@
     </div>
   </div>
 </div>
-<!-- Modal -->
+
 <app-poligono-map></app-poligono-map>
