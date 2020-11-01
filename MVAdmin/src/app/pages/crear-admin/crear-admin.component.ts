@@ -422,7 +422,11 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
       }
     }
     Swal.close();
-    Swal.fire('¡Registro Exitoso!');
+    if(this._editar.getMetodoConexion() == "POST"){
+    Swal.fire('¡Registro Exitoso!');}
+    else{
+      Swal.fire('¡Actualización Exitosa!');
+    }
     this.router.navigate(['/inicio/administradores']);
 
   }

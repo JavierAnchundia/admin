@@ -388,7 +388,7 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
             console.log(this.difunto.id_difunto);
             this.crearResponsable(this.difunto.id_difunto);
             Swal.close();
-            Swal.fire("Registro exitoso")
+            Swal.fire("¡Actualización exitosa!")
             this.difuntoForm.reset();
             this.router.navigate(['/inicio/difuntos']);
             return true;
@@ -474,6 +474,15 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
     } */
     console.log(this.responsableForm.value.correo)
     formData.append('id_difunto', id);
+
+    console.log("Estoy revisando los datos del formData")
+    console.log(formData.get("celular"))
+    console.log(formData.get("nombre"));
+    console.log(formData.get("apellido"))
+    console.log(formData.get("telefono"))
+    console.log(formData.get("direccion"))
+    console.log(this.difunto.id_difunto)
+
 
     if (this._editar.getMetodoConexion() == "PUT") {
 
