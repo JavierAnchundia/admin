@@ -17,7 +17,8 @@ import { RenderizareditService } from '../../services/renderizaredit/renderizare
 import { Responsable_difunto } from '../../models/responsable_difunto.model'
 import { Tipo_sepultura } from '../../models/tipo_sepultura.model'
 import { Sector } from '../../models/sector.model'
-
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: 'app-registro-difunto',
@@ -73,10 +74,27 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
     private _servicioGeo: GeolocalizacionService,
     private router: Router,
     public _editar: RenderizareditService,
-  ) { }
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer,
+  ) { 
+    this.matIconRegistry.addSvgIcon(
+      "flecha2",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../../../assets/icons/flecha2.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "inhabilitada",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../../../assets/icons/inhabilitada.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "habilitada",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../../../assets/icons/habilitada.svg")
+    );
+  }
+
   ngOnDestroy(): void {
     this._editar.setMetodoConexion("POST");
   }
+  
   ngOnInit(): void {
     //Aqui se puede revisar el servicios y si aun no se han cargado los datos, entonces ponerle un wait here or something like that 
     this.id = JSON.parse(localStorage.getItem('camposanto'));

@@ -50,14 +50,12 @@ export class AdminPanelComponent implements OnInit,AfterViewInit  {
     .subscribe((resp:any)=>{
       this.lista_admin = [];
       for (var i =0; i < resp.length; i++){
-        console.log(resp[i])
+        
         if((resp[i]['tipo_usuario']=="ad")|| (resp[i]['tipo_usuario']=="su")){
             this.lista_admin.push(resp[i]);
         }
       }
-      console.log(this.lista_admin)
       this.dataSource.data = this.lista_admin;
-      console.log(this.dataSource.data)
 
     }
       )
@@ -81,8 +79,7 @@ export class AdminPanelComponent implements OnInit,AfterViewInit  {
     await this._permiso.getMisPermisos(this.rowID['id'])
     .then((resp:any)=>{
       misPermisos = resp;
-      console.log(resp);
-      console.log(typeof(resp));
+     
       
     })
     

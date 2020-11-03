@@ -1,7 +1,7 @@
-// const URL_ROOT = 'http://localhost:8000/api'
-// const URL_ROOT_AUTH = 'http://localhost:8000'
-const URL_ROOT = 'https://carmsanc.pythonanywhere.com/api'
-const URL_ROOT_AUTH = 'https://carmsanc.pythonanywhere.com'
+ const URL_ROOT = 'http://localhost:8000/api'
+ const URL_ROOT_AUTH = 'http://localhost:8000'
+//const URL_ROOT = 'https://carmsanc.pythonanywhere.com/api'
+//const URL_ROOT_AUTH = 'https://carmsanc.pythonanywhere.com'
 const URL_SERVICIOS = {
     url_backend: URL_ROOT_AUTH,
     camposantos : URL_ROOT + '/camposantos/',

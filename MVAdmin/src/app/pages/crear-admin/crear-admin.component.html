@@ -1,35 +1,61 @@
-<nav aria-label="breadcrumb">
+
+<!--<nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <!-- <li class="breadcrumb-item"><a routerLink="/inicio/dashboard">Cementerios</a></li> -->
+      <!- <li class="breadcrumb-item"><a routerLink="/inicio/dashboard">Cementerios</a></li> ->
       <li class="breadcrumb-item"><a routerLink="/inicio/perfil/{{this.id.camposanto}}">Inicio</a></li>
       <li class="breadcrumb-item"><a routerLink="/inicio/administradores">Administradores</a></li>
       <li class="breadcrumb-item active" aria-current="page">Crear Administrador</li>
     </ol>
-  </nav>
+</nav> -->
   
-  <div *ngIf="!editando"class="row" >
-    <div class="col-12">
-      <h1>Registro de administrador</h1>
+  <div *ngIf="!editando"class="row mt-2" >
+    <div class="col-2 ml-3 mr-4">
+      <a class="titulo font-weight-bold " routerLink="/inicio/administradores">ADMINISTRADORES</a>
+    </div>
+    <div class= "col-auto m-0 p-0 ">
+      <mat-icon class="icono m-0 p-0 mt-2 " svgIcon="flecha2" ></mat-icon>
+    </div>
+    <div class="col-4 ml-0 pr-5 mr-5">
+      <h2 class="subtitulo ml-0 pl-0 mt-2">Creación de administrador</h2>
     </div>
   </div>
 
-  <div *ngIf="editando" class="row" >
-    <div class="col-12">
-      <h1>Editar administrador</h1>
+  <div *ngIf="editando" class="row mt-2" >
+    <div class="col-2 ml-3 mr-4">
+      <a class="titulo font-weight-bold " routerLink="/inicio/administradores">ADMINISTRADORES</a>
+    </div>
+    <div class= "col-auto m-0 p-0 ">
+      <mat-icon class="icono m-0 p-0 mt-2 " svgIcon="flecha2" ></mat-icon>
+    </div>
+    <div class="col-4 ml-0 pr-5 mr-5">
+      <h2 class="subtitulo ml-0 pl-0 mt-2">Editar administrador</h2>
     </div>
   </div>
 
   <br>
-  <div class="container-fluid">
+  <div class="container-fluid mt-4 ml-5">
     
     <div class="row">
       <div class="col-12">
         <form [formGroup]="adminForm" (ngSubmit)="onSubmit()">
           <div class="row">
+
+            <div class="col-5">
+              <div class="form-group">
+                <label for="firstName" class="font-weight-bold"> Nombres:</label>
+                <input id="firstName" type="text" formControlName="firstName" class="form-control form-control-lg inputs"
+                  [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" required/>
+                <div *ngIf=" firstName.invalid && (firstName.dirty || firstName.touched)" >
+                  <div *ngIf="firstName.errors.required" class="text-danger"><small>Ingresar nombres</small></div>
+                </div>
+              </div>
+  
+            </div>
+
             <div class="col-5">
                 <div class="form-group">
-                  <label for="usuario"><i class="campo-req">*</i> Nombre de Usuario</label>
-                  <input id="usuario" type="text"  class="form-control form-control-sm" formControlName="usuario"
+                  <label for="usuario" class="font-weight-bold"> Nombre de usuario:</label>
+                  <input id="usuario" type="text"  class="form-control form-control-lg inputs " formControlName="usuario"
                    required [ngClass]="{ 'is-invalid': submitted && usuario.errors }"/>
                   <div *ngIf=" usuario.invalid && (usuario.dirty || usuario.touched)" class="">
                     <div *ngIf="usuario.errors.required " class="text-danger"><small>Ingresar un nombre de usuario</small></div>
@@ -38,11 +64,24 @@
                 </div>
     
             </div>
+            
+            <div class="col-5"> 
+              <div class="form-group">
+                <label for="lastName" class="font-weight-bold"> Apellidos:</label>
+                <input id="lastName" type="text" formControlName="lastName" class="form-control form-control-lg inputs"
+                  [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+                <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" >
+                  <div *ngIf="lastName.errors.required" class="text-danger"><small>Ingresar apellidos</small></div>
+                </div>
+              </div>
+            </div>
+
+           
 
             <div class="col-5">
                 <div class="form-group">
-                  <label for="correo"><i class="campo-req">*</i> Correo</label>
-                  <input id="correo" type="text" formControlName="correo" class="form-control form-control-sm"
+                  <label for="correo" class="font-weight-bold"> Correo electrónico:</label>
+                  <input id="correo" type="text" formControlName="correo" class="form-control form-control-lg inputs"
                     [ngClass]="{ 'is-invalid': submitted && f.correo.errors }" required/>
                   <div *ngIf=" correo.invalid && (correo.dirty || correo.touched) " class="">
                     <div *ngIf="correo.errors.required" class="text-danger"><small>Ingresar un correo electrónico</small></div>
@@ -53,45 +92,26 @@
     
             </div>
 
-            <div class="col-5">
-              <div class="form-group">
-                <label for="firstName"><i class="campo-req">*</i> Nombres</label>
-                <input id="firstName" type="text" formControlName="firstName" class="form-control form-control-sm"
-                  [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" required/>
-                <div *ngIf=" firstName.invalid && (firstName.dirty || firstName.touched)" >
-                  <div *ngIf="firstName.errors.required" class="text-danger"><small>Ingresar nombres</small></div>
-                </div>
-              </div>
-  
-            </div>
+            
+            
+
             <div class="col-5"> 
-              <div class="form-group">
-                <label for="lastName"><i class="campo-req">*</i> Apellidos</label>
-                <input id="lastName" type="text" formControlName="lastName" class="form-control form-control-sm"
-                  [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
-                <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" >
-                  <div *ngIf="lastName.errors.required" class="text-danger"><small>Ingresar apellidos</small></div>
+              <div *ngIf="mostrar_contrasena" class="form-group">
+                <label for="contrasena" class="font-weight-bold"> Contraseña:</label>
+                <input  id="contrasena" type="password" formControlName="contrasena" class="form-control form-control-lg inputs"
+                  [ngClass]="{ 'is-invalid': submitted && f.contrasena.errors }" />
+                <div *ngIf="contrasena.invalid && (contrasena.dirty || contrasena.touched)" >
+                  <div *ngIf="contrasena.errors.required" class="text-danger"><small>Ingresar Contraseña</small></div>
+                  <div *ngIf="contrasena.errors.minlength" class="text-danger"><small>La contrasena debe tener minimo 6 carácteres</small> </div>
+
                 </div>
               </div>
             </div>
-
-            <div class="col-5"> 
-                <div *ngIf="mostrar_contrasena" class="form-group">
-                  <label for="contrasena"><i class="campo-req">*</i> Contraseña</label>
-                  <input  id="contrasena" type="password" formControlName="contrasena" class="form-control form-control-sm"
-                    [ngClass]="{ 'is-invalid': submitted && f.contrasena.errors }" />
-                  <div *ngIf="contrasena.invalid && (contrasena.dirty || contrasena.touched)" >
-                    <div *ngIf="contrasena.errors.required" class="text-danger"><small>Ingresar Contraseña</small></div>
-                    <div *ngIf="contrasena.errors.minlength" class="text-danger"><small>La contrasena debe tener minimo 6 carácteres</small> </div>
-
-                  </div>
-                </div>
-              </div>
 
                 <div class="col-5"> 
                     <div *ngIf="mostrar_contrasena" class="form-group">
-                    <label for="repetirContrasena"><i class="campo-req">*</i> Repetir Contraseña</label>
-                    <input  id="repetirContrasena" type="password" formControlName="repetirContrasena" class="form-control form-control-sm"
+                    <label for="repetirContrasena" class="font-weight-bold"> Repetir contraseña:</label>
+                    <input  id="repetirContrasena" type="password" formControlName="repetirContrasena" class="form-control form-control-lg inputs"
                         [ngClass]="{ 'is-invalid': submitted && f.repetirContrasena.errors }" />
                     <div *ngIf="repetirContrasena.invalid && (repetirContrasena.dirty || repetirContrasena.touched)">
                         <div *ngIf="repetirContrasena.errors.required" class="text-danger"><small>Repetir la Contraseña</small></div>
@@ -102,8 +122,8 @@
 
                 <div class="col-5"> 
                     <div class="form-group">
-                      <label for="telefono"><i class="campo-req">*</i> Teléfono </label>
-                      <input id="telefono" type="text" formControlName="telefono" class="form-control form-control-sm" minlength="7" maxlength="10" />
+                      <label for="telefono" class="font-weight-bold"> Teléfono: </label>
+                      <input id="telefono" type="text" formControlName="telefono" class="form-control form-control-lg inputs" minlength="7" maxlength="10" />
                       <div
                         *ngIf="adminForm.controls['telefono'].invalid && (adminForm.controls['telefono'].dirty || adminForm.controls['telefono'].touched)">
                         <div class="text-danger" *ngIf="adminForm.controls['telefono'].errors.required">
@@ -122,15 +142,23 @@
                 
                 <div class="col-5">
                     <div class="form-group">
-                      <label><i class="campo-req">*</i> Tipo de Administrador:</label>
+                      <label class="font-weight-bold"> Tipo de Administrador:</label>
                       <div class="row">
-                        <div class="col-6">
+                        <select class="custom-select ml-3 pr-5 mr-3 form-control-md inputs" formControlName="tipoAdmin" id="superadmin" placeholder="Seleccione un tipo">
+                          <option>Super Administrador</option>
+                          <option>Administrador</option>
+                         
+                        </select>
+                        <!--
+                          <div class="col-6">
                           <input  id="superadmin" type="radio" value="su"  formControlName="tipoAdmin" required>
                           Super Administrador
                         </div>
                         <div class="col-6">
                           <input  id="admin" type="radio" value="ad"  formControlName="tipoAdmin" required> Administrador
                         </div>
+                        -->
+                        
                        
                       </div>
                       <div *ngIf="submitted && tipoAdmin.invalid" class="">
@@ -142,26 +170,35 @@
           <div class="row mt-3">
             <div class="col-5">
                 <div class="form-group">
-                    <mat-slide-toggle id="permisoToggle" formControlName="permisoToggle" class="font-weight-bold" [checked]="permisoPaginas" 
-                     labelPosition="before"  ng-model="pepe" (change)="onChange()"> Asignar Permisos </mat-slide-toggle> 
+                    <p class="font-weight-bold font-italic mb-4 mt-1 permisosTitle"> Permisos : </p>
                 </div>
             </div>
           </div>
   
-          <div class="row">
+          <div class="row ml-4">
             <div class="col-12">
               <div class="form-group">
                 <div class="row">
-                  <div class="col-4 mt-2" *ngFor="let permiso of lista_permisos; let i = index">
-                    <input type="checkbox" [value]="permiso.id_permiso" name="permisos_Admin" [attr.disabled]="disabled ? '' : null" [checked]="bool_permisos[i]">
+                  <div class="col-6 mb-5 row" *ngFor="let permiso of lista_permisos; let i = index">
+                    <!--
+                      <input type="checkbox" [value]="permiso.id_permiso" name="permisos_Admin" [attr.disabled]="disabled ? '' : null" [checked]="bool_permisos[i]">
                     {{permiso.nombre}}
+                    -->
+                    <span class="col-5"> {{permiso.nombre}} </span>
+                    <mat-icon (click)="cambiarEstadoFalse(permiso.id_permiso)" *ngIf="bool_permisos[i]" class="icono   ml-1 col-2 " svgIcon="habilitada" ></mat-icon>
+                    <mat-icon (click)="cambiarEstadoTrue(permiso.id_permiso)" *ngIf="!bool_permisos[i]" class="icono   ml-1 col-2" svgIcon="inhabilitada" ></mat-icon>
+
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="form-group mt-10">
-            <button class="btn btn-primary" type="submit" [disabled]="!adminForm.valid">Guardar registro</button>
+          <div class="form-group mt-10 container-fluid mr-5 pr-5">
+            <div class="row  mr-5 pr-5">
+              <button *ngIf="!editando" class="btn  btnSend col-2 pt-3  pb-3 align-self-end offset-10" type="submit" [disabled]="!adminForm.valid">CREAR</button>
+              <button *ngIf="editando" class="btn  btnSend col-2  pt-3 pb-3 align-self-end offset-10" type="submit" [disabled]="!adminForm.valid">EDITAR</button>
+            </div>
+            
           </div>
         </form>
       </div>

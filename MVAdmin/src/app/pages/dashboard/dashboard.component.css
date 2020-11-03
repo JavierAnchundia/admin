@@ -1,24 +1,22 @@
 .tarjetas{
     background-color: #F0F2F5;
-    border-width: 5px;
-    border-bottom-style:solid;
-    border-color:rgb(25, 179, 199);
+    
 }
 p.nombreCementerio{
     font-family: sans-serif;
     font-size: 1.4rem;
     font-weight: 600;
-    color: #0F79E1;
+    color: #000000;
 }
 
 p.descripcionCementerio{
     font-family: sans-serif;
-    font-size: 1.0rem;
+    font-size: 0.9rem;
     font-weight: 300;
 }
 
 .fotoCementerio{
-    height: 150px;
+    height: 200px;
     width: 100%;
 }
 
@@ -40,4 +38,38 @@ li:nth-child(1){
 
 li:nth-child(2){
     margin-right: 10px;
+}
+
+#divFondo{
+    width: 100%;
+    height: 100%;
+}
+
+#fondoDiv{
+    
+    position: fixed;
+}
+
+#btnAgregar{
+    background-color: #A3C442;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 0.95rem;
+
+}
+
+.fondoCrear{
+    border-radius: 5%;
+}
+
+#containerLogo{
+
+}
+
+.pointerVerede{
+   height: 10%;
+
+}
+
+.icono{
+    color: #A3C442;
 }

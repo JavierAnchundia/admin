@@ -4,3 +4,17 @@
 .espacioH{
     margin-right: 50px;
 }
+
+.titulo {
+    font-weight: 700;
+    font-size: x-large;
+    color: black;
+  }
+  .lista{
+      background-color: #E9ECEF;
+  }
+
+  .btnSend{
+    background-color: #A3C442;
+    color:#FFFFFF;
+}

@@ -1,13 +1,37 @@
-<nav aria-label="breadcrumb">
+<!--<nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <!-- <li class="breadcrumb-item"><a routerLink="/inicio/dashboard">Cementerios</a></li> -->
+    <!- <li class="breadcrumb-item"><a routerLink="/inicio/dashboard">Cementerios</a></li> ->
     <li class="breadcrumb-item"><a routerLink="/inicio/perfil/{{this.id.camposanto}}">Inicio</a></li>
     <li class="breadcrumb-item"><a routerLink="/inicio/difuntos">Difuntos</a></li>
     <li class="breadcrumb-item active" aria-current="page">Registro difuntos</li>
   </ol>
-</nav>
+</nav>-->
 
-<div *ngIf="!editando" class="row">
+<div *ngIf="!editando"class="row mt-2" >
+  <div class="col-auto ml-3 ">
+    <a class="titulo font-weight-bold " routerLink="/inicio/difuntos">FALLECIDOS</a>
+  </div>
+  <div class= "col-auto m-0 p-0 ">
+    <mat-icon class="icono m-0 p-0 mt-2 " svgIcon="flecha2" ></mat-icon>
+  </div>
+  <div class="col-4 ml-0 pr-5 mr-5">
+    <h2 class="subtitulo ml-0 pl-0 mt-2">Registrar fallecido</h2>
+  </div>
+</div>
+
+<div *ngIf="editando" class="row mt-2" >
+  <div class="col-auto ml-3 ">
+    <a class="titulo font-weight-bold " routerLink="/inicio/difuntos">FALLECIDOS</a>
+  </div>
+  <div class= "col-auto m-0 p-0 ">
+    <mat-icon class="icono m-0 p-0 mt-2 " svgIcon="flecha2" ></mat-icon>
+  </div>
+  <div class="col-4 ml-0 pr-5 mr-5">
+    <h2 class="subtitulo ml-0 pl-0 mt-2">Editar fallecido</h2>
+  </div>
+</div>
+
+<!--<div *ngIf="!editando" class="row">
   <div class="col-12">
     <h1> Registro de difuntos</h1>
   </div>
@@ -17,13 +41,12 @@
   <div class="col-12">
     <h1> Editar difuntos</h1>
   </div>
-</div>
+</div>-->
 
-<div class="container-fluid">
-  <div class="row">
+<div class="container-fluid mt-5 ml-5">
+  <div class="row mb-4">
     <div class="col-12">
-      <h3>Información personal</h3>
-      <hr>
+      <h3 class="font-italic">Información personal</h3>
     </div>
   </div>
   <div class="row">
@@ -32,8 +55,8 @@
         <div class="row">
           <div class="col-5">
             <div class="form-group">
-              <label for="firstName"><i class="campo-req">*</i> Nombres</label>
-              <input type="text" formControlName="firstName" class="form-control"  />
+              <label for="firstName" class="font-weight-bold"><i class="campo-req"></i> Nombres</label>
+              <input type="text" formControlName="firstName" class="form-control inputs"  />
               <div
                 *ngIf="difuntoForm.controls['firstName'].invalid && (difuntoForm.controls['firstName'].dirty || difuntoForm.controls['firstName'].touched)">
 
@@ -47,8 +70,8 @@
           </div>
           <div class="col-5">
             <div class="form-group">
-              <label for="lastName"><i class="campo-req">*</i> Apellidos</label>
-              <input type="text" formControlName="lastName" class="form-control" 
+              <label for="lastName" class="font-weight-bold"><i class="campo-req"></i> Apellidos</label>
+              <input type="text" formControlName="lastName" class="form-control inputs" 
                 [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
               <div
                 *ngIf="difuntoForm.controls['lastName'].invalid && (difuntoForm.controls['lastName'].dirty || difuntoForm.controls['lastName'].touched)">
@@ -64,8 +87,8 @@
         <div class="row">
           <div class="col-5">
             <div class="form-group">
-              <label><i class="campo-req">*</i> Género:</label>
-              <select class="custom-select" formControlName="generoDropdown" placeholder="Seleccione un género" 
+              <label class="font-weight-bold"><i class="campo-req"></i> Género:</label>
+              <select class="custom-select inputs" formControlName="generoDropdown" placeholder="Seleccione un género" 
                 [ngClass]="{ 'is-invalid': submitted && f.generoDropdown.errors }">
                 <option value=""></option>
                 <option value="Femenino">Femenino</option>
@@ -79,8 +102,8 @@
           </div>
           <div class="col-5">
             <div class="form-group">
-              <label for="cedula"><i class="campo-req">*</i> No. de cédula</label>
-              <input type="text" [pattern]="numericNumberReg" formControlName="cedula" class="form-control" value="{{difunto.cedula}}"
+              <label for="cedula" class="font-weight-bold"><i class="campo-req"></i> No. de cédula</label>
+              <input type="text" [pattern]="numericNumberReg" formControlName="cedula" class="form-control inputs" value="{{difunto.cedula}}"
                 minlength="10" maxlength="10" />
               <div
                 *ngIf="difuntoForm.controls['cedula'].invalid && (difuntoForm.controls['cedula'].dirty || difuntoForm.controls['cedula'].touched)">
@@ -102,70 +125,71 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-12">
-            <h4> Información de nacimiento</h4>
-          </div>
-        </div>
+        
 
         <div class="row">
           <div class="col-5">
-            <div class="row">
-
-              <div class="col-4">
-                <div class="form-group">
-                  <label>DD:</label>
-                  <select class="custom-select" formControlName="dayBirth" placeholder="DD"
-                    (change)="onChangeBirthDay($event.target.value)"
-                    [ngClass]="{ 'is-invalid': submitted && f.dayBirth.errors }" id="daysBirth">
-                    <option selected disabled>DD</option>
-                  </select>
-                  <div *ngIf="submitted && f.dayBirth.errors" class="invalid-feedback">
-                    <div *ngIf="f.dayBirth.errors"><small>Seleccione una opción</small></div>
+            <div class="row"> 
+              <label class="font-weight-bold col-12">Fecha de nacimiento:</label>
+              <div class="col-12">
+                <div class="row">
+    
+                  <div class="col-4">
+                    <div class="form-group">
+                      <label class="font-weight-bold">DD:</label>
+                      <select class="custom-select inputs" formControlName="dayBirth" placeholder="DD"
+                        (change)="onChangeBirthDay($event.target.value)"
+                        [ngClass]="{ 'is-invalid': submitted && f.dayBirth.errors }" id="daysBirth">
+                        <option selected disabled>DD</option>
+                      </select>
+                      <div *ngIf="submitted && f.dayBirth.errors" class="invalid-feedback">
+                        <div *ngIf="f.dayBirth.errors"><small>Seleccione una opción</small></div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div class="col-4">
-                <div class="form-group">
-                  <label>MM:</label>
-                  <select class="custom-select" formControlName="monBirth"
-                    (change)="onChangeBirthMonth($event.target.value)"
-                    [ngClass]="{ 'is-invalid': submitted && f.monBirth.errors }">
-                    <option selected disabled>MM</option>
-                    <option *ngFor="let mon of monthNames" [value]=mon>{{mon}}</option>
-                  </select>
-                  <div *ngIf="submitted && f.monBirth.errors" class="invalid-feedback">
-                    <div *ngIf="f.monBirth.errors"><small>Seleccione una opción</small></div>
+                  <div class="col-4">
+                    <div class="form-group">
+                      <label class="font-weight-bold">MM:</label>
+                      <select class="custom-select inputs" formControlName="monBirth"
+                        (change)="onChangeBirthMonth($event.target.value)"
+                        [ngClass]="{ 'is-invalid': submitted && f.monBirth.errors }">
+                        <option selected disabled>MM</option>
+                        <option *ngFor="let mon of monthNames" [value]=mon>{{mon}}</option>
+                      </select>
+                      <div *ngIf="submitted && f.monBirth.errors" class="invalid-feedback">
+                        <div *ngIf="f.monBirth.errors"><small>Seleccione una opción</small></div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div class="col-4">
-                <div class="form-group">
-                  <label>YY:</label>
-                  <select class="custom-select" formControlName="yearBirth"
-                    (change)="onChangeBirthYear($event.target.value)"
-                    [ngClass]="{ 'is-invalid': submitted && f.yearBirth.errors }" id="yearBirthSelector">
-                    <option selected disabled>YY</option>
-
-                  </select>
-                  <div *ngIf="submitted && f.yearBirth.errors" class="invalid-feedback">
-                    <div *ngIf="f.yearBirth.errors"><small>Seleccione una opción</small></div>
+                  <div class="col-4">
+                    <div class="form-group">
+                      <label class="font-weight-bold ">YY:</label>
+                      <select class="custom-select inputs" formControlName="yearBirth"
+                        (change)="onChangeBirthYear($event.target.value)"
+                        [ngClass]="{ 'is-invalid': submitted && f.yearBirth.errors }" id="yearBirthSelector">
+                        <option selected disabled>YY</option>
+    
+                      </select>
+                      <div *ngIf="submitted && f.yearBirth.errors" class="invalid-feedback">
+                        <div *ngIf="f.yearBirth.errors"><small>Seleccione una opción</small></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+           
           </div>
-          <div class="col-5">
+          <div class="col-6 ">
             <div class="form-group">
               <div class="form-row">
-                <label for="birthPlace"><i class="campo-req">*</i> Lugar de nacimiento</label>
+                <label for="birthPlace" class="font-weight-bold"><i class="campo-req"></i> Lugar de nacimiento</label>
               </div>
-              <div class="form-row">
-                <mat-form-field class="example-full-width">
+              <div class="form-row mt-2 pt-1">
+                <mat-form-field class="example-full-width" appearance="fill">
                   <input type="text"
                         formControlName="birthPlace"
                         [ngClass]="{ 'is-invalid': submitted && f.birthPlace.errors }"
-                        placeholder="nacimiento"
                         aria-label="Number"
                         matInput
                         [matAutocomplete]="autoNacimi">
@@ -186,71 +210,76 @@
               </div>
             </div>
           </div>
+          
+          
         </div>
         <div class="row">
-          <div class="col-12">
-            <h4>Información de defunción</h4>
-          </div>
+          
         </div>
 
         <div class="row">
           <div class="col-5">
-            <div class="row">
-
-              <div class="col-4">
-                <div class="form-group">
-                  <label>DD:</label>
-                  <select class="custom-select" formControlName="dayDeath"
-                    (change)="onChangeDeathDay($event.target.value)"
-                    [ngClass]="{ 'is-invalid': submitted && f.dayDeath.errors }" id="daysDeath">
-                    <option selected disabled>DD</option>
-
-                  </select>
-                  <div *ngIf="submitted && f.dayDeath.errors" class="invalid-feedback">
-                    <div *ngIf="f.dayDeath.errors"><small>Seleccione una opción</small></div>
+            <div class= "row">
+              <label class="font-weight-bold col-12">Fecha de defunción:</label>
+              <div class="col-12">
+                <div class="row">
+    
+                  <div class="col-4">
+                    <div class="form-group">
+                      <label class="font-weight-bold">DD:</label>
+                      <select class="custom-select inputs" formControlName="dayDeath"
+                        (change)="onChangeDeathDay($event.target.value)"
+                        [ngClass]="{ 'is-invalid': submitted && f.dayDeath.errors }" id="daysDeath">
+                        <option selected disabled>DD</option>
+    
+                      </select>
+                      <div *ngIf="submitted && f.dayDeath.errors" class="invalid-feedback">
+                        <div *ngIf="f.dayDeath.errors"><small>Seleccione una opción</small></div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div class="col-4">
-                <div class="form-group">
-                  <label>MM:</label>
-                  <select class="custom-select" formControlName="monDeath" placeholder="MM"
-                    (change)="onChangeDeathMonth($event.target.value)"
-                    [ngClass]="{ 'is-invalid': submitted && f.monDeath.errors }">
-                    <option selected disabled>MM</option>
-                    <option *ngFor="let mon of monthNames" [value]=mon>{{mon}} </option>
-                  </select>
-                  <div *ngIf="submitted && f.monDeath.errors" class="invalid-feedback">
-                    <div *ngIf="f.monDeath.errors"><small>Seleccione una opción</small></div>
+                  <div class="col-4">
+                    <div class="form-group">
+                      <label class="font-weight-bold">MM:</label>
+                      <select class="custom-select inputs" formControlName="monDeath" placeholder="MM"
+                        (change)="onChangeDeathMonth($event.target.value)"
+                        [ngClass]="{ 'is-invalid': submitted && f.monDeath.errors }">
+                        <option selected disabled>MM</option>
+                        <option *ngFor="let mon of monthNames" [value]=mon>{{mon}} </option>
+                      </select>
+                      <div *ngIf="submitted && f.monDeath.errors" class="invalid-feedback">
+                        <div *ngIf="f.monDeath.errors"><small>Seleccione una opción</small></div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div class="col-4">
-                <div class="form-group">
-                  <label>YY:</label>
-                  <select class="custom-select" formControlName="yearDeath"
-                    (change)="onChangeDeathYear($event.target.value)"
-                    [ngClass]="{ 'is-invalid': submitted && f.yearDeath.errors }" id="yearDeathSelector">
-                    <option selected disabled>YY</option>
-                  </select>
-                  <div *ngIf="submitted && f.yearDeath.errors" class="invalid-feedback">
-                    <div *ngIf="f.yearDeath.errors"><small>Seleccione una opción</small></div>
+                  <div class="col-4">
+                    <div class="form-group">
+                      <label class="font-weight-bold">YY:</label>
+                      <select class="custom-select inputs" formControlName="yearDeath"
+                        (change)="onChangeDeathYear($event.target.value)"
+                        [ngClass]="{ 'is-invalid': submitted && f.yearDeath.errors }" id="yearDeathSelector">
+                        <option selected disabled>YY</option>
+                      </select>
+                      <div *ngIf="submitted && f.yearDeath.errors" class="invalid-feedback">
+                        <div *ngIf="f.yearDeath.errors"><small>Seleccione una opción</small></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-5">
+          
+          <div class="col-6">
             <div class="form-group">
               <div class="form-row">
-                <label for="deathPlace"><i class="campo-req">*</i> Lugar de defunción</label>
+                <label for="deathPlace" class="font-weight-bold "><i class="campo-req"></i> Lugar de defunción</label>
               </div>
-              <div class="form-row">
-                <mat-form-field class="example-full-width">
+              <div class="form-row mt-2 pt-1">
+                <mat-form-field class="example-full-width" appearance="fill">
                   <input type="text"
                         formControlName="deathPlace"
                         [ngClass]="{ 'is-invalid': submitted && f.deathPlace.errors }"
-                        placeholder="fallecimiento"
                         aria-label="Number"
                         matInput
                         [matAutocomplete]="autoFalleci">
@@ -273,50 +302,30 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row mb-4 mt-2">
           <div class="col-12">
-            <h3>Datos de Ubicación</h3>
-            <hr>
+            <h3 class="font-italic">Datos de ubicación</h3>
           </div>
         </div>
-        <div class="row">
-          <div class="col-5">
-            <label><i class="campo-req">*</i> Coordenadas de la sepultura:</label>
-          </div>
-          <div class="col-5">
-            <button class="btn btn-success" data-toggle="modal" data-target="#mapaDifuntoModal" (click)="puntosBoton()"
-              >
-              Elegir ubicación</button>
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col-4">
-            <div class="form-group">
-              <label><i class="campo-req">*</i> Tipo de sepultura:</label>
-              <div class="row">
-                <select required formControlName="tipoSepultura" class="form-control custom-select" id="sepultura"
-                  
-                  (change)="onChangeSepultura($event.target.value)">
-                  <option style="display:none" value=null default>Seleccione un tipo</option>
-                  <option [value]="sep.nombre" *ngFor="let sep of lista_sepultura" >{{sep.nombre}}</option>
-                </select>
-              </div>
-              <div
-                  *ngIf="difuntoForm.controls['tipoSepultura'].invalid && (difuntoForm.controls['tipoSepultura'].dirty || difuntoForm.controls['tipoSepultura'].touched)">
-                  <div class="text-danger" *ngIf="difuntoForm.controls['tipoSepultura'].errors.required">
-                    <small>Este campo es obligatorio.</small>
-                  </div>
-                </div>
+        <div class="row ">
+            <div class="col-5">
+              <label class="font-weight-bold"><i class="campo-req" ></i> Datos de ubicación:</label>
             </div>
-          </div>
-          <div class="col-4">
+            <div class="col-5">
+              <label class="font-weight-bold"><i class="campo-req" ></i> Ubicación en mapa:</label>
+            </div>
+         
+        </div>
+        <div class="row">
+          
+          
+          <div class="col-3">
             <div class="form-group">
-              <label><i class="campo-req">*</i> Sector:</label>
-              <select class="custom-select" formControlName="sector" placeholder="Sector"
+              <!--<label class="font-weight-bold"><i class="campo-req"></i> Sector:</label>-->
+              <select class="custom-select inputs" formControlName="sector" placeholder="Sector"
                 (change)="onChangeSector($event.target.value)"
                 >
-                <option style="display:none" value=null>Seleccione un sector</option>
+                <option value="">Sector</option>
                 <option *ngFor="let sec of lista_sector" [value]=sec.nombre>{{sec.nombre}}</option>
               </select>
               <div
@@ -327,10 +336,38 @@
                 </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-6 offset-2">
+             
+            <button class="btn btn-success ubicacionBtn" data-toggle="modal" data-target="#mapaDifuntoModal" (click)="puntosBoton()"
+              >
+              Elegir ubicación</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">
             <div class="form-group">
-              <label for="lapida"><i class="campo-req">*</i> No. de lapida</label>
-              <input type="text" formControlName="lapida" class="form-control" />
+              <!--<label class="font-weight-bold"><i class="campo-req"></i> Tipo de sepultura:</label>-->
+                <select required formControlName="tipoSepultura" class="form-control custom-select inputs" id="sepultura"
+                  
+                  (change)="onChangeSepultura($event.target.value)">
+                  <option value="">Tipo de sepultura</option>
+                  <option [value]="sep.nombre" *ngFor="let sep of lista_sepultura" >{{sep.nombre}}</option>
+                </select>
+              <div
+                  *ngIf="difuntoForm.controls['tipoSepultura'].invalid && (difuntoForm.controls['tipoSepultura'].dirty || difuntoForm.controls['tipoSepultura'].touched)">
+                  <div class="text-danger" *ngIf="difuntoForm.controls['tipoSepultura'].errors.required">
+                    <small>Este campo es obligatorio.</small>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="col-3">
+            <div class="form-group">
+              <!--<label for="lapida" class="font-weight-bold"><i class="campo-req"></i> No. de lapida</label>-->
+              <input type="text" formControlName="lapida" class="form-control inputs" placeholder="N° de lápida"/>
               <div
                 *ngIf="difuntoForm.controls['lapida'].invalid && (difuntoForm.controls['lapida'].dirty || difuntoForm.controls['lapida'].touched)">
                 <div class="text-danger" *ngIf="difuntoForm.controls['lapida'].errors.required">
@@ -339,22 +376,19 @@
               </div>
             </div>
           </div>
-
         </div>
-        <div class="row">
-        </div>
-        <div class="row">
+        
+        <div class="row mt-4 mb-4">
           <div class="col-12">
-            <h3>Información de contacto responsable</h3>
-            <hr>
+            <h3 class="font-italic" >Información de contacto responsable</h3>
           </div>
         </div>
         <form [formGroup]="responsableForm">
           <div class="row">
             <div class="col-5">
               <div class="form-group">
-                <label for="NombreRes"><i class="campo-req">*</i> Nombres del responsable: </label>
-                <input type="text" formControlName="NombreRes" class="form-control" />
+                <label for="NombreRes" class="font-weight-bold"><i class="campo-req"></i> Nombres del responsable: </label>
+                <input type="text" formControlName="NombreRes" class="form-control inputs" />
                 <div
                   *ngIf="responsableForm.controls['NombreRes'].invalid && (responsableForm.controls['NombreRes'].dirty || responsableForm.controls['NombreRes'].touched)">
                   <div class="text-danger" *ngIf="responsableForm.controls['NombreRes'].errors.required">
@@ -366,8 +400,8 @@
             </div>
             <div class="col-5">
               <div class="form-group">
-                <label for="ApellidoRes"><i class="campo-req">*</i> Apellidos del responsable:</label>
-                <input type="text" formControlName="ApellidoRes" class="form-control" />
+                <label for="ApellidoRes" class="font-weight-bold"><i class="campo-req"></i> Apellidos del responsable:</label>
+                <input type="text" formControlName="ApellidoRes" class="form-control inputs" />
                 <div
                   *ngIf="responsableForm.controls['ApellidoRes'].invalid && (responsableForm.controls['ApellidoRes'].dirty || responsableForm.controls['ApellidoRes'].touched)">
                   <div class="text-danger" *ngIf="responsableForm.controls['ApellidoRes'].errors.required">
@@ -380,8 +414,8 @@
           <div class="row">
             <div class="col-5">
               <div class="form-group">
-                <label for="telefono"><i class="campo-req">*</i> Teléfono del responsable:</label>
-                <input type="text"  formControlName="telefono" class="form-control" minlength="9"
+                <label for="telefono" class="font-weight-bold"><i class="campo-req "></i> Teléfono del responsable:</label>
+                <input type="text"  formControlName="telefono" class="form-control inputs" minlength="9"
                   maxlength="9" />
                 <div
                   *ngIf="responsableForm.controls['telefono'].invalid && (responsableForm.controls['telefono'].dirty || responsableForm.controls['telefono'].touched)">
@@ -400,8 +434,8 @@
             </div>
             <div class="col-5">
               <div class="form-group">
-                <label for="correo">Correo del responsable:</label>
-                <input type="email" formControlName="correo" class="form-control" />
+                <label for="correo" class="font-weight-bold">Correo del responsable:</label>
+                <input type="email" formControlName="correo" class="form-control inputs" />
                 <div
                   *ngIf="responsableForm.controls['correo'].errors && (responsableForm.controls['correo'].dirty || responsableForm.controls['correo'].touched)">
                   <div class="text-danger" *ngIf="responsableForm.controls['correo'].errors.required">
@@ -417,8 +451,8 @@
           <div class="row">
             <div class="col-5">
               <div class="form-group">
-                <label for="celular"><i class="campo-req">*</i> Celular del responsable:</label>
-                <input type="text" formControlName="celular" class="form-control" minlength="10" maxlength="10"/>
+                <label for="celular" class="font-weight-bold"><i class="campo-req"></i> Celular del responsable:</label>
+                <input type="text" formControlName="celular" class="form-control inputs" minlength="10" maxlength="10"/>
                 <div
                   *ngIf="responsableForm.controls['celular'].invalid && (responsableForm.controls['celular'].dirty || responsableForm.controls['celular'].touched)">
                   <div class="text-danger" *ngIf="responsableForm.controls['celular'].errors.required">
@@ -436,8 +470,8 @@
             </div>
             <div class="col-5">
               <div class="form-group">
-                <label><i class="campo-req">*</i>  Parentesco:</label>
-                <select class="custom-select" formControlName="parentesco" placeholder="Seleccione un parentesco">
+                <label class="font-weight-bold"><i class="campo-req" ></i>  Parentesco:</label>
+                <select class="custom-select inputs" formControlName="parentesco" placeholder="Seleccione un parentesco">
                   <option>Hijo/a</option>
                   <option>Esposo/a</option>
                   <option>Nieto/a</option>
@@ -458,8 +492,8 @@
           <div class="row">
             <div class="col-5">
               <div class="form-group">
-                <label for="direccion"><i class="campo-req">*</i> Dirección del responsable:</label>
-                <input type="text" formControlName="direccion" class="form-control" />
+                <label for="direccion" class="font-weight-bold"><i class="campo-req"></i> Dirección del responsable:</label>
+                <input type="text" formControlName="direccion" class="form-control inputs" />
 
                 <div
                   *ngIf="responsableForm.controls['direccion'].invalid && (responsableForm.controls['direccion'].dirty || responsableForm.controls['direccion'].touched)">
@@ -471,16 +505,20 @@
             </div>
             <div class="col-5">
               <div *ngIf="responsableForm.value.parentesco == 'Otro' " class="form-group">
-                <label for="otro">Ingrese otro tipo de parentesco: </label>
-                <input formControlName="otro" class="form-control">
+                <label for="otro" class="font-weight-bold">Ingrese otro tipo de parentesco: </label>
+                <input formControlName="otro" class="form-control inputs">
               </div>
             </div>
           </div>
         </form>
-        <div class="form-group mt-10">
-          <button class="btn btn-primary" [disabled]="(!difuntoForm.valid)||(!responsableForm.valid)">Guardar
-            registro</button>
+        <div class="form-group mt-10 container-fluid mr-5 pr-5 mt-3">
+          <div class="row  mr-5 pr-5">
+              <button *ngIf="!editando" class="btn btnSend col-2 pt-3  pb-3 align-self-end offset-10" [disabled]="(!difuntoForm.valid)||(!responsableForm.valid)">AGREGAR</button>
+              <button *ngIf="editando"  class="btn btnSend col-2 pt-3  pb-3 align-self-end offset-10" [disabled]="(!difuntoForm.valid)||(!responsableForm.valid)">EDITAR
+                </button>  
+          </div>
         </div>
+      
       </form>
     </div>
   </div>

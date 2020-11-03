@@ -16,6 +16,9 @@ import { User_permiso } from '../../models/user_permisos.model'
 import {RenderizareditService} from '../../services/renderizaredit/renderizaredit.service'
 import {Usuario} from '../../models/usuario.model'
 import {UsuarioH} from '../../models/usuario_herencia.model'
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
+
 @Component({
   selector: 'app-crear-admin',
   templateUrl: './crear-admin.component.html',
@@ -64,8 +67,22 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
     public router: Router,
     private _permisoService: PermisosService,
     private _editar: RenderizareditService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer,
   ) {
     this.cementerios = dashboardService.cementerios;
+    this.matIconRegistry.addSvgIcon(
+      "flecha2",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../../../assets/icons/flecha2.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "inhabilitada",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../../../assets/icons/inhabilitada.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "habilitada",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../../../assets/icons/habilitada.svg")
+    );
   }
 
   ngOnDestroy():void{
@@ -114,10 +131,20 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
     );
     
     if(this._editar.getMetodoConexion()=="PUT"){
-      this.adminForm.get('contrasena').disable();
-      this.adminForm.get('repetirContrasena').disable();
+        this.adminForm.get('contrasena').disable();
+        this.adminForm.get('repetirContrasena').disable();
 
-      this.mostrar_contrasena = false;
+        this.mostrar_contrasena = false;
+        if(this.administrador.tipo_usuario == "su"){
+          this.adminForm.patchValue({
+            tipoAdmin: "Super Administrador",
+          })
+        }
+        else {
+          this.adminForm.patchValue({
+            tipoAdmin: "Administrador",
+          })
+        }
     }
     if(this._editar.getMetodoConexion()=="PUT" && this.admin_permisos.length > 0){
       this.adminForm.addControl('permisoToggle', new FormControl(true));
@@ -144,7 +171,15 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
 
 
 
+  cambiarEstadoTrue(id){
+    this.bool_permisos[id-1] = true;
+    console.log(this.bool_permisos)
+  }
 
+  cambiarEstadoFalse(id){
+    this.bool_permisos[id-1] = false;
+    console.log(this.bool_permisos)
+  }
   
   async obtenerInfo(){
     if(this._editar.getMetodoConexion()=='PUT'){
@@ -160,13 +195,12 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
   async obtenerPermisos() {
     await this._permisoService.getPermisos().subscribe(async (data) => {
       this.lista_permisos = await data;
-
-      //Esta parte del codigo deberia haber sido llamada desde el metodo OnInit, pero si se lo ponoe ahi no se obtienen los datos "a tiempo"
+      console.log(data)
+      //Esta parte del codigo deberia haber sido llamada desde el metodo OnInit, pero si se lo pone ahi no se obtienen los datos "a tiempo"
       //A partir de la funcion asincronica, entonces para asegurarse que se van obtener las dos listas se los pone justamente aqui
-      if(this._editar.getMetodoConexion()=='PUT'){
         this.bool_permisos = new Array<boolean>(this.lista_permisos.length).fill(false);
         this.permisosBool(this.lista_permisos,this.admin_permisos);
-        console.log(this.bool_permisos);}
+        console.log(this.bool_permisos);
         
     });
   }
@@ -264,17 +298,25 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
     console.log(this.permisoToggle.value);
   }
 
+  
+
   obtenerChecksPermisos() {
-    this.permisos_admin = [];
-    let checkboxes = document.getElementsByName('permisos_Admin');
+    //this.permisos_admin = [];
+    //let checkboxes = document.getElementsByName('permisos_Admin');
     // var checkboxesChecked = [];
     // loop over them all
-    for (let i = 0; i < checkboxes.length; i++) {
-      let checkitem = checkboxes[i] as HTMLInputElement;
-      if (checkitem.checked) {
-        this.permisos_admin.push(checkitem.value);
+    //for (let i = 0; i < checkboxes.length; i++) {
+      //let checkitem = checkboxes[i] as HTMLInputElement;
+      //if (checkitem.checked) {
+       // this.permisos_admin.push(checkitem.value);
         //   checkboxesChecked.push(checkitem.value);
-      }
+      //}
+   // }
+    //console.log(this.permisos_admin);
+    for (let i = 0; i < this.bool_permisos.length; i++){
+      if(this.bool_permisos[i]){
+         console.log(this.bool_permisos[i])
+         this.permisos_admin.push(this.lista_permisos[i].id_permiso)}
     }
     console.log(this.permisos_admin);
   }
@@ -283,23 +325,9 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
     this.submitted = true;
     if (this.adminForm.valid) {
       Swal.showLoading();
-      // this.registrarAdministrador();
-      if (this.permisoToggle.value) {
-        if (this.permisos_admin.length == 0) {
-          Swal.fire({
-            title: 'No ha seleccionado ningun permiso, por favor seleccione!!',
-            icon: 'warning',
-          });
-          return;
-        } else {
-          this.registrarAdministrador();
-        }
-      } else if(!this.permisoToggle.value) {
-        this.registrarAdministrador();
-      }
-    } else {
-      return;
+      this.registrarAdministrador();
     }
+    
   }
 
   get hasDropDownError() {
@@ -333,10 +361,17 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
     formData.append('direccion', '');
     formData.append('is_active', 'True');
     formData.append('id_camposanto', this.id.camposanto);
-    formData.append('tipo_usuario', this.adminForm.value.tipoAdmin);
 
-    if(this._editar.getMetodoConexion()=="POST"){formData.append('password', this.adminForm.value.repetirContrasena);
-  }
+    if(this.adminForm.value.tipoAdmin == "Super Administrador"){
+      formData.append('tipo_usuario', "su");
+    }
+    else{
+      formData.append('tipo_usuario', "ad");
+    }
+
+    if(this._editar.getMetodoConexion()=="POST"){
+      formData.append('password', this.adminForm.value.repetirContrasena);
+    }
   
     
   if(this._editar.getMetodoConexion()=="PUT"){

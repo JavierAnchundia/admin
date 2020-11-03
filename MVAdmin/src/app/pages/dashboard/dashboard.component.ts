@@ -9,6 +9,9 @@ import URL_SERVICIOS from 'src/app/config/config';
 import Swal from 'sweetalert2'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { faUserTag } from '@fortawesome/free-solid-svg-icons';
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -28,7 +31,14 @@ export class DashboardComponent implements OnInit {
     public _servicio: CamposantoService, 
     private router: Router,
     private _usuarioService : UsuarioService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer,
     ) { 
+
+      this.matIconRegistry.addSvgIcon(
+        "pointer_verde",
+        this.domSanitizer.bypassSecurityTrustResourceUrl("../../../assets/icons/pointer_verde.svg")
+      );
   }
 
   ngOnInit(): void {

@@ -1,37 +1,54 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <!-- <a class="navbar-brand" href="#"></a> -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    
-    <div class="navbar-collapse collapse justify-content-between" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <button type="button" class="btn btn-success" [routerLink]="['/crear']">Agregar Cementerio</button>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ nameUsuario }}
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <h6 class="dropdown-header"><fa-icon [icon]="faUserTag"></fa-icon> {{ tipoUsuario }}</h6>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" (click)="logout()"><fa-icon [icon]="faTimesCircle"></fa-icon> Cerrar Sesión</a>
-                </div>
-            </li>
-        </ul>
-    </div>
-</nav>
-<div class="container-fluid" >
-    <div class="row justify-content-around" >
-        <div class="col-3 tarjetas container-fluid ml-0 mr-1 mt-5 = shadow rounded punteroHand" *ngFor="let camposanto of lista_camposanto" >
-            <div class="row fondoCrear justify-content-start" (click)="redirectProfile(camposanto.id_camposanto)">
-                <img src="{{url_backend}}{{camposanto.logo}}" class=" img-fluid fotoCementerio ">
-                <p class=" mb-0 pt-2  nombreCementerio col-12 d-flex justify-content-start font-weight-bold "> {{camposanto.nombre}}</p>
-                <p class="pb-1 descripcionCementerio col-12 d-flex justify-content-start "> {{camposanto.direccion}}</p>
+ <div id="divFondo">
+    <img src="../../../assets/fondo.png" class="img-fluid"alt="" id="fondoDiv">
+    <div id="containerLogo">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <!-- <a class="navbar-brand" href="#"></a> -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="navbar-collapse collapse justify-content-between mb-3" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mt-4">
+                    <li class="nav-item">
+                        <div >
+                            <button type="button" id="btnAgregar" class="pt-3 pb-3 pl-4 pr-4 btn btn-success border-0 font-weight-bold rounded-0" 
+                            [routerLink]="['/crear']">
+                                AGREGAR CEMENTERIO
+                            </button>
+                        </div>
+                        
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ nameUsuario }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <h6 class="dropdown-header"><fa-icon [icon]="faUserTag"></fa-icon> {{ tipoUsuario }}</h6>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" (click)="logout()"><fa-icon [icon]="faTimesCircle"></fa-icon> Cerrar Sesión</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container-fluid pr-5 pl-5" >
+            <div class="row justify-content-center pr-5 pl-5 mr-5 ml-5" >
+                <div class="col-3 tarjetas fondoCrear container-fluid ml-0 mr-5 mt-2 mb-2 = shadow  punteroHand" *ngFor="let camposanto of lista_camposanto" >
+                    <div class="row  justify-content-start" (click)="redirectProfile(camposanto.id_camposanto)">
+                        <p class=" mb-0 pt-2 mt-2 mb-1 nombreCementerio col-12 d-flex justify-content-start font-weight-bold "> {{camposanto.nombre}}</p>
+                        <div class="pr-3 pl-3">
+                            <img src="{{url_backend}}{{camposanto.logo}}" class=" img-fluid fotoCementerio  ">
+                        </div>
+                                               
+                        <p class="pb-1 mt-3 descripcionCementerio col-12 d-flex justify-content-start "> 
+                            <mat-icon class="icono mr-1" svgIcon="pointer_verde" ></mat-icon>
+                            {{camposanto.direccion}}
+                        </p>
 
+                    </div>
+                </div>
+                <!-- <app-boton-crear class="col-3 p-0 tarjetas mr-1 mt-5 shadow rounded" [routerLink]="['/inicio/crear']"></app-boton-crear>      -->
             </div>
         </div>
-        <!-- <app-boton-crear class="col-3 p-0 tarjetas mr-1 mt-5 shadow rounded" [routerLink]="['/inicio/crear']"></app-boton-crear>      -->
     </div>
-</div>
+</div>   
