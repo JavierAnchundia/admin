@@ -64,7 +64,9 @@
                                             >
                                             <span class="text-danger" *ngIf="form_p_configuracion.controls['contrasena'].touched && form_p_configuracion.controls['contrasena'].hasError('required')">
                                                 Contraseña es requerida! </span>
-                                        </div>
+                                            <span *ngIf="form_p_configuracion.controls['contrasena'].touched && form_p_configuracion.controls['contrasena'].hasError('minlength')" class="text-danger"><small>La contrasena debe tener minimo 6 carácteres</small> </span>
+
+                                        </div> 
                                     </div>
                                     <div class="form-group col-4">
                                         <div class="col-11"><label for="conf_contrasena" class="col-form-label font-weight-bold">Confirmar contraseña:</label></div>
@@ -77,8 +79,7 @@
                                             >
                                             <span class="invalid-feedback" *ngIf="form_p_configuracion.controls['conf_contrasena'].hasError('passwordMismatch')">
                                                 No concuerdan las contraseñas! </span>
-                                            <span class="text-danger" *ngIf="form_p_configuracion.controls['conf_contrasena'].touched && form_p_configuracion.controls['conf_contrasena'].hasError('required')">
-                                                Confirmar contraseña es requerida! </span>
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -87,9 +88,12 @@
                                     <div class="form-group col-4">
                                         <div class="col-11"><label for="telefono" class="col-form-label font-weight-bold">Teléfono:</label></div>
                                         <div class="col-11">
-                                            <input formControlName="telefono" type="text"  class="form-control ">
+                                            <input formControlName="telefono" type="text"  class="form-control " minlength="7" maxlength="10">
                                             <span class="text-danger" *ngIf="form_p_configuracion.controls['telefono'].touched && form_p_configuracion.controls['telefono'].hasError('required')">
                                                 Teléfono es requerido! </span>
+                                            <span class="text-danger"  *ngIf="form_p_configuracion.controls['telefono'].hasError('minlength') ||form_p_configuracion.controls['telefono'].hasError('maxlength')">
+                                                <small>La longitud del campo debe ser de 7 o 10.</small>
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="form-group col-4">

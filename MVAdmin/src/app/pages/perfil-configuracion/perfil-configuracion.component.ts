@@ -25,6 +25,7 @@ export class PerfilConfiguracionComponent implements OnInit {
   username: string;
   id_user: any;
   infoPermisos:Array<Permiso> = [];
+  numericNumberReg = '[0-9]*';
 
   constructor(
     private fb: FormBuilder,
@@ -43,9 +44,15 @@ export class PerfilConfiguracionComponent implements OnInit {
       apellido: [null, Validators.compose([Validators.required])],
       usuario: [null, Validators.compose([Validators.required])],
       correo: [null, Validators.compose([Validators.required, Validators.email])],
-      contrasena: ["",],
+      contrasena: ["",[Validators.minLength(6)]],
       conf_contrasena: ["", ],
-      telefono: [null, Validators.compose([Validators.required])],
+      telefono: [null,[
+        Validators.required,
+        Validators.minLength(7),
+        Validators.maxLength(10),
+        Validators.pattern(this.numericNumberReg),
+      ],
+    ],
       rol: {value: null, disabled: true}
     },
     {
