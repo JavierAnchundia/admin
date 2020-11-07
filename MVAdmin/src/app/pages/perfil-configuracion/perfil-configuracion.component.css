@@ -18,3 +18,8 @@
     background-color: #A3C442;
     color:#FFFFFF;
 }
+
+.editar:hover{
+    cursor: pointer;
+    color: #A3C442;
+}

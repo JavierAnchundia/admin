@@ -11,7 +11,7 @@
                                         <span class="section-heading-lower titulo font-weight-bold">CONFIGURACIÓN DEL PERFIL</span>  
                                     </h2>
                                 </div>
-                                <div ><h5 class="mt-2 mr-5"><fa-icon [icon]="faEdit" (click) = "edForm()"></fa-icon></h5></div>
+                                <div ><h5 class="mt-2 mr-5 editar"><fa-icon type="button" data-toggle="tooltip" data-placement="bottom" title="De click para editar" [icon]="faEdit" (click) = "edForm()"></fa-icon></h5></div>
                             </div>
                             <br>
                             <form [formGroup]="form_p_configuracion" (ngSubmit)="onSubmit()">
@@ -57,14 +57,16 @@
                                         <div class="col-11"><label for="contrasena" class="col-form-label font-weight-bold">Contraseña:</label></div>
                                         <div class="col-11">
                                             <input 
+                                                id="contrasena"
                                                 formControlName="contrasena" 
                                                 type="password" 
                                                 class="form-control "
-                                                [ngClass]="{'is-invalid':form_p_configuracion.controls['contrasena'].errors && form_p_configuracion.controls['contrasena'].touched}"
+                                                [ngClass]="{'is-invalid':f.contrasena.errors && (f.contrasena.touched || f.contrasena.dirty) }"
                                             >
-                                            <span class="text-danger" *ngIf="form_p_configuracion.controls['contrasena'].touched && form_p_configuracion.controls['contrasena'].hasError('required')">
+                                            <span class="text-danger" *ngIf="form_p_configuracion.controls.contrasena.touched && form_p_configuracion.controls.contrasena.hasError('required')">
                                                 Contraseña es requerida! </span>
-                                            <span *ngIf="form_p_configuracion.controls['contrasena'].touched && form_p_configuracion.controls['contrasena'].hasError('minlength')" class="text-danger"><small>La contrasena debe tener minimo 6 carácteres</small> </span>
+                                            <span *ngIf="(f.contrasena.touched || f.contrasena.dirty) && f.contrasena.hasError('min_len_Pass')" 
+                                            class="text-danger"><small>La contrasena debe tener minimo 6 carácteres</small> </span>
 
                                         </div> 
                                     </div>
@@ -72,13 +74,15 @@
                                         <div class="col-11"><label for="conf_contrasena" class="col-form-label font-weight-bold">Confirmar contraseña:</label></div>
                                         <div class="col-11">
                                             <input 
+                                                id="conf_contrasena"
                                                 formControlName="conf_contrasena" 
                                                 type="password" 
                                                 class="form-control "
-                                                [ngClass]="{'is-invalid':form_p_configuracion.controls['conf_contrasena'].errors && form_p_configuracion.controls['conf_contrasena'].touched}"
+                                                [ngClass]="{'is-invalid':f.conf_contrasena.errors && f.conf_contrasena.touched}"
                                             >
-                                            <span class="invalid-feedback" *ngIf="form_p_configuracion.controls['conf_contrasena'].hasError('passwordMismatch')">
-                                                No concuerdan las contraseñas! </span>
+                                            <span class="text-danger" *ngIf="f.conf_contrasena.hasError('passwordMismatch') && (f.conf_contrasena.touched|| 
+                                            f.conf_contrasena.dirty || f.contrasena.touched || f.contrasena.dirty)">
+                                                <small>No concuerdan las contraseñas!</small> </span>
                                            
                                         </div>
                                     </div>

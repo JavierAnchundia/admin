@@ -44,8 +44,8 @@ export class PerfilConfiguracionComponent implements OnInit {
       apellido: [null, Validators.compose([Validators.required])],
       usuario: [null, Validators.compose([Validators.required])],
       correo: [null, Validators.compose([Validators.required, Validators.email])],
-      contrasena: ["",[Validators.minLength(6)]],
-      conf_contrasena: ["", ],
+      contrasena: ["******"],
+      conf_contrasena: ["******"],
       telefono: [null,[
         Validators.required,
         Validators.minLength(7),
@@ -56,10 +56,12 @@ export class PerfilConfiguracionComponent implements OnInit {
       rol: {value: null, disabled: true}
     },
     {
-      validator: this._match_contrasena.validateMatchContrasena(
+      validator: [this._match_contrasena.validateMatchContrasena(
         "contrasena",
         "conf_contrasena"
-      )
+      ),
+      this.min_len_Pass(),
+      ]
     }
     );
     this.id = JSON.parse(localStorage.getItem('camposanto'));
@@ -121,6 +123,32 @@ export class PerfilConfiguracionComponent implements OnInit {
     )
   }
 
+  get f() {
+    return this.form_p_configuracion.controls;
+  }
+
+  get contrasena(){
+    return this.form_p_configuracion.get('contrasena');
+  }
+
+  min_len_Pass() {
+    // let username = this.adminForm.value.usuario;
+    // username = String(username);
+    return (formGroup: FormGroup) =>{
+      
+      const contrasenaControl = formGroup.controls['contrasena'];
+      if (contrasenaControl.errors && ! contrasenaControl.errors.min_len_Pass) {
+        // return if another validator has already found an error on the matchingControl
+        return;
+      }
+      if ((contrasenaControl.value).length < 6) {
+        
+        contrasenaControl.setErrors({ min_len_Pass: true });
+      } else {
+        contrasenaControl.setErrors(null);
+      }
+    }
+  }
   editarDatos() {
     const formData = new FormData();
     formData.append('first_name', this.form_p_configuracion.value.nombre);
@@ -133,7 +161,7 @@ export class PerfilConfiguracionComponent implements OnInit {
     formData.append('is_active', 'True');
     formData.append('id_camposanto', this.id.camposanto);
 
-    if(this.form_p_configuracion.value.conf_contrasena != ""){
+    if(this.form_p_configuracion.value.conf_contrasena != "******"){
     formData.append('password', this.form_p_configuracion.value.conf_contrasena);
     console.log(formData.get('password'));
   }
