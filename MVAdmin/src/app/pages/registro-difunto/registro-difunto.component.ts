@@ -65,6 +65,8 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
   monthNames = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
   numericNumberReg = '[0-9]*';
   parentezcoOptions: Array<String> = ["Hijo/a", "Esposo/a", "Nieto/a", "Hermano/a", 'Primo/a', "1", "nieto", "aaa"]
+  info_difunto: any;
+
 
 
   constructor(
@@ -73,7 +75,7 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
     public _sepultura: TiposepulturaService,
     private _servicioGeo: GeolocalizacionService,
     private router: Router,
-    public _editar: RenderizareditService,
+    private _editar: RenderizareditService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
   ) { 
@@ -92,7 +94,6 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._editar.setMetodoConexion("POST");
   }
   
   ngOnInit(): void {
@@ -225,7 +226,7 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.submitted = true;
     Swal.close()
-    if ((this.markers.length == 0 && this._editar.getMetodoConexion() != "PUT")) {
+    if ((this.markers.length == 0 && this.info_difunto.metodo_conexion != "PUT")) {
       Swal.close();
       console.log(this.verPuntos)
       console.log(this.markers.length)
@@ -258,12 +259,13 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
   }
 
    obtenerInfo() {
-    if (this._editar.getMetodoConexion() == 'PUT') {
+    this.info_difunto = JSON.parse(localStorage.getItem('difunto_info'));
+    if (this.info_difunto.metodo_conexion  == 'PUT') {
         this.editando = true;
-        this.difunto =  this._editar.getinfoRenderizarDifunto().difunto;
-        this.sector =  this._editar.getinfoRenderizarDifunto().sector;
-        this.sepultura =  this._editar.getinfoRenderizarDifunto().sepultura;
-        this.responsable =  this._editar.getinfoRenderizarDifunto().responsable;
+        this.difunto =  this.info_difunto.difunto;
+        this.sector =  this.info_difunto.sector;
+        this.sepultura =  this.info_difunto.sepultura;
+        this.responsable =  this.info_difunto.responsable;
         this.fechaDefuncionInfo = this.difunto.fecha_difuncion as unknown as string;
         this.latitudFinal = this.difunto.latitud;
         this.longitudFinal = this.difunto.longitud;
@@ -388,7 +390,7 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
     formData.append('id_tip_sepultura', this.obtenerID(this.lista_sepultura, this.difuntoForm.value.tipoSepultura));
     formData.append('id_sector', this.obtenerID(this.lista_sector, this.difuntoForm.value.sector));
 
-    if (this._editar.getMetodoConexion() == "PUT") {
+    if (this.info_difunto.metodo_conexion == "PUT") {
       console.log("Esto es un metodo PUT")
       this._difunto.putDifunto(formData, this.difunto.id_difunto)
         .pipe(
@@ -502,12 +504,11 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
     console.log(this.difunto.id_difunto)
 
 
-    if (this._editar.getMetodoConexion() == "PUT") {
+    if (this.info_difunto.metodo_conexion  == 'PUT') {
 
       this._difunto.putResponable(formData, this.difunto.id_difunto).subscribe(
         () => {
           console.log(this.responsableForm);
-          this._editar.setMetodoConexion("POST");
         },
         error => {
           console.error('Error:' + error);
@@ -521,7 +522,6 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
       this._difunto.postResponsable(formData).subscribe(
         () => {
           console.log(this.responsableForm);
-          this._editar.setMetodoConexion("POST");
         },
         error => {
           console.error('Error:' + error);

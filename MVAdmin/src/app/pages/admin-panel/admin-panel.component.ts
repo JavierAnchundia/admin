@@ -44,6 +44,16 @@ export class AdminPanelComponent implements OnInit,AfterViewInit  {
     this.cargarAdmin();
   }
 
+  cambiarMetodoConexion(){
+    let info_admin = JSON.parse(localStorage.getItem('admin_info'));
+    if(info_admin != null){
+      localStorage.setItem('admin_info', JSON.stringify({admin: info_admin.admin, permisos:info_admin.permisos, metodo_conexion:('POST')}));
+
+    }
+
+    else{localStorage.setItem('admin_info', JSON.stringify({admin: "", permisos:"", metodo_conexion:('POST')}));
+    }
+  }
 
   cargarAdmin(){
     this._usuario.getUsers(this.id.camposanto)
@@ -95,6 +105,7 @@ export class AdminPanelComponent implements OnInit,AfterViewInit  {
     }
     
     console.log(infoPermisos);
+    localStorage.setItem('admin_info', JSON.stringify({admin:this.rowID, permisos:infoPermisos, metodo_conexion:('PUT')}));
     await this._editar.setinfoRenderizarAdmin({admin:this.rowID,permisos:infoPermisos})
     this.router.navigateByUrl('inicio/create');
 

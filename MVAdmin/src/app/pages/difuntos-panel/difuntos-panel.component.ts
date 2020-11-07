@@ -47,6 +47,18 @@ export class DifuntosPanelComponent implements OnInit, AfterViewInit {
     this.cargarDifuntos();
   }
 
+  cambiarMetodoConexion(){
+    let info_difunto = JSON.parse(localStorage.getItem('difunto_info'));
+    if(info_difunto != null){
+      localStorage.setItem('difunto_info', JSON.stringify({admin: info_difunto.admin, sector: info_difunto.sector, sepultura: info_difunto.sepultura,
+         responsable: info_difunto.responsable, metodo_conexion:('POST')}));
+    }
+
+    else{ localStorage.setItem('difunto_info', JSON.stringify({admin: "", sector: "", sepultura: "",
+      responsable: "", metodo_conexion:('POST')}));
+    }
+  }
+  
   cargarDifuntos(){
     this._difuntos.getDifuntos(this.id.camposanto)
     .subscribe((resp:any)=>{
@@ -68,7 +80,11 @@ export class DifuntosPanelComponent implements OnInit, AfterViewInit {
     .subscribe( async (resp:any)=>{
       this.difunto = resp as Difunto;
       await this.cargarSector();
-       this._editar.setinfoRenderizarDifunto({difunto:this.difunto, sector:this.sector, sepultura:this.sepultura, responsable:this.responsable});
+      
+      localStorage.setItem('difunto_info', JSON.stringify({difunto:this.difunto, sector:this.sector, sepultura:this.sepultura,
+      responsable:this.responsable,metodo_conexion:('PUT')}));
+
+      this._editar.setinfoRenderizarDifunto({difunto:this.difunto, sector:this.sector, sepultura:this.sepultura, responsable:this.responsable});
 
     })
 
@@ -230,6 +246,10 @@ cargarResponsable(){
       console.log(resp)
       console.log(this.responsable)
       if(this._editar.getMetodoConexion()=='PUT'){
+
+        localStorage.setItem('difunto_info', JSON.stringify({difunto:this.difunto, sector:this.sector, sepultura:this.sepultura,
+        responsable:this.responsable,metodo_conexion:('PUT')}));
+
          this._editar.setinfoRenderizarDifunto({difunto:this.difunto, sector:this.sector, sepultura:this.sepultura, responsable:this.responsable});
          this.router.navigateByUrl('inicio/registrodifunto');
       }

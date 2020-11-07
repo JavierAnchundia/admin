@@ -142,7 +142,7 @@ export class PerfilConfiguracionComponent implements OnInit {
         return;
       }
       if ((contrasenaControl.value).length < 6) {
-        
+        console.log("Estoy harto")
         contrasenaControl.setErrors({ min_len_Pass: true });
       } else {
         contrasenaControl.setErrors(null);

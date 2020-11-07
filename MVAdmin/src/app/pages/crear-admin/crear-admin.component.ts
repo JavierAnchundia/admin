@@ -59,6 +59,8 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
   bool_permisos: Array<boolean>=[];
   mostrar_contrasena: Boolean = true;
   editando= false;
+  info_admin: any;
+
   constructor(
     private fb: FormBuilder,
     public mustMatchService: MustMatchService,
@@ -86,14 +88,14 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy():void{
-    this._editar.setMetodoConexion("POST");
+    //localStorage.setItem('admin_info', JSON.stringify({admin:this.info_admin.admin, permisos:this.info_admin.permisos, metodo_conexion:('PUT')}));
   }
 
   async ngOnInit(): Promise<void> {
     await this.obtenerInfo();
     await this.obtenerPermisos();
-    console.log(this._editar.getinfoRenderizarAdmin());
-    console.log(this._editar.getMetodoConexion())
+    console.log(this.info_admin.admin);
+    console.log(this.info_admin.metodo_conexion)
     console.log(this.administrador)
     console.log(this.admin_permisos)
     this.id = JSON.parse(localStorage.getItem('camposanto'));
@@ -130,7 +132,7 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
       }
     );
     
-    if(this._editar.getMetodoConexion()=="PUT"){
+    if(this.info_admin.metodo_conexion == "PUT"){
         this.adminForm.get('contrasena').disable();
         this.adminForm.get('repetirContrasena').disable();
 
@@ -146,7 +148,7 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
           })
         }
     }
-    if(this._editar.getMetodoConexion()=="PUT" && this.admin_permisos.length > 0){
+    if(this.info_admin.metodo_conexion == "PUT" && this.admin_permisos.length > 0){
       this.adminForm.addControl('permisoToggle', new FormControl(true));
     }
     else{this.adminForm.addControl('permisoToggle', new FormControl(null));}
@@ -182,10 +184,11 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
   }
   
   async obtenerInfo(){
-    if(this._editar.getMetodoConexion()=='PUT'){
+    this.info_admin = JSON.parse(localStorage.getItem('admin_info'));
+    if(this.info_admin.metodo_conexion == 'PUT'){
      this.editando = true;
-     this.administrador =this._editar.getinfoRenderizarAdmin().admin;
-     this.admin_permisos = await this._editar.getinfoRenderizarAdmin().permisos;
+     this.administrador = this.info_admin.admin;
+     this.admin_permisos = await this.info_admin.permisos;
      console.log(this.admin_permisos);
     }
   }
@@ -223,7 +226,7 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
     // let username = this.adminForm.value.usuario;
     // username = String(username);
     return (formGroup: FormGroup) =>{
-      if(this._editar.getMetodoConexion()=="PUT"){
+      if(this.info_admin.metodo_conexion == "PUT"){
         return;
       }
       let list_username = this.usernameLista;
@@ -244,7 +247,7 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
     // let correo_u = this.adminForm.value.correo;
     // correo_u = String(correo_u);
     return (formGroup: FormGroup) =>{
-      if(this._editar.getMetodoConexion()=="PUT"){
+      if(this.info_admin.metodo_conexion =="PUT"){
         return;
       }
       let list_correo = this.emailLista;
@@ -369,14 +372,14 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
       formData.append('tipo_usuario', "ad");
     }
 
-    if(this._editar.getMetodoConexion()=="POST"){
+    if(this.info_admin.metodo_conexion == "POST"){
       formData.append('password', this.adminForm.value.repetirContrasena);
     }
   
     
-  if(this._editar.getMetodoConexion()=="PUT"){
+  if(this.info_admin.metodo_conexion == "PUT"){
     this._usuario
-       .actualizarAdmin(formData, this._editar.getinfoRenderizarAdmin().admin.username)
+       .actualizarAdmin(formData, this.info_admin.admin.username)
        .pipe(
         catchError((err) => {
           Swal.close();
@@ -457,7 +460,7 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
       }
     }
     Swal.close();
-    if(this._editar.getMetodoConexion() == "POST"){
+    if(this.info_admin.metodo_conexion == "POST"){
     Swal.fire('¡Registro Exitoso!');}
     else{
       Swal.fire('¡Actualización Exitosa!');
