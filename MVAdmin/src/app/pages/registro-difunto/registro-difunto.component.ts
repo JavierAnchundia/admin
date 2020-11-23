@@ -384,7 +384,6 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
     formData.append('no_lapida', this.difuntoForm.value.lapida);
     formData.append('latitud', String(this.latitudFinal));
     formData.append('longitud', String(this.longitudFinal));
-    formData.append('num_rosas', '0');
     formData.append('estado', 'True');
     formData.append('id_camposanto', this.id.camposanto);
     formData.append('id_tip_sepultura', this.obtenerID(this.lista_sepultura, this.difuntoForm.value.tipoSepultura));

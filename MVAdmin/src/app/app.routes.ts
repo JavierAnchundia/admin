@@ -8,6 +8,8 @@ import { ErrorpageComponent } from './errorpage/errorpage.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { DashboardComponent } from 'src/app/pages/dashboard/dashboard.component';
 import { SadminCrearCementerioComponent } from 'src/app/pages/sadmin-crear-cementerio/sadmin-crear-cementerio.component'
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
+
 const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     {
@@ -15,6 +17,7 @@ const appRoutes: Routes = [
         component: PagesComponent,
         loadChildren: './pages/pages.module#PagesModule'
     },
+    {path: 'recuperarContrasena', component:PasswordRecoveryComponent},
     {
         path: 'dashboard' , component:DashboardComponent, data:{ titulo:' DashBoard '},
         canActivate: [AuthGuard] 

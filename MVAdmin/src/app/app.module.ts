@@ -27,6 +27,7 @@ import { PagesComponent } from './pages/pages.component';
 import { SharedModule } from './shared/shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ErrorpageComponent } from './errorpage/errorpage.component';
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 
 registerLocaleData(es);
 
@@ -35,7 +36,8 @@ registerLocaleData(es);
     AppComponent,
     LoginComponent,
     PagesComponent,
-    ErrorpageComponent
+    ErrorpageComponent,
+    PasswordRecoveryComponent
 
   ],
   imports: [
