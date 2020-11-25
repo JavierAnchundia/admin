@@ -90,7 +90,10 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/dashboard']);
         }
         else if(data['tipo_usuario'] == 'su'){
+          console.log(data['tipo_usuario']);
+          console.log(data['id_camposanto']);
           this.router.navigate(['/inicio/perfil/'+data['id_camposanto']]);
+          console.log("Sigo aqui");
         }
         else{
           localStorage.removeItem('tipo_user'); 

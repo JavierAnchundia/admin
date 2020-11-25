@@ -4,6 +4,8 @@ import Swal from 'sweetalert2';
 import { RecuperarContrasenaService } from '../services/recuperar-contrasena/recuperar-contrasena.service';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-password-recovery',
   templateUrl: './password-recovery.component.html',
@@ -15,6 +17,7 @@ export class PasswordRecoveryComponent implements OnInit {
   constructor(
     private formb: FormBuilder,
     public _recuperarContrasena: RecuperarContrasenaService,
+    private router: Router,
 
 
   ){ }
@@ -71,7 +74,14 @@ export class PasswordRecoveryComponent implements OnInit {
        Swal.fire({
         heightAuto: false,
         backdrop:false,
-        title:'¡Petición Exitosa! Revise su correo por favor'});
+        title:'¡Petición Exitosa! Revise su correo por favor',
+        confirmButtonText: 'Ok',
+      }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/login/']);
+      } 
+      })
+
        console.log("Holi");
        return true;
      },
