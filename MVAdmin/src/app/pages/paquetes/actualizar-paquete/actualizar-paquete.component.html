@@ -1,0 +1,189 @@
+<div
+  class="modal fade"
+  id="modalActualizarPaquete"
+  tabindex="-1"
+  aria-labelledby="modalActualizarPaquete"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">ACTUALIZAR PAQUETE</h5>
+        <button
+          type="button"
+          #closebuttonActualizar
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form
+        [formGroup]="form_actualizarPaquete"
+        (submit)="actualizarPaquete()"
+        enctype="multipart/form-data"
+      >
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-6">
+              <div class="col-8">
+                <label for="nombre" class="col-form-label col-form-label-sm">
+                  Nombre:</label
+                >
+              </div>
+              <div class="col-11">
+                <input
+                  formControlName="nombre"
+                  type="text"
+                  class="form-control"
+                />
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    form_actualizarPaquete.controls['nombre'].touched &&
+                    form_actualizarPaquete.controls['nombre'].hasError(
+                      'required'
+                    )
+                  "
+                >
+                  <small>Nombre es requerido</small>
+                </span>
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    form_actualizarPaquete.controls['nombre'].errors
+                      ?.minlength ||
+                    form_actualizarPaquete.controls['nombre'].errors?.maxlength
+                  "
+                >
+                  <small>Solo se aceptan entre 5 y 70 caracteres.</small>
+                </span>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="col-8">
+                <label for="precio" class="col-form-label col-form-label-sm"
+                  >Precio:</label
+                >
+              </div>
+              <div class="col-11">
+                <input
+                  formControlName="precio"
+                  type="text"
+                  class="form-control"
+                />
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    form_actualizarPaquete.controls['precio'].touched &&
+                    form_actualizarPaquete.controls['precio'].hasError(
+                      'required'
+                    )
+                  "
+                >
+                  <small>Precio es requerido</small>
+                </span>
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    form_actualizarPaquete.controls['precio'].errors?.pattern
+                  "
+                >
+                  <small> Ingrese un precio válido tipo: 25.75 o 25</small>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <div class="col-8">
+                <label
+                  for="descripcion"
+                  class="col-form-label col-form-label-sm"
+                >
+                  Descripción:</label
+                >
+              </div>
+              <div class="col-11">
+                <textarea
+                  formControlName="descripcion"
+                  class="form-control"
+                  placeholder=""
+                  rows="10"
+                  cols="20"
+                ></textarea>
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    form_actualizarPaquete.controls['descripcion'].touched &&
+                    form_actualizarPaquete.controls['descripcion'].hasError(
+                      'required'
+                    )
+                  "
+                >
+                  <small>Descripción es requerida</small>
+                </span>
+
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    form_actualizarPaquete.controls['descripcion'].errors
+                      ?.minlength ||
+                    form_actualizarPaquete.controls['descripcion'].errors
+                      ?.maxlength
+                  "
+                >
+                  <small>Solo se aceptan entre 10 y 500 caracteres.</small>
+                </span>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="col-8">
+                <label for="logo" class="col-form-label col-form-label-sm"
+                  >Imagen:</label
+                >
+              </div>
+              <div class="col-11">
+                <div class="custom-file">
+                  <input
+                    formControlName="imagen"
+                    type="file"
+                    accept="image/*"
+                    class="custom-file-input form-control"
+                    (change)="selectFile($event)"
+                    lang="es"
+                  />
+                  <label
+                    class="custom-file-label col-form-label col-form-label-sm"
+                    for="customFileLang"
+                    >{{ nameLogo }}</label
+                  >
+                </div>
+                <!-- <span
+                  class="text-danger"
+                  *ngIf="
+                    form_actualizarPaquete.controls['imagen'].touched &&
+                    form_actualizarPaquete.controls['imagen'].hasError('required')
+                  "
+                >
+                  <small>Logo es requerido</small>
+                </span> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="submit"
+            class="btn"
+            [disabled]="!form_actualizarPaquete.valid"
+            id="closeModalCPA"
+          >
+            <span>Actualizar</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
