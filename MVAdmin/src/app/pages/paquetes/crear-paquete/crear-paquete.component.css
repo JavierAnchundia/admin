@@ -1,0 +1,27 @@
+input {
+  font-size: 0.75em;
+  background: #edeef0;
+  color: #87868a;
+}
+h5 {
+  font-weight: bolder;
+}
+
+textarea {
+  font-size: 0.75em;
+  background: #edeef0;
+  color: #87868a;
+}
+.dangerColor {
+  color: red;
+  font-size: 20px;
+}
+
+#closeModalCPC {
+  background: #a3c442;
+  color: #ffffff;
+  border-radius: 0px;
+}
+#closeModalCPC span {
+  font-size: 0.95em;
+}
