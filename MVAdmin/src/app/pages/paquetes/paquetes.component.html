@@ -1,0 +1,102 @@
+<div class="row ml-1 mr-1 align-items-center">
+  <div class="col-md-7 col-xs-12 col-sm-12">
+    <h1>Paquetes</h1>
+  </div>
+  <div class="col-md-1 col-xs-12 col-sm-12">
+    <button
+      class="buttonEditar"
+      type="button"
+      id="buttonAdd"
+      data-toggle="modal"
+      data-target="#modalAgregarPaquete"
+    >
+      <fa-icon [icon]="faPlus" id="plusIcon"></fa-icon>
+    </button>
+  </div>
+  <div
+    class="col-md-4 col-xs-12 col-sm-12"
+    style="font-size: 12px; margin-top: 1px"
+  >
+    <mat-form-field appearance="fill">
+      <input
+        matInput
+        type="text"
+        (keyup)="doFilter($event.target.value)"
+        placeholder="Buscar"
+      />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+    matSortStart="desc"
+    class="mat-elevation-z8 punteroHand"
+  >
+    <ng-container matColumnDef="imagen">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Imagen</th>
+      <td mat-cell *matCellDef="let element">
+        <img
+          class="imagenPaquete"
+          src="{{ url_backend }}{{ element.imagen }}"
+          alt=""
+        />
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.nombre }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="descripcion">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
+      <td mat-cell *matCellDef="let element" class="descripcionTd">
+        {{ element.descripcion }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.fecha_created | date: "dd/MM/yyyy" }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="precio">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
+      <td mat-cell *matCellDef="let element">${{ element.precio }}</td>
+    </ng-container>
+    <ng-container matColumnDef="update">
+      <th mat-header-cell *matHeaderCellDef>Editar</th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          class="buttonEditar"
+          type="button"
+          data-toggle="modal"
+          data-target="#modalActualizarPaquete"
+          (click)="cargarPaqueteModal(element)"
+        >
+          <fa-icon [icon]="faPen"></fa-icon>
+        </button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon
+          class="delete-icon"
+          (click)="deletePaquete(element.id_paquete)"
+          >delete</mat-icon
+        >
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+
+<app-crear-paquete></app-crear-paquete>
+<app-actualizar-paquete></app-actualizar-paquete>

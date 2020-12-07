@@ -4,13 +4,13 @@ import { environment } from '../../environments/environment';
 import { PAGES_ROUTES } from './pages.routes';
 import { SharedModule } from '../shared/shared.module';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 //servicios
 import { ComunicateNavSiderService } from '../services/comunicatens/comunicate-nav-sider.service';
-import { CargarGeolocalizacionSadminService } from '../services/cargar-geolocalizacion-sadmin/cargar-geolocalizacion-sadmin.service'
+import { CargarGeolocalizacionSadminService } from '../services/cargar-geolocalizacion-sadmin/cargar-geolocalizacion-sadmin.service';
 
-import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
@@ -36,70 +36,79 @@ import { EditarMapaComponent } from './perfil-cementerio/editar-mapa/editar-mapa
 import { ServicioModules } from '../services/servicios.module';
 import { DetalleDifuntoComponent } from './difuntos-panel/detalle-difunto/detalle-difunto.component';
 import { MatTableModule } from '@angular/material/table';
-import { MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSortModule } from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';registerLocaleData(es);
+import { MatFormFieldModule } from '@angular/material/form-field';
+registerLocaleData(es);
 import { MatInputModule } from '@angular/material/input';
-import {MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { PaquetesComponent } from './paquetes/paquetes.component';
+import { ActualizarPaqueteComponent } from './paquetes/actualizar-paquete/actualizar-paquete.component';
+import { CrearPaqueteComponent } from './paquetes/crear-paquete/crear-paquete.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
-    declarations: [
-        //PagesComponent,
-        PerfilCementerioComponent,
-        AdminPanelComponent,
-        SadminCrearCementerioComponent,
-        PerfilConfiguracionComponent,
-        PoligonoMapComponent,
-        DashboardComponent,
-        BotonCrearComponent,
-        RegistroDifuntoComponent,
-        DifuntosPanelComponent,
-        CrearAdminComponent,
-        VerMapaComponent,
-        EditarMapaComponent,
-        DetalleDifuntoComponent,
-    ],
-    exports: [
-        PerfilCementerioComponent,
-        SadminCrearCementerioComponent,
-        RegistroDifuntoComponent,
-        MatTableModule,
-        MatSortModule,
-        MatIconModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatDialogModule,
-        MatAutocompleteModule,
-
-    ],
-    imports: [
-        MatAutocompleteModule,
-        CommonModule,
-        NgxSkeletonLoaderModule,
-        SharedModule,
-        ServicioModules,
-        PAGES_ROUTES,
-        FormsModule,
-        NgZorroAntdModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        FontAwesomeModule,
-        MatSlideToggleModule,
-        MatTableModule,
-        MatIconModule,
-        MatFormFieldModule,
-        MatDialogModule,
-        MatSortModule,
-        MatInputModule,
-        MatAutocompleteModule,
-        AgmCoreModule.forRoot({
-            apiKey: environment.api_key,
-            libraries: ['places', 'drawing', 'geometry']
-        }),
-    ],
-    providers: [
-        ComunicateNavSiderService,
-        CargarGeolocalizacionSadminService,
-        { provide: NZ_I18N, useValue: es_ES }],
+  declarations: [
+    //PagesComponent,
+    PerfilCementerioComponent,
+    AdminPanelComponent,
+    SadminCrearCementerioComponent,
+    PerfilConfiguracionComponent,
+    PoligonoMapComponent,
+    DashboardComponent,
+    BotonCrearComponent,
+    RegistroDifuntoComponent,
+    DifuntosPanelComponent,
+    CrearAdminComponent,
+    VerMapaComponent,
+    EditarMapaComponent,
+    DetalleDifuntoComponent,
+    PaquetesComponent,
+    ActualizarPaqueteComponent,
+    CrearPaqueteComponent,
+  ],
+  exports: [
+    PerfilCementerioComponent,
+    SadminCrearCementerioComponent,
+    RegistroDifuntoComponent,
+    MatTableModule,
+    MatSortModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+    MatAutocompleteModule,
+  ],
+  imports: [
+    MatAutocompleteModule,
+    CommonModule,
+    NgxSkeletonLoaderModule,
+    SharedModule,
+    ServicioModules,
+    PAGES_ROUTES,
+    FormsModule,
+    NgZorroAntdModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FontAwesomeModule,
+    MatSlideToggleModule,
+    MatTableModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatDialogModule,
+    MatSortModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.api_key,
+      libraries: ['places', 'drawing', 'geometry'],
+    }),
+  ],
+  providers: [
+    DatePipe,
+    ComunicateNavSiderService,
+    CargarGeolocalizacionSadminService,
+    { provide: NZ_I18N, useValue: es_ES },
+  ],
 })
-export class PagesModule { }
+export class PagesModule {}
