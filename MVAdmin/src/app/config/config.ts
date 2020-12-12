@@ -1,7 +1,7 @@
- const URL_ROOT = 'http://localhost:8000/api'
- const URL_ROOT_AUTH = 'http://localhost:8000'
-//const URL_ROOT = 'https://carmsanc.pythonanywhere.com/api'
-//const URL_ROOT_AUTH = 'https://carmsanc.pythonanywhere.com'
+// const URL_ROOT = 'http://localhost:8000/api';
+// const URL_ROOT_AUTH = 'http://localhost:8000';
+const URL_ROOT = 'https://carmsanc.pythonanywhere.com/api';
+const URL_ROOT_AUTH = 'https://carmsanc.pythonanywhere.com';
 const URL_SERVICIOS = {
     url_backend: URL_ROOT_AUTH,
     camposantos : URL_ROOT + '/camposantos/',
@@ -33,6 +33,9 @@ const URL_SERVICIOS = {
     info_permiso : URL_ROOT + '/permiso/',
     recuperar_contrasena: URL_ROOT + '/enviar_email_password_admin/',
     info_permiso_user: URL_ROOT + '/info_permiso_user/',
+    paquete_add: URL_ROOT + '/paquete_add/',
+    paquete_put_del: URL_ROOT + '/paquete_put_del/',
+    paquetes_list: URL_ROOT + '/paquetes_list/',
 }
 
-export default URL_SERVICIOS
+export default URL_SERVICIOS;

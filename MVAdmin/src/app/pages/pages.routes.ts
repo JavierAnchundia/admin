@@ -4,20 +4,18 @@ import { PagesComponent } from './pages.component';
 import { SadminCrearCementerioComponent } from './sadmin-crear-cementerio/sadmin-crear-cementerio.component';
 import { PerfilCementerioComponent } from './perfil-cementerio/perfil-cementerio.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
-import { PerfilConfiguracionComponent } from './perfil-configuracion/perfil-configuracion.component'
+import { PerfilConfiguracionComponent } from './perfil-configuracion/perfil-configuracion.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegistroDifuntoComponent } from './registro-difunto/registro-difunto.component';
 import { DifuntosPanelComponent } from './difuntos-panel/difuntos-panel.component';
 import { CrearAdminComponent } from './crear-admin/crear-admin.component';
 import { AuthGuard } from '../guards/auth/auth.guard';
-import { PerfilCementerioGuard } from '../guards/perfil-cementerio/perfil-cementerio.guard'
+import { PerfilCementerioGuard } from '../guards/perfil-cementerio/perfil-cementerio.guard';
 import { CrearAdminGuard } from '../guards/crear-admin/crear-admin.guard';
 import {PagPermisosGuard} from '../guards/pag-permisos/pag-permisos.guard';
-
+import { PaquetesComponent } from 'src/app/pages/paquetes/paquetes.component';
 
 // Guards
-
-
 
 const pagesRoutes: Routes = [
     {
@@ -55,8 +53,14 @@ const pagesRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
 
     { path: 'dashboard' , component:DashboardComponent, data:{ titulo:' DashBoard '},
-      canActivate: [AuthGuard, PagPermisosGuard] }
+      canActivate: [AuthGuard, PagPermisosGuard] },
+
+      {
+        path: 'paquetes',
+        component: PaquetesComponent,
+        data: { titulo: 'Paquetes' },
+        canActivate: [AuthGuard, PagPermisosGuard]
+      },
 ];
 
-
-export const PAGES_ROUTES = RouterModule.forChild(pagesRoutes); 
+export const PAGES_ROUTES = RouterModule.forChild(pagesRoutes);
