@@ -21,15 +21,14 @@ export class AuthGuard implements CanActivate {
       if(this.tipo_user == 'ha'){
         return true;
       }
-      else if(this.tipo_user == 'su'){
+      else if(this.tipo_user == 'su' || this.tipo_user == 'ad'){
         return true;
       }
       else {
-        return true;
+        return false;
       }
     }
     else{
-      console.log("Hola")
       this.router.navigate(['/login']);
       return false;
     }
