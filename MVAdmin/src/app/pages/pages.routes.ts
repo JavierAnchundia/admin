@@ -33,7 +33,7 @@ const pagesRoutes: Routes = [
         canActivate: [AuthGuard, PagPermisosGuard],
     },
     {
-        path: 'administradores', component: AdminPanelComponent, data: { titulo: 'Administradores' },
+        path: 'administradores', component: AdminPanelComponent, data: { titulo: 'Ver Administradores' },
         canActivate: [AuthGuard, PagPermisosGuard],
     },
     {
@@ -41,7 +41,7 @@ const pagesRoutes: Routes = [
         canActivate: [AuthGuard, PagPermisosGuard],
     },
     {
-        path: 'difuntos', component: DifuntosPanelComponent, data: { titulo: 'Difuntos' },
+        path: 'difuntos', component: DifuntosPanelComponent, data: { titulo: 'Ver Difuntos' },
         canActivate: [AuthGuard, PagPermisosGuard],
     },
     {
