@@ -72,29 +72,33 @@ export class ActualizarPaqueteComponent implements OnInit {
       cancelButtonText: 'No',
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await Swal.close();
-        await Swal.showLoading();
-        await this._paquete
-          .putPaquete(data, this.paquete['id_paquete'])
-          .subscribe(
-            async (resp) => {
-              await Swal.close();
-              await this.closebuttonActualizar.nativeElement.click();
-              await Swal.fire({
-                icon: 'success',
-                title: 'Se ha actualizado con éxito el paquete',
-              });
-              this._paquete.reload_Paquetes('reload');
-            },
-            async (error) => {
-              await Swal.close();
-              await Swal.fire({
-                icon: 'error',
-                title: 'Error...',
-                text: 'No se ha podido actualizar!',
-              });
-            }
-          );
+        Swal.fire({
+          title: 'Actualizando...',
+          onOpen: async () => {
+            await Swal.showLoading();
+            await this._paquete
+              .putPaquete(data, this.paquete['id_paquete'])
+              .subscribe(
+                async (resp) => {
+                  await Swal.close();
+                  await this.closebuttonActualizar.nativeElement.click();
+                  await Swal.fire({
+                    icon: 'success',
+                    title: 'Se ha actualizado con éxito el paquete',
+                  });
+                  this._paquete.reload_Paquetes('reload');
+                },
+                async (error) => {
+                  await Swal.close();
+                  await Swal.fire({
+                    icon: 'error',
+                    title: 'Error...',
+                    text: 'No se ha podido actualizar!',
+                  });
+                }
+              );
+          },
+        });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
       }
     });

@@ -61,6 +61,7 @@ export class CrearPaqueteComponent implements OnInit {
 
   async agregarPaquete() {
     let data = await this.cargarData();
+    let retorno;
     await Swal.fire({
       title: '¿Está seguro que desea crear el paquete?',
       icon: 'warning',
@@ -69,25 +70,33 @@ export class CrearPaqueteComponent implements OnInit {
       cancelButtonText: 'No',
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await Swal.close();
-        await Swal.showLoading();
-        await this._paquete.postPaquete(data).subscribe(
-          async (resp) => {
-            await Swal.close();
-            await this.closebuttonAgregar.nativeElement.click();
-            await Swal.fire('Se ha creado con éxito el paquete', '', 'success');
-            await this.resetForm();
-            this._paquete.reload_Paquetes('reload');
+        Swal.fire({
+          title: 'Guardando...',
+          onOpen: async () => {
+            await Swal.showLoading();
+            await this._paquete.postPaquete(data).subscribe(
+              async (resp) => {
+                await Swal.close();
+                await this.closebuttonAgregar.nativeElement.click();
+                await Swal.fire(
+                  'Se ha creado con éxito el paquete',
+                  '',
+                  'success'
+                );
+                await this.resetForm();
+                this._paquete.reload_Paquetes('reload');
+              },
+              async (error) => {
+                await Swal.close();
+                await Swal.fire({
+                  icon: 'error',
+                  title: 'Error...',
+                  text: 'No se ha podido crear el paquete!',
+                });
+              }
+            );
           },
-          async (error) => {
-            await Swal.close();
-            await Swal.fire({
-              icon: 'error',
-              title: 'Error...',
-              text: 'No se ha podido crear el paquete!',
-            });
-          }
-        );
+        });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
       }
     });

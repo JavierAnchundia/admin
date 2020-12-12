@@ -77,26 +77,30 @@ export class PaquetesComponent implements OnInit {
       cancelButtonText: 'No',
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await Swal.close();
-        await Swal.showLoading();
-        this._paquetes.deletePaquete(id).subscribe(
-          async (resp) => {
-            await Swal.close();
-            await Swal.fire(
-              'Se ha eliminado con éxito el paquete',
-              '',
-              'success'
+        Swal.fire({
+          title: 'Eliminando...',
+          onOpen: async () => {
+            await Swal.showLoading();
+            this._paquetes.deletePaquete(id).subscribe(
+              async (resp) => {
+                await Swal.close();
+                await Swal.fire(
+                  'Se ha eliminado con éxito el paquete',
+                  '',
+                  'success'
+                );
+                this.cargarPaquetes(this.id.camposanto);
+              },
+              async (error) => {
+                await Swal.fire({
+                  icon: 'error',
+                  title: 'Error...',
+                  text: 'No se ha podido eliminar!',
+                });
+              }
             );
-            this.cargarPaquetes(this.id.camposanto);
           },
-          async (error) => {
-            await Swal.fire({
-              icon: 'error',
-              title: 'Error...',
-              text: 'No se ha podido eliminar!',
-            });
-          }
-        );
+        });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
       }
     });
