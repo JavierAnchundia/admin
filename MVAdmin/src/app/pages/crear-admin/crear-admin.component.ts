@@ -160,26 +160,40 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
   //Lo que va a hacer esta funcion es que va ver los ids de la lista de permisos que tiene un usuario y aparte de alli va a crear
   // un array booleano que tomara los valores de true justo en las paginas que el usuario tiene permiso
   permisosBool(lista_permisos:Permiso[], admin_permisos:Array<Permiso>){
+    let id_permisoslist:Array<number> = [];
     console.log(lista_permisos)
     console.log(this.lista_permisos)
     console.log(this.admin_permisos)
     for(let i in admin_permisos){
-      let index = admin_permisos[i].id_permiso as number
-      
-      this.bool_permisos[index - 1] = true;
+
+      let id_permiso = admin_permisos[i].id_permiso as number;
+      id_permisoslist.push(id_permiso);
+      //this.bool_permisos[index - 1] = true;
     }
+
+    console.log(this.bool_permisos)
+    for( let i in lista_permisos){
+
+      if(id_permisoslist.includes(lista_permisos[i].id_permiso as number))
+      {
+        this.bool_permisos.push(true);
+      }
+      else{this.bool_permisos.push(false)}
+    }
+
+    console.log(id_permisoslist)
     console.log(this.bool_permisos);
   }
 
 
 
-  cambiarEstadoTrue(id){
-    this.bool_permisos[id-1] = true;
+  cambiarEstadoTrue(index){
+    this.bool_permisos[index] = true;
     console.log(this.bool_permisos)
   }
 
-  cambiarEstadoFalse(id){
-    this.bool_permisos[id-1] = false;
+  cambiarEstadoFalse(index){
+    this.bool_permisos[index] = false;
     console.log(this.bool_permisos)
   }
   
@@ -201,7 +215,6 @@ export class CrearAdminComponent implements OnInit, OnDestroy {
       console.log(data)
       //Esta parte del codigo deberia haber sido llamada desde el metodo OnInit, pero si se lo pone ahi no se obtienen los datos "a tiempo"
       //A partir de la funcion asincronica, entonces para asegurarse que se van obtener las dos listas se los pone justamente aqui
-        this.bool_permisos = new Array<boolean>(this.lista_permisos.length).fill(false);
         this.permisosBool(this.lista_permisos,this.admin_permisos);
         console.log(this.bool_permisos);
         

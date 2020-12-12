@@ -12,6 +12,7 @@ import { CrearAdminComponent } from './crear-admin/crear-admin.component';
 import { AuthGuard } from '../guards/auth/auth.guard';
 import { PerfilCementerioGuard } from '../guards/perfil-cementerio/perfil-cementerio.guard'
 import { CrearAdminGuard } from '../guards/crear-admin/crear-admin.guard';
+import {PagPermisosGuard} from '../guards/pag-permisos/pag-permisos.guard';
 
 
 // Guards
@@ -20,31 +21,41 @@ import { CrearAdminGuard } from '../guards/crear-admin/crear-admin.guard';
 
 const pagesRoutes: Routes = [
     {
-        path: 'perfil/:id', component: PerfilCementerioComponent, data: { titulo: 'Perfil' },
-        canActivate: [PerfilCementerioGuard]
+        path: 'perfil/:id', component: PerfilCementerioComponent, data: { titulo: 'Perfil Cementerio' },
+        canActivate: [PerfilCementerioGuard, AuthGuard]
+        
+
     },
     {
-        path: 'configuracion', component: PerfilConfiguracionComponent, data: { titulo: 'Configuración Perfil' }
+        path: 'configuracion', component: PerfilConfiguracionComponent, data: { titulo: 'Configuración Perfil' },
+        canActivate: [AuthGuard, ],
     },
     {
-        path: 'crear', component: SadminCrearCementerioComponent, data: { titulo: 'CrearCementerio' }
+        path: 'crear', component: SadminCrearCementerioComponent, data: { titulo: 'Crear Cementerio' },
+        canActivate: [AuthGuard, PagPermisosGuard],
     },
     {
-        path: 'administradores', component: AdminPanelComponent, data: { titulo: 'Administradores' }
+        path: 'administradores', component: AdminPanelComponent, data: { titulo: 'Administradores' },
+        canActivate: [AuthGuard, PagPermisosGuard],
     },
     {
-        path: 'registrodifunto', component: RegistroDifuntoComponent, data: { titulo: 'RegistroDifuntos' }
+        path: 'registrodifunto', component: RegistroDifuntoComponent, data: { titulo: 'Crear/Editar Difuntos' },
+        canActivate: [AuthGuard, PagPermisosGuard],
     },
     {
-        path: 'difuntos', component: DifuntosPanelComponent, data: { titulo: 'Difuntos' }
+        path: 'difuntos', component: DifuntosPanelComponent, data: { titulo: 'Difuntos' },
+        canActivate: [AuthGuard, PagPermisosGuard],
     },
     {
-        path: 'create', component: CrearAdminComponent, data: { titulo: 'Crear Administrador' },
-        canActivate: [CrearAdminGuard]
+        path: 'create', component: CrearAdminComponent, data: { titulo: 'Crear/Editar Administrador' },
+        //canActivate: [CrearAdminGuard, AuthGuard, PagPermisosGuard]
+        canActivate: [ AuthGuard, PagPermisosGuard]
     },
+    
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+
     { path: 'dashboard' , component:DashboardComponent, data:{ titulo:' DashBoard '},
-    canActivate: [AuthGuard] }
+      canActivate: [AuthGuard, PagPermisosGuard] }
 ];
 
 

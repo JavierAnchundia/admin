@@ -31,7 +31,8 @@ const URL_SERVICIOS = {
     listar_permisos_general: URL_ROOT + '/listar_permisos_general/',
     mis_user_permisos: URL_ROOT + '/mis_user_permisos/',
     info_permiso : URL_ROOT + '/permiso/',
-    recuperar_contrasena: URL_ROOT + '/enviar_email_password_admin/'
+    recuperar_contrasena: URL_ROOT + '/enviar_email_password_admin/',
+    info_permiso_user: URL_ROOT + '/info_permiso_user/',
 }
 
 export default URL_SERVICIOS

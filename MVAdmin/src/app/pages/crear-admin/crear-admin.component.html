@@ -185,8 +185,8 @@
                     {{permiso.nombre}}
                     -->
                     <span class="col-5"> {{permiso.nombre}} </span>
-                    <mat-icon (click)="cambiarEstadoFalse(permiso.id_permiso)" *ngIf="bool_permisos[i]" class="icono   ml-1 col-2 " svgIcon="habilitada" ></mat-icon>
-                    <mat-icon (click)="cambiarEstadoTrue(permiso.id_permiso)" *ngIf="!bool_permisos[i]" class="icono   ml-1 col-2" svgIcon="inhabilitada" ></mat-icon>
+                    <mat-icon (click)="cambiarEstadoFalse(i)" *ngIf="bool_permisos[i]" class="icono   ml-1 col-2 " svgIcon="habilitada" ></mat-icon>
+                    <mat-icon (click)="cambiarEstadoTrue(i)" *ngIf="!bool_permisos[i]" class="icono   ml-1 col-2" svgIcon="inhabilitada" ></mat-icon>
 
                   </div>
                 </div>

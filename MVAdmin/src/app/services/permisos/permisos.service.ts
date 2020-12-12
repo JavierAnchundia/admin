@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import URL_SERVICIOS from 'src/app/config/config';
 import { UsuarioService } from '../usuario/usuario.service';
+import { Info_permiso_user } from 'src/app/models/info_permiso_user';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,12 @@ export class PermisosService {
     let url = URL_SERVICIOS.mis_user_permisos + id_user + "/";
     return await this.http.get<User_permiso[]>(url).toPromise();
   }
+
+  async getMisPermisosInfo(id_user){
+    let url = URL_SERVICIOS.info_permiso_user + id_user + "/";
+    return await this.http.get<Info_permiso_user[]>(url).toPromise();
+  }
+
 
   async deleteMisPermisos(id_user){
     let url = URL_SERVICIOS.mis_user_permisos + id_user + "/";
