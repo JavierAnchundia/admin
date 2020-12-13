@@ -82,7 +82,7 @@ const pagesRoutes: Routes = [
     path: 'notificaciones',
     component: NotificacionesComponent,
     data: { titulo: 'Notificaciones' },
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, PagPermisosGuard],
   },
 ];
 
