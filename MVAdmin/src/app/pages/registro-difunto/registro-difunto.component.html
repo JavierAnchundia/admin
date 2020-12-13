@@ -7,26 +7,26 @@
   </ol>
 </nav>-->
 
-<div *ngIf="!editando"class="row mt-2" >
-  <div class="col-auto ml-3 ">
+<div *ngIf="!editando"class="d-flex flex-row mt-2" >
+  <div class=" ml-3 mr-3">
     <a class="titulo font-weight-bold " routerLink="/inicio/difuntos">FALLECIDOS</a>
   </div>
-  <div class= "col-auto m-0 p-0 ">
+  <div class= " m-0 p-0 ">
     <mat-icon class="icono m-0 p-0 mt-2 " svgIcon="flecha2" ></mat-icon>
   </div>
-  <div class="col-4 ml-0 pr-5 mr-5">
-    <h2 class="subtitulo ml-0 pl-0 mt-2">Registrar fallecido</h2>
+  <div class=" ml-0 pr-5 mr-5">
+    <h2 class="subtitulo ml-3 pl-0 mt-2">Registrar fallecido</h2>
   </div>
 </div>
 
-<div *ngIf="editando" class="row mt-2" >
-  <div class="col-auto ml-3 ">
+<div *ngIf="editando" class="d-flex flex-row mt-2" >
+  <div class=" ml-3 ">
     <a class="titulo font-weight-bold " routerLink="/inicio/difuntos">FALLECIDOS</a>
   </div>
-  <div class= "col-auto m-0 p-0 ">
+  <div class= " m-0 p-0 ">
     <mat-icon class="icono m-0 p-0 mt-2 " svgIcon="flecha2" ></mat-icon>
   </div>
-  <div class="col-4 ml-0 pr-5 mr-5">
+  <div class=" ml-0 pr-5 mr-5">
     <h2 class="subtitulo ml-0 pl-0 mt-2">Editar fallecido</h2>
   </div>
 </div>
