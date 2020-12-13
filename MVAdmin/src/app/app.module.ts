@@ -29,6 +29,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ErrorpageComponent } from './errorpage/errorpage.component';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+
 registerLocaleData(es);
 
 @NgModule({
@@ -55,6 +58,9 @@ registerLocaleData(es);
       apiKey: environment.api_key,
       libraries: ['places', 'drawing', 'geometry']
     }),
+    
+    LoadingBarHttpClientModule,
+    LoadingBarRouterModule,
   ],
   providers: [
     ComunicateNavSiderService, 
