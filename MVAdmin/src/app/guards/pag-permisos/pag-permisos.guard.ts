@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import {PermisosService} from '../../services/permisos/permisos.service' 
 import Swal from 'sweetalert2';
 import { UsuarioService } from '../../services/usuario/usuario.service'
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -25,13 +27,40 @@ export class PagPermisosGuard implements CanActivate {
     let resultado;
 
     if(this.auth.isAuthenticated()){
+      console.log("Estoy dentro");
       this.tipo_user =  localStorage.getItem('tipo_user');
-      this.id_cementerio = JSON.parse(localStorage.getItem('camposanto')).camposanto;
+
       if(this.tipo_user == 'ha'){
         console.log("HiperAdmin");
         return true;
       }
+
+      await this.auth.getDatosUser(localStorage.getItem('username'))
+       .pipe(
+        catchError((err) => {
+          Swal.close();
+          Swal.fire(
+          );
+          return throwError(err);
+        })
+      )
+      .subscribe(
+        async (resp: any) => {        
+          console.log(resp['id_camposanto']);
+          this.id_cementerio = resp['id_camposanto'];
+          return true;
+        },
+        (error) => {
+          console.error('Error:' + error);
+          return throwError(error);
+        },
+        () => console.log('HTTP request completed.')
+      );
+
+     // this.id_cementerio = JSON.parse(localStorage.getItem('camposanto')).camposanto;
+      
     }
+
     await this._permisos.getMisPermisosInfo((JSON.parse(localStorage.getItem('user'))).user_id )
       .then((resp:any) =>{
         for(let i of Object.keys(resp)){
@@ -47,6 +76,20 @@ export class PagPermisosGuard implements CanActivate {
       })
     
     return true;
+  }
+
+  errorTranslateHandler(error: String) {
+    switch (error) {
+      case 'user with this email address already exists.': {
+        return 'Hubo un error al guardar los datos: Ya existe este correo, intente con otro';
+      }
+      case 'user with this username already exists.': {
+        return 'Hubo un error al guardar los datos: Ya existe este nombre de usuario, intente con otro';
+      }
+      default: {
+        return 'Hubo un error al guardar los datos';
+      }
+    }
   }
   
 }
