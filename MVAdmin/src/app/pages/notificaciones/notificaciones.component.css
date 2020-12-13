@@ -1,0 +1,127 @@
+table {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  min-width: 500px;
+}
+
+.punteroHand {
+  cursor: pointer;
+  cursor: hand;
+}
+
+th.mat-header-cell {
+  font-size: 14px;
+  text-align: center !important;
+  background: #a3c442 !important;
+  color: white;
+  font-weight: normal;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+#buttonAdd {
+  background: #a3c442;
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+}
+
+#plusIcon {
+  color: white;
+}
+/* td.mat-cell:first-of-type {
+        padding: 0px;
+      } */
+th.mat-header-cell.mat-sort-header {
+  font-size: 14px;
+  text-align: center !important;
+  background: #a3c442 !important;
+  color: white;
+  justify-content: center !important;
+  font-weight: normal;
+  align-items: center !important;
+}
+
+.add-icon {
+  width: 40px;
+  height: auto;
+  cursor: pointer;
+  align-items: center;
+  padding-top: 0px;
+  margin-top: 0px;
+}
+
+h1 {
+  font-weight: bolder;
+  font-size: x-large;
+}
+
+.title {
+  font-weight: bolder;
+}
+
+input.matInput {
+  box-shadow: none;
+  border: none;
+  font-weight: normal;
+  font-size: 12px;
+  background-color: #edeef0;
+  color: #87868a;
+  height: 40px;
+  width: 100%;
+  margin: 2px;
+  text-align: center;
+  align-items: center;
+}
+
+td {
+  font-size: 10px;
+}
+
+.descripcionTd {
+  width: 300px;
+  padding: 0 10px 0 10px;
+}
+
+th.mat-row {
+  padding: 15px 5px;
+  text-align: center !important;
+}
+
+.mat-row:nth-child(even) {
+  background-color: #edeef0;
+  text-align: center !important;
+}
+
+.mat-row:nth-child(odd) {
+  background-color: rgba(255, 255, 255, 0.952);
+  text-align: center !important;
+}
+
+mat-form-field {
+  width: 100%;
+  height: 50% !important;
+}
+
+::ng-deep .mat-form-field-underline {
+  display: none;
+}
+
+.buttonEditar {
+  background-color: transparent;
+  border: white;
+}
+
+fa-icon {
+  font-size: 16px;
+}
+.mat-cell,
+.mat-header-cell {
+  border: none !important;
+}
+
+:host ::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}

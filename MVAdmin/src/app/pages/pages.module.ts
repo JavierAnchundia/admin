@@ -46,6 +46,9 @@ import { PaquetesComponent } from './paquetes/paquetes.component';
 import { ActualizarPaqueteComponent } from './paquetes/actualizar-paquete/actualizar-paquete.component';
 import { CrearPaqueteComponent } from './paquetes/crear-paquete/crear-paquete.component';
 import { DatePipe } from '@angular/common';
+import { NotificacionesComponent } from './notificaciones/notificaciones.component';
+import { CrearNotificacionComponent } from './notificaciones/crear-notificacion/crear-notificacion.component';
+import { ActualizarNotificacionComponent } from './notificaciones/actualizar-notificacion/actualizar-notificacion.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +69,9 @@ import { DatePipe } from '@angular/common';
     PaquetesComponent,
     ActualizarPaqueteComponent,
     CrearPaqueteComponent,
+    NotificacionesComponent,
+    CrearNotificacionComponent,
+    ActualizarNotificacionComponent,
   ],
   exports: [
     PerfilCementerioComponent,

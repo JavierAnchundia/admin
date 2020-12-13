@@ -1,0 +1,119 @@
+<div
+  class="modal fade"
+  id="modalAgregarNotificacion"
+  tabindex="-1"
+  aria-labelledby="modalAgregarNotificacion"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">CREAR NOTIFICACIÓN</h5>
+        <button
+          type="button"
+          #closebuttonAgregar
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form
+        [formGroup]="form_crearNotificacion"
+        (submit)="agregarNotificacion()"
+        enctype="multipart/form-data"
+      >
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="col-7">
+                <label for="nombre" class="col-form-label col-form-label-sm">
+                  Título:</label
+                >
+              </div>
+              <div class="col-8">
+                <input
+                  formControlName="titulo"
+                  type="text"
+                  class="form-control"
+                />
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    form_crearNotificacion.controls['titulo'].touched &&
+                    form_crearNotificacion.controls['titulo'].hasError(
+                      'required'
+                    )
+                  "
+                >
+                  <small>Título es requerido</small>
+                </span>
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    form_crearNotificacion.controls['titulo'].errors
+                      ?.minlength ||
+                    form_crearNotificacion.controls['titulo'].errors?.maxlength
+                  "
+                >
+                  <small>Solo se aceptan entre 5 y 70 caracteres.</small>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="col-7">
+                <label for="mensaje" class="col-form-label col-form-label-sm">
+                  Mensaje:</label
+                >
+              </div>
+              <div class="col-8">
+                <textarea
+                  formControlName="mensaje"
+                  class="form-control"
+                  placeholder=""
+                  rows="10"
+                  cols="20"
+                ></textarea>
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    form_crearNotificacion.controls['mensaje'].touched &&
+                    form_crearNotificacion.controls['mensaje'].hasError(
+                      'required'
+                    )
+                  "
+                >
+                  <small>Mensaje es requerido</small>
+                </span>
+
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    form_crearNotificacion.controls['mensaje'].errors
+                      ?.minlength ||
+                    form_crearNotificacion.controls['mensaje'].errors?.maxlength
+                  "
+                >
+                  <small>Solo se aceptan entre 10 y 100 caracteres.</small>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="submit"
+            class="btn"
+            [disabled]="!form_crearNotificacion.valid"
+            id="closeModalCPC"
+          >
+            <span>AGREGAR</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
