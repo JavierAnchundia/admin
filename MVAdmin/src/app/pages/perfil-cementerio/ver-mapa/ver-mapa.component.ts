@@ -1,6 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { GeolocalizacionService} from '../../../services/geolocalizacion/geolocalizacion.service';
 import Swal from 'sweetalert2'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ver-mapa',
@@ -20,12 +21,19 @@ export class VerMapaComponent implements OnInit {
   loaded:boolean = false;
   constructor(
     private _servicioGeo : GeolocalizacionService,
-
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
-    this.id = JSON.parse(localStorage.getItem('camposanto'));
-    this.cargarPuntosGeoMapa(this.id['camposanto']);
+    let url = this.router.url.split("/");
+    let idCamposanto = url[url.length - 1];
+    
+    if(url[url.length - 2] == "perfil"){
+      console.log(url[url.length - 2], idCamposanto)
+      this.cargarPuntosGeoMapa(idCamposanto);
+    }
+    // this.id = JSON.parse(localStorage.getItem('camposanto'));
+    // this.cargarPuntosGeoMapa(this.id['camposanto']);
   }
   
   async cargarPuntosGeoMapa(id){
