@@ -66,22 +66,22 @@
       </div>
       <div class="container">
         <hr/>
-        <div class="text-center">
+        <div class="text-center d-flex flex-row">
           <div class="" *ngFor= "let red of redes">
-            <button *ngIf="red.nombre == 'Facebook'" type="button" class="btn btn-social-icon btn-facebook">
-              <a href ={{red.link}} style="text-decoration: none; color:white;" ><i class="fa fa-facebook"></i></a>
+            <button *ngIf="red.nombre == 'facebook'" type="button" class="btn btn-social-icon btn-facebook">
+              <a href ={{red.link}} style="text-decoration: none; color:white;" target="_blank"><i class="fa fa-facebook"></i></a>
             </button>
-            <button type="button" *ngIf="red.nombre == 'Youtube'" class="btn btn-social-icon btn-youtube">
-              <a href ={{red.link}} style="text-decoration: none; color:white;" ><i class="fa fa-youtube"></i></a>
+            <button type="button" *ngIf="red.nombre == 'youtube'" class="btn btn-social-icon btn-youtube">
+              <a href ={{red.link}} style="text-decoration: none; color:white;" target="_blank"><i class="fa fa-youtube"></i></a>
             </button>
-            <button *ngIf="red.nombre == 'Twitter'" type="button" class="btn btn-social-icon btn-twitter">
-              <a href ={{red.link}} style="text-decoration: none; color:white;" > <i class="fa fa-twitter"></i></a>
+            <button *ngIf="red.nombre == 'twitter'" type="button" class="btn btn-social-icon btn-twitter">
+              <a href ={{red.link}} style="text-decoration: none; color:white;" target="_blank"> <i class="fa fa-twitter"></i></a>
             </button>
-            <button type="button" *ngIf="red.nombre == 'Linkedin'" class="btn btn-social-icon btn-linkedin">
-              <a href ={{red.link}} style="text-decoration: none; color:white;" ><i class="fa fa-linkedin"></i></a>
+            <button type="button" *ngIf="red.nombre == 'linkedin'" class="btn btn-social-icon btn-linkedin">
+              <a href ={{red.link}} style="text-decoration: none; color:white;" target="_blank"><i class="fa fa-linkedin"></i></a>
             </button>
-            <button type="button" *ngIf="red.nombre == 'Instagram'"  class="btn btn-social-icon btn-instagram">
-              <a href ={{red.link}} style="text-decoration: none; color:white;"><i class="fa fa-instagram "></i></a>
+            <button type="button" *ngIf="red.nombre == 'instagram'"  class="btn btn-social-icon btn-instagram">
+              <a href ={{red.link}} style="text-decoration: none; color:white;" target="_blank"><i class="fa fa-instagram "></i></a>
             </button>
           </div>
         </div>
