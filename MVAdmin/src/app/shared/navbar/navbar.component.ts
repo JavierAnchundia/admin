@@ -26,10 +26,22 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.id = JSON.stringify(localStorage.getItem('id'));
-    let camposanto = JSON.parse(localStorage.getItem('camposanto'))
-    this.setNombreCamposanto(camposanto);
-    this.setNombreEmpresa(camposanto);
+    // this.id = JSON.stringify(localStorage.getItem('id'));
+    // let camposanto = JSON.parse(localStorage.getItem('camposanto'))
+    let url = this.router.url.split("/");
+    let idCamposanto = url[url.length - 1];
+    
+    if(url[url.length - 2] == "perfil"){
+      console.log(url[url.length - 2], idCamposanto)
+      this.setNombreCamposanto(idCamposanto);
+    }
+    else{
+      let camposanto = JSON.parse(localStorage.getItem("camposanto"));
+      if(camposanto){
+        this.setNombreCamposanto(camposanto["camposanto"]);
+      }
+    }
+    
     this.setRolUser();
     //this.getUser();
     
@@ -66,23 +78,23 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  setNombreCamposanto(camposanto){
-    let idCamposanto = camposanto['camposanto'];
-    this._servCamposanto.getCamposantoByID(idCamposanto).subscribe(
+  setNombreCamposanto(id){
+    this._servCamposanto.getCamposantoByID(id).subscribe(
       (resp) => {
         this.nombreCamposanto = resp['nombre'];
+        this.setNombreEmpresa(resp['id_empresa'])
       }
     )
   }
 
-  setNombreEmpresa(camposanto){
-    let idEmpresa = camposanto['empresa'];
-    this._servCamposanto.getEmpresa(idEmpresa).subscribe(
+  setNombreEmpresa(id){
+    this._servCamposanto.getEmpresa(id).subscribe(
       (resp) => {
         this.nombreEmpresa = resp['nombre'];
       }
     )
   }
+  
   getUser() {
     this._usuario.getUserId(this.id.user_id)
       .subscribe((resp: any) => {
