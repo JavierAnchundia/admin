@@ -136,7 +136,7 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
       direccion: new FormControl("", Validators.required),
       otro: new FormControl(null)
     })
-
+    
     this.obtenerInfo();
 
     //Campos del formulario que toman un valor en funcion de si el parentezco esta dentro de las opciones o pertenece a "Otro"
