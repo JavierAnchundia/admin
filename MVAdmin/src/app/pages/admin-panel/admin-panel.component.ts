@@ -61,7 +61,8 @@ export class AdminPanelComponent implements OnInit,AfterViewInit  {
       this.lista_admin = [];
       for (var i =0; i < resp.length; i++){
         
-        if((resp[i]['tipo_usuario']=="ad")|| (resp[i]['tipo_usuario']=="su")){
+        if(((resp[i]['tipo_usuario']=="ad")|| (resp[i]['tipo_usuario']=="su")) && resp[i]['username'] != localStorage.getItem('username')){
+            console.log(resp)
             this.lista_admin.push(resp[i]);
         }
       }
@@ -134,9 +135,9 @@ export class AdminPanelComponent implements OnInit,AfterViewInit  {
      async (resp: any) => {
       Swal.close();
       if(this.rowID["is_active"]){
-        Swal.fire('¡Eliminado Lógico Exitoso!');}
+        Swal.fire('¡Administrador deshabilitado exitosamente!');}
       else{
-        Swal.fire('Activado Lógico Exitoso!');
+        Swal.fire('¡Administrador habilitado exitosamente!');
       }
       this.cargarAdmin();
        return true;
