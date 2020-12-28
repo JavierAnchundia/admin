@@ -19,6 +19,7 @@ import { Tipo_sepultura } from '../../models/tipo_sepultura.model'
 import { Sector } from '../../models/sector.model'
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
+import { CamposantoService } from 'src/app/services/servicios.index';
 
 @Component({
   selector: 'app-registro-difunto',
@@ -50,6 +51,7 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
   byearOption: string;
   verPuntos = false;
   submitted = false;
+  nombreCamposanto: String = "";
 
   difunto: DifuntoH = new DifuntoH();
   fechaNacimientoInfo = "";
@@ -64,7 +66,7 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
   generoOptions = ["Femenino", "Masculino"]
   monthNames = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
   numericNumberReg = '[0-9]*';
-  parentezcoOptions: Array<String> = ["Hijo/a", "Esposo/a", "Nieto/a", "Hermano/a", 'Primo/a', "1", "nieto", "aaa"]
+  parentezcoOptions: Array<String> = ["Hijo/a", "Esposo/a", "Nieto/a", "Hermano/a", 'Primo/a', "1", "nieto", "aaa", "Indefinido"]
   info_difunto: any;
 
 
@@ -78,6 +80,7 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
     private _editar: RenderizareditService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
+    private _servCamposanto: CamposantoService,
   ) { 
     this.matIconRegistry.addSvgIcon(
       "flecha2",
@@ -102,8 +105,11 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
     this.cargarSector();
     this.cargarSepultura();
 
+    if(this.id){
+      this.setNombreCamposanto(this.id["camposanto"]);
+    }
 
-
+    
     console.log(this.responsable.parentezco)
 
 
@@ -112,9 +118,9 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
       firstName: new FormControl("", Validators.required),
       lastName: new FormControl("", Validators.required),
       generoDropdown: new FormControl("", Validators.required),
-      cedula: new FormControl("", [Validators.required, Validators.minLength(9), Validators.maxLength(10), Validators.pattern(this.numericNumberReg)]),
-      birthPlace: new FormControl("", Validators.required),
-      deathPlace: new FormControl("", Validators.required),
+      cedula: new FormControl("9999999999", [Validators.required, Validators.minLength(9), Validators.maxLength(10), Validators.pattern(this.numericNumberReg)]),
+      birthPlace: new FormControl("Indefinido", Validators.required),
+      deathPlace: new FormControl("Indefinido", Validators.required),
       dayBirth: new FormControl("", Validators.required),
       monBirth: new FormControl("", Validators.required),
       yearBirth: new FormControl("", Validators.required),
@@ -129,10 +135,10 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
     this.responsableForm = new FormGroup({
       NombreRes: new FormControl("", Validators.required),
       ApellidoRes: new FormControl("", Validators.required),
-      telefono: new FormControl("", [Validators.required, Validators.maxLength(9), Validators.minLength(9), Validators.pattern(this.numericNumberReg)]),
-      celular: new FormControl("", [Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(this.numericNumberReg)]),
+      telefono: new FormControl(9999999999, [Validators.required, Validators.maxLength(9), Validators.minLength(9), Validators.pattern(this.numericNumberReg)]),
+      celular: new FormControl(9999999999, [Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(this.numericNumberReg)]),
       correo: new FormControl("", [Validators.email]),
-      parentesco: new FormControl("", Validators.required),
+      parentesco: new FormControl("Indefinido", Validators.required),
       direccion: new FormControl("", Validators.required),
       otro: new FormControl(null)
     })
@@ -192,7 +198,7 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
 
 
   control_nacimiento = new FormControl();
-  options_nacimiento: string[] = ['Guayaquil', 'Cuenca', 'Quito', 'Portoviejo', 'Machala', 'Durán', 'Daule'];
+  options_nacimiento: string[] = ['Guayaquil', 'Cuenca', 'Quito', 'Portoviejo', 'Machala', 'Durán', 'Daule', 'Indefinido'];
   filteredOptions_nacimiento: Observable<string[]>;
   private _filter_nacimiento(value: string): string[] {
     const filterValueN = value.toLowerCase();
@@ -200,7 +206,7 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
   }
 
   control_fallecimiento = new FormControl();
-  options_fallecimiento: string[] = ['Guayaquil', 'Cuenca', 'Quito', 'Portoviejo', 'Machala', 'Durán', 'Daule'];
+  options_fallecimiento: string[] = ['Guayaquil', 'Cuenca', 'Quito', 'Portoviejo', 'Machala', 'Durán', 'Daule', 'Indefinido'];
   filteredOptions_fallecimiento: Observable<string[]>;
   private _filter_fallecimiento(value: string): string[] {
     const filterValueF = value.toLowerCase();
@@ -213,6 +219,26 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
 
   puntosBoton() {
     this.verPuntos = true;
+  }
+
+  setNombreCamposanto(id){
+    this._servCamposanto.getCamposantoByID(id).subscribe(
+      (resp) => {
+        this.nombreCamposanto = resp['nombre'];
+
+        if(this.info_difunto.metodo_conexion != "PUT"){
+          this.responsableForm.patchValue({
+            NombreRes: this.nombreCamposanto,
+            ApellidoRes: this.nombreCamposanto,
+            correo: this.nombreCamposanto.split(' ').join('') + '@correo.com',
+            direccion: this.nombreCamposanto,
+          });
+        }
+        console.log(this.nombreCamposanto)
+        
+       
+      }
+    )
   }
   /* Esto era usado para la conversion al formato del DifuntoForm en las fechas
   conversionFecha(valor: number){
