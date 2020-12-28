@@ -26,6 +26,7 @@ import { Sector } from '../../models/sector.model';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CamposantoService } from 'src/app/services/servicios.index';
+
 interface Marker {
   lat: Number;
   lng: Number;
