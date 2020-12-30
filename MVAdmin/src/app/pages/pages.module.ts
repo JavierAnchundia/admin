@@ -54,6 +54,7 @@ import { HomenajesComponent } from './homenajes/homenajes.component';
 import { CrearHomenajeComponent } from './homenajes/crear-homenaje/crear-homenaje.component';
 import {MatSelectModule} from '@angular/material/select';
 import { EditarHomenajeComponent } from './homenajes/editar-homenaje/editar-homenaje.component';
+import { SugerenciasComponent } from './sugerencias/sugerencias.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { EditarHomenajeComponent } from './homenajes/editar-homenaje/editar-home
     HomenajesComponent,
     CrearHomenajeComponent,
     EditarHomenajeComponent,
+    SugerenciasComponent,
   ],
   exports: [
     PerfilCementerioComponent,

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { SadminCrearCementerioComponent } from './sadmin-crear-cementerio/sadmin-crear-cementerio.component';
 import { PerfilCementerioComponent } from './perfil-cementerio/perfil-cementerio.component';
+import { SugerenciasComponent } from './sugerencias/sugerencias.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { PerfilConfiguracionComponent } from './perfil-configuracion/perfil-configuracion.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -90,6 +91,13 @@ const pagesRoutes: Routes = [
     component: HomenajesComponent,
     data: { titulo: 'Homenajes'}
   }
+
+  {
+    path: 'sugerencias',
+    component: SugerenciasComponent,
+    data: { titulo: 'Sugerencias' },
+    canActivate: [AuthGuard, PagPermisosGuard],
+  },
 ];
 
 export const PAGES_ROUTES = RouterModule.forChild(pagesRoutes);

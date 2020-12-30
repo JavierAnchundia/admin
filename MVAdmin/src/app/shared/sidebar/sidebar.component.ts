@@ -5,6 +5,7 @@ import { faBoxOpen } from '@fortawesome/free-solid-svg-icons';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { faListAlt } from '@fortawesome/free-solid-svg-icons';
 import { faAnkh } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelopeOpenText } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 
@@ -21,6 +22,7 @@ export class SidebarComponent implements OnInit {
   faListAlt = faListAlt;
   faUserCircle = faUserCircle;
   faAnkh = faAnkh;
+  faEnvelopeOpenText = faEnvelopeOpenText;
   emailUser: String = "";
   tipoUsuario: String = "admin";
   constructor(
