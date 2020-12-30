@@ -16,6 +16,7 @@ import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 // import { PagesComponent } from './pages.component';
 
@@ -49,6 +50,10 @@ import { DatePipe } from '@angular/common';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 import { CrearNotificacionComponent } from './notificaciones/crear-notificacion/crear-notificacion.component';
 import { ActualizarNotificacionComponent } from './notificaciones/actualizar-notificacion/actualizar-notificacion.component';
+import { HomenajesComponent } from './homenajes/homenajes.component';
+import { CrearHomenajeComponent } from './homenajes/crear-homenaje/crear-homenaje.component';
+import {MatSelectModule} from '@angular/material/select';
+import { EditarHomenajeComponent } from './homenajes/editar-homenaje/editar-homenaje.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +77,9 @@ import { ActualizarNotificacionComponent } from './notificaciones/actualizar-not
     NotificacionesComponent,
     CrearNotificacionComponent,
     ActualizarNotificacionComponent,
+    HomenajesComponent,
+    CrearHomenajeComponent,
+    EditarHomenajeComponent,
   ],
   exports: [
     PerfilCementerioComponent,
@@ -105,6 +113,8 @@ import { ActualizarNotificacionComponent } from './notificaciones/actualizar-not
     MatSortModule,
     MatInputModule,
     MatAutocompleteModule,
+    MatPaginatorModule,
+    MatSelectModule,
     AgmCoreModule.forRoot({
       apiKey: environment.api_key,
       libraries: ['places', 'drawing', 'geometry'],

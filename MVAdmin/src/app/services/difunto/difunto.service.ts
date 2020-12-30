@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import URL_SERVICIOS from 'src/app/config/config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -9,55 +11,68 @@ export class DifuntoService {
 
   constructor(private http: HttpClient) { }
 
+opts = [];
+
 
 getDifuntos(id) {
-  let url = URL_SERVICIOS.difuntos+id+'/';
+  const url = URL_SERVICIOS.difuntos + id + '/';
 
   return this.http.get(url);
 }
 
 getDifunto(id_difunto) {
-  let url = URL_SERVICIOS.difunto+id_difunto+'/';
+  const url = URL_SERVICIOS.difunto + id_difunto + '/';
 
   return this.http.get(url);
 }
 
-putDifunto(difunto:FormData, id_difunto){
-  let url = URL_SERVICIOS.difunto+id_difunto+'/';
-  let httpOptions = {
+getDifuntosOpt(id) {
+    const url = URL_SERVICIOS.difuntos + id + '/';
+    const httpOptions = {
+      headers: new HttpHeaders({
+      })
+    };
+    return this.opts.length ?
+      of(this.opts) :
+      this.http.get<any>(url).pipe(tap(data => this.opts = data));
+  }
+
+putDifunto(difunto: FormData, id_difunto){
+  const url = URL_SERVICIOS.difunto + id_difunto + '/';
+  const httpOptions = {
     headers: new HttpHeaders({
     })
-  }
-  return this.http.put(url,difunto,httpOptions);
+  };
+  return this.http.put(url, difunto, httpOptions);
 }
 postDifunto(difunto: FormData){
-  let url = URL_SERVICIOS.difunto_post
-  let httpOptions = {
+  const url = URL_SERVICIOS.difunto_post;
+  const httpOptions = {
     headers: new HttpHeaders({
     })
-  }
-  return this.http.post(url, difunto, httpOptions)
+  };
+  return this.http.post(url, difunto, httpOptions);
 }
-putResponable(responsable:FormData, id_difunto){
-  let url= URL_SERVICIOS.responsable_get+id_difunto+'/';
-  let httpOptions = {
+putResponable(responsable: FormData, id_difunto){
+  const url = URL_SERVICIOS.responsable_get + id_difunto + '/';
+  const httpOptions = {
     headers: new HttpHeaders({
     })
-  }
-  return this.http.put(url,responsable,httpOptions);
+  };
+  return this.http.put(url, responsable, httpOptions);
 
 }
 postResponsable(responsable: FormData){
-  let url = URL_SERVICIOS.responsable_post
-  let httpOptions = {
+  const url = URL_SERVICIOS.responsable_post;
+  const httpOptions = {
     headers: new HttpHeaders({
     })
-  }
-  return this.http.post(url, responsable, httpOptions)
+  };
+  return this.http.post(url, responsable, httpOptions);
 }
 
 getResponsable(id_difunto){
-  let url = URL_SERVICIOS.responsable_get+id_difunto+'/'
+  const url = URL_SERVICIOS.responsable_get + id_difunto + '/';
 
   return this.http.get(url);
 }

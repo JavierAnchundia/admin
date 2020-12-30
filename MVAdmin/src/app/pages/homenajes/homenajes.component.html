@@ -1,0 +1,149 @@
+<div class="row ml-1 mr-1 mb-2 align-items-center">
+  <div class="col-md-3 col-xs-12 col-sm-12">
+    <h1>HOMENAJES</h1>
+  </div>
+  <div class="col-md-1 col-xs-12 col-sm-12 text-center mb-4">
+    <button class="buttonEditar" type="button" id="buttonAdd" data-toggle="modal" data-target="#modalCrearHomenaje">
+      <fa-icon [icon]="faPlus" id="plusIcon"></fa-icon>
+    </button>
+  </div>
+  <div class="form-group col-sm-12 cols-xs-12 col-md-3">
+    <mat-form-field class="example-full-width" appearance="fill" color="primary" >
+      <mat-label>Seleccione una opción</mat-label>
+      <!-- [formControl]="difuntoControl" -->
+      <input type="text" matInput [formControl]="difuntoControl" required
+        [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayDifuntos">
+        <mat-option *ngFor="let option of filteredDifuntos | async" [value]="option">
+          {{option.nombre}} {{option.apellido}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+  <div class="form-group col-sm-12 cols-xs-12 col-md-3">
+    <mat-form-field appearance="fill">
+      <mat-label>Seleccione una opción</mat-label>
+      <mat-select [disabled]="disableSelect.value" [formControl]="tipoControl">
+        <mat-option value="true">Gratuito</mat-option>
+        <mat-option value="false">Pagado</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="form-group col-sm-12 cols-xs-12 col-md-2 mb-4">
+    <button class="buttonEditar" type="button" id="buttonAdd" (click)="buscarHomenajes()">
+      <fa-icon [icon]="faSearch" id="plusIcon"></fa-icon>
+    </button>
+  </div>
+</div>
+
+  <div class="row ml-1 mr-1 align-items-center">
+    
+  </div>
+  
+<div class="container-fluid" *ngIf="dataLoaded">
+  <table mat-table [dataSource]="dataSource" matSort matSortStart="desc" class="mat-elevation-z8 punteroHand">
+    <ng-container matColumnDef="cliente">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Cliente</th>
+        <td mat-cell *matCellDef="let element">
+          {{element.id_usuario.first_name}} {{element.id_usuario.last_name}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="mensaje">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Mensaje</th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="element.id_textcontent != null">
+            {{element.id_textcontent.mensaje}}
+          </div>
+          <div *ngIf="element.id_audiocontent != null">
+            {{element.id_audiocontent.mensaje}}
+          </div>
+          <div *ngIf="element.id_videocontent != null">
+            {{element.id_videocontent.mensaje}}
+            
+          </div>
+          <div *ngIf="element.id_youtube !== null">
+            {{element.id_youtube.mensaje}}
+            
+          </div>
+          <div *ngIf="element.id_imagecontent != null">
+            {{element.id_imagecontent.mensaje}}
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="difunto">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Difunto</th>
+        <td mat-cell *matCellDef="let element">
+          {{element.id_difunto.nombre}} {{element.id_difunto.apellido}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="tipo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="element.id_textcontent != null">
+            Texto
+          </div>
+          <div *ngIf="element.id_audiocontent != null">
+            Audio
+          </div>
+          <div *ngIf="element.id_videocontent != null || element.id_youtube">
+            Video
+          </div>
+          <div *ngIf="element.id_imagecontent != null">
+            Imagen
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
+        <td mat-cell *matCellDef="let element">
+          {{element.fecha_publicacion | date:'M/d/yyyy HH:mm a':'+0:00'}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="element.estado">
+            Activo
+          </div>
+          <div *ngIf="!element.estado">
+            Bloqueado
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="bloquear">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Bloquear</th>
+        <td mat-cell *matCellDef="let element">
+          
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="editar">
+        <th *matHeaderCellDef mat-header-cell >Editar</th>
+        <td mat-cell *matCellDef="let element">
+            <button
+            class="buttonEditar"
+            type="button" 
+            data-toggle="modal" data-target="#modalEditarHomenaje"
+          >
+            <fa-icon [icon]="faPen"></fa-icon>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="eliminar">
+        <th mat-header-cell *matHeaderCellDef >Eliminar</th>
+        <td mat-cell *matCellDef="let element">
+            <mat-icon
+            class="delete-icon"
+            >delete</mat-icon
+          >
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+</div>
+<mat-paginator [pageSizeOptions]="[10, 20, 30]"></mat-paginator>
+
+
+<app-crear-homenaje></app-crear-homenaje>
+<app-editar-homenaje></app-editar-homenaje>

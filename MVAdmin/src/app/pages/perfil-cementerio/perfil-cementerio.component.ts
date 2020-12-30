@@ -7,7 +7,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Empresa } from '../../models/empresa.model';
 import { Camposanto } from '../../models/camposanto.model';
 import { Red_social } from '../../models/red_social.model';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import { map,catchError } from 'rxjs/operators';
 import { of,throwError } from 'rxjs';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';

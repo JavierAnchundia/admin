@@ -15,6 +15,7 @@ import { CrearAdminGuard } from '../guards/crear-admin/crear-admin.guard';
 import { PagPermisosGuard } from '../guards/pag-permisos/pag-permisos.guard';
 import { PaquetesComponent } from 'src/app/pages/paquetes/paquetes.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
+import { HomenajesComponent } from './homenajes/homenajes.component';
 
 // Guards
 
@@ -84,6 +85,11 @@ const pagesRoutes: Routes = [
     data: { titulo: 'Notificaciones' },
     canActivate: [AuthGuard, PagPermisosGuard],
   },
+  {
+    path: 'homenajes',
+    component: HomenajesComponent,
+    data: { titulo: 'Homenajes'}
+  }
 ];
 
 export const PAGES_ROUTES = RouterModule.forChild(pagesRoutes);

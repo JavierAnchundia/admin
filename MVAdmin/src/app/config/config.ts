@@ -1,7 +1,8 @@
-// const URL_ROOT = 'http://localhost:8000/api';
-// const URL_ROOT_AUTH = 'http://localhost:8000';
+//const URL_ROOT = 'http://localhost:8000/api';
+//const URL_ROOT_AUTH = 'http://localhost:8000';
 const URL_ROOT = 'https://carmsanc.pythonanywhere.com/api';
 const URL_ROOT_AUTH = 'https://carmsanc.pythonanywhere.com';
+
 const URL_SERVICIOS = {
   url_backend: URL_ROOT_AUTH,
   camposantos: URL_ROOT + '/camposantos/',
@@ -42,6 +43,12 @@ const URL_SERVICIOS = {
   notificacion_list: URL_ROOT + '/notificacion_list/',
 
   enviarNotificacionPush: URL_ROOT + '/enviarNotificacionPush/',
+
+  homenaje_post: URL_ROOT + '/homenajes_post/',
+  himagen_post: URL_ROOT + '/himagen_post/',
+  hyoutube_post: URL_ROOT + '/hyoutube_post/',
+  homenajesFree: URL_ROOT + '/homenajesFree/',
+  homenajesPaid: URL_ROOT + '/homenajesPaid/',
 };
 
 export default URL_SERVICIOS;

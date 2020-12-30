@@ -1,0 +1,131 @@
+<div class="modal fade" id="modalCrearHomenaje" tabindex="-1" aria-labelledby="modalCrearHomenaje" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">REGISTRAR HOMENAJE</h5>
+        <button type="button" #closebuttonAgregar class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="homenaje" (submit)="onSubmit()">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-6">
+              <div class="row">
+                <div class="form-group col-sm-12 cols-xs-12 col-md-3">
+                  <label>Cliente:</label>
+                  <mat-form-field class="example-full-width" appearance="fill" color="primary" [style.width.px]=330>
+                    <mat-label>Seleccione una opción</mat-label>  
+                    <!-- [formControl]="usuarioControl" -->
+                    <input type="text" matInput formControlName= "cliente" required
+                      [matAutocomplete]="auto1">
+                    <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayUsuarios">
+                      <mat-option *ngFor="let option of filteredUsuarios | async" [value]="option">
+                        {{option.first_name}} {{option.last_name}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                </div>
+                <span class="text-danger" *ngIf="
+                        homenaje.controls['cliente'].touched &&
+                        homenaje.controls['cliente'].hasError('required')
+                      ">
+                      <small>Seleccione un usuario.</small>
+                    </span> 
+              </div>
+              <div class="row">
+                <div class="form-group col-sm-12 cols-xs-12 col-md-3">
+                  <label>Difunto:</label>
+                  <mat-form-field class="example-full-width" appearance="fill" color="primary" [style.width.px]=330>
+                    <mat-label>Seleccione una opción</mat-label>
+                    <!-- [formControl]="difuntoControl" -->
+                    <input type="text" matInput formControlName="difunto" required
+                      [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayDifuntos">
+                      <mat-option *ngFor="let option of filteredDifuntos | async" [value]="option">
+                        {{option.nombre}} {{option.apellido}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                  
+                </div>
+                <span class="text-danger" *ngIf="
+                        homenaje.controls['difunto'].touched &&
+                        homenaje.controls['difunto'].hasError('required')
+                      ">
+                      <small>Seleccione un difunto.</small>
+                    </span> 
+              </div>
+              <div class="row">
+                <div class="col-8">
+                  <label for="tipo" class="col-form-label col-form-label-sm">
+                    Tipo:</label>
+                </div>
+                <div class="col-11">
+                    <div class="row">
+                        <select class="custom-select ml-3 pr-5 mr-3" formControlName="tipo">
+                          <option disabled value='null'>Seleccione un tipo</option>
+                          <option value='1'>Imagen</option>
+                          <option value='2'>Video</option>
+                        </select>
+                        </div>
+                </div>
+                <span class="text-danger" *ngIf="
+                        homenaje.controls['tipo'].touched &&
+                        homenaje.controls['tipo'].hasError('required')
+                      ">
+                      <small>Seleccione un tipo.</small>
+                    </span> 
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="row">
+                <div class="col-8">
+                  <label for="logo" class="col-form-label col-form-label-sm">Imagen/Video:</label>
+                </div>
+                <div class="col-11" *ngIf="this.homenaje.value.tipo==='1'">
+                  <div class="custom-file">
+                    <input formControlName="contenido" type="file" accept="image/*" class="custom-file-input form-control"
+                    (change)="selectFile($event)" lang="es" required/>
+                    <label class="custom-file-label col-form-label col-form-label-sm" for="customFileLang">{{this.imageName}}</label>
+                  </div>
+                  <span class="text-danger" *ngIf="
+                        homenaje.controls['contenido'].touched &&
+                        homenaje.controls['contenido'].hasError('required')
+                      ">
+                      <small>Seleccione un archivo.</small>
+                    </span> 
+                </div>
+                <div class="col-11" *ngIf="this.homenaje.value.tipo==='2'">
+                  <div class="custom-file">
+                    <input formControlName="contenido" type="text" class="form-control" placeholder="Ingrese el url del video ej. https://www.youtube.com/watch?v=o5SQIECedTY"
+                    required/>
+                  </div>
+                  <span class="text-danger" *ngIf="
+                        homenaje.controls['contenido'].touched &&
+                        homenaje.controls['contenido'].hasError('required')
+                      ">
+                      <small>Seleccione un archivo.</small>
+                    </span> 
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-8">
+                    <label for="mensaje" class="col-form-label col-form-label-sm">Mensaje:</label>
+                  </div>
+                  <div class="col-11">
+                      <textarea formControlName="mensaje"></textarea>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn" id="closeModalCPC">
+            <span>AGREGAR</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

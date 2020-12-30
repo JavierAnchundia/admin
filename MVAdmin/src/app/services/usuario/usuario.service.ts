@@ -4,15 +4,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import URL_SERVICIOS from 'src/app/config/config';
 import { Router } from '@angular/router';
 import { Usuario } from '../../models/usuario.model';
-import { map } from "rxjs/operators";
-import { BehaviorSubject } from 'rxjs';
+import { map, tap } from "rxjs/operators";
+import { BehaviorSubject, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
   private httpOptions: any;
-  
+
   public token: string;
   public refresh: string;
   public user: string;
@@ -20,6 +20,7 @@ export class UsuarioService {
   public username: string;
   public errors: any = [];
   public isLoggedin = false;
+  opts = [];
 
   constructor(
     public http: HttpClient,
@@ -29,7 +30,7 @@ export class UsuarioService {
     this.httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-    
+
   }
 
   public loginUser(user) {
@@ -106,8 +107,8 @@ export class UsuarioService {
     localStorage.removeItem('user');
     localStorage.removeItem('username');
     localStorage.removeItem('id');
-    localStorage.removeItem('tipo_user'); 
-    localStorage.removeItem('refresh'); 
+    localStorage.removeItem('tipo_user');
+    localStorage.removeItem('refresh');
     this.isLoggedin = true;
     this.router.navigate(['/login'])
   }
@@ -183,6 +184,18 @@ export class UsuarioService {
   getUsersAll(){
     let url = URL_SERVICIOS.obtener_usuarios;
     return this.http.get(url);
+  }
+
+  getUsuariosOpt(id) {
+    const url = URL_SERVICIOS.usuarios_camp + id + '/';
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.getToken(),
+      })
+    };
+    return this.opts.length ?
+      of(this.opts) :
+      this.http.get<any>(url, httpOptions).pipe(tap(data => this.opts = data));
   }
 
 }
