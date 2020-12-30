@@ -49,6 +49,7 @@ import { DatePipe } from '@angular/common';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 import { CrearNotificacionComponent } from './notificaciones/crear-notificacion/crear-notificacion.component';
 import { ActualizarNotificacionComponent } from './notificaciones/actualizar-notificacion/actualizar-notificacion.component';
+import { SugerenciasComponent } from './sugerencias/sugerencias.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { ActualizarNotificacionComponent } from './notificaciones/actualizar-not
     NotificacionesComponent,
     CrearNotificacionComponent,
     ActualizarNotificacionComponent,
+    SugerenciasComponent,
   ],
   exports: [
     PerfilCementerioComponent,

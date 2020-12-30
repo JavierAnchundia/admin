@@ -1,5 +1,5 @@
-// const URL_ROOT = 'http://localhost:8000/api';
-// const URL_ROOT_AUTH = 'http://localhost:8000';
+//const URL_ROOT = 'http://localhost:8000/api';
+//const URL_ROOT_AUTH = 'http://localhost:8000';
 const URL_ROOT = 'https://carmsanc.pythonanywhere.com/api';
 const URL_ROOT_AUTH = 'https://carmsanc.pythonanywhere.com';
 const URL_SERVICIOS = {
@@ -42,6 +42,8 @@ const URL_SERVICIOS = {
   notificacion_list: URL_ROOT + '/notificacion_list/',
 
   enviarNotificacionPush: URL_ROOT + '/enviarNotificacionPush/',
+  contactoCamposanto: URL_ROOT + '/contactoCamposanto/',
+  contacto: URL_ROOT + '/contacto/'
 };
 
 export default URL_SERVICIOS;
