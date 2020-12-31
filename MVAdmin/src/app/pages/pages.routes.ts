@@ -89,9 +89,11 @@ const pagesRoutes: Routes = [
   {
     path: 'homenajes',
     component: HomenajesComponent,
-    data: { titulo: 'Homenajes'}
-  }
+    data: { titulo: 'Homenajes'},
+    canActivate: [AuthGuard, PagPermisosGuard],
 
+  }
+  ,
   {
     path: 'sugerencias',
     component: SugerenciasComponent,

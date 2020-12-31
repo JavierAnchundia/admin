@@ -75,6 +75,7 @@ export class SugerenciasComponent implements OnInit {
         this.dataSource.data = data.reverse() as any[];
       },
       (error) => {
+        console.log(error)
         Swal.close();
         Swal.fire({
           icon: 'error',
