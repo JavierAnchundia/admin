@@ -13,7 +13,20 @@ export class HomenajeService {
     private http: HttpClient,
     private usuarioService: UsuarioService
   ) { }
+  
+  getToken() {
+    return localStorage.getItem('token');
+  }
 
+  bloquearHomenaje(homenaje:FormData, id_homenaje){
+    let url = URL_SERVICIOS.homenajeDelete + id_homenaje + '/';
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.put(url, homenaje, httpOptions);
+  }
   getHomenajesFree(id) {
     const url = URL_SERVICIOS.homenajesFree + id + '/';
 
@@ -56,5 +69,36 @@ export class HomenajeService {
       })
     };
     return this.http.post<FormData>(url, homenaje, httpOptions);
+  }
+
+
+  deleteAudio(id){
+    let url = URL_SERVICIOS.del_audio + id +'/'
+
+    return this.http.delete(url);
+  }
+
+  deleteImagen(id){
+    let url = URL_SERVICIOS.del_img + id +'/'
+
+    return this.http.delete(url);
+  }
+
+  deleteVideo(id){
+    let url = URL_SERVICIOS.del_video + id +'/'
+
+    return this.http.delete(url);
+  }
+
+  deleteMensaje(id){
+    let url = URL_SERVICIOS.del_mensaje + id +'/'
+
+    return this.http.delete(url);
+  }
+  
+  deleteYoutube(id_youtube){
+    let url = URL_SERVICIOS.del_youtube + id_youtube +'/'
+
+    return this.http.delete(url);
   }
 }
