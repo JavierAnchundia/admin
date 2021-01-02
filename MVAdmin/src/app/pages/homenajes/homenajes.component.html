@@ -113,7 +113,9 @@
       <ng-container matColumnDef="bloquear">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Bloquear</th>
         <td mat-cell *matCellDef="let element">
-          
+            <mat-icon *ngIf="element.estado==true"  class="delete-icon" (click)="redirectToBloqueo(element)">block</mat-icon>
+            <mat-icon *ngIf="element.estado==false" class="delete-icon" (click)="redirectToBloqueo(element)">check_circle</mat-icon>
+
         </td>
       </ng-container>
       <ng-container matColumnDef="editar">
@@ -132,9 +134,7 @@
       <ng-container matColumnDef="eliminar">
         <th mat-header-cell *matHeaderCellDef >Eliminar</th>
         <td mat-cell *matCellDef="let element">
-            <mat-icon
-            class="delete-icon"
-            >delete</mat-icon
+            <mat-icon class="delete-icon" (click)="redirectToDelete(element)" >delete</mat-icon
           >
         </td>
       </ng-container>

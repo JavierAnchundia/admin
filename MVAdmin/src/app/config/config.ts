@@ -55,6 +55,12 @@ const URL_SERVICIOS = {
   himagenUpd: URL_ROOT + '/himagenUpd/',
   hyoutubeUpd: URL_ROOT + '/hyoutubeUpd/',
 
+  homenajeDelete: URL_ROOT + '/homenajesDel/',
+  del_img: URL_ROOT + '/himagen_del/',
+  del_video: URL_ROOT + '/hvideo_del/',
+  del_mensaje: URL_ROOT + '/hmensaje_del/',
+  del_audio: URL_ROOT + '/haudio_del/',
+  del_youtube: URL_ROOT + '/hyoutube_del/',
 };
 
 export default URL_SERVICIOS;
