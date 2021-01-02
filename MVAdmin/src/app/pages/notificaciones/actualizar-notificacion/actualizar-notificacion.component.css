@@ -28,3 +28,8 @@ textarea {
 #closeModalCPA span {
   font-size: 0.95em;
 }
+
+select {
+  background-color: #edeef0;
+  color: #87868a;
+}

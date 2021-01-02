@@ -65,6 +65,31 @@
           <div class="row">
             <div class="col-12">
               <div class="col-7">
+                <label for="tipo" class="col-form-label col-form-label-sm">
+                  Tipo Notificación:</label
+                >
+              </div>
+              <div class="col-8">
+                <select class="custom-select pr-5 mr-3" formControlName="tipo">
+                  <option disabled value="null">Seleccione un tipo</option>
+                  <option value="tip">Tips</option>
+                  <option value="paquete">Paquete</option>
+                </select>
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    form_crearNotificacion.controls['tipo'].touched &&
+                    form_crearNotificacion.controls['tipo'].hasError('required')
+                  "
+                >
+                  <small>Tipo es requerido</small>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="col-7">
                 <label for="mensaje" class="col-form-label col-form-label-sm">
                   Mensaje:</label
                 >

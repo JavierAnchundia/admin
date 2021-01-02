@@ -40,11 +40,12 @@ export class CrearNotificacionComponent implements OnInit {
           Validators.maxLength(100),
         ]),
       ],
+      tipo: [null, Validators.compose([Validators.required])],
     });
   }
 
   async agregarNotificacion() {
-    let data = await this.cargarData();
+    const data = await this.cargarData();
     await Swal.fire({
       title: '¿Está seguro que desea crear la notificación?',
       icon: 'warning',
@@ -86,13 +87,14 @@ export class CrearNotificacionComponent implements OnInit {
   }
 
   cargarData() {
-    let data = new FormData();
-    let datosForm = this.form_crearNotificacion.value;
+    const data = new FormData();
+    const datosForm = this.form_crearNotificacion.value;
     data.append('titulo', datosForm['titulo']);
     data.append('mensaje', datosForm['mensaje']);
     data.append('estado', 'no_enviada');
     data.append('fecha_created', this.getFecha());
     data.append('id_camposanto', this.id.camposanto);
+    data.append('tipo', datosForm['tipo']);
     return data;
   }
 

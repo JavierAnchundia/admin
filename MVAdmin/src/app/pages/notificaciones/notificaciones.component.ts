@@ -22,6 +22,7 @@ export class NotificacionesComponent implements OnInit {
     'titulo',
     'mensaje',
     'fecha',
+    'tipo',
     'estado',
     'update',
     'delete',

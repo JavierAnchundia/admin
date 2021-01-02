@@ -39,7 +39,7 @@ export class ActualizarNotificacionComponent implements OnInit {
           Validators.maxLength(500),
         ]),
       ],
-      imagen: [null, Validators.compose([])],
+      tipo: [null, Validators.compose([Validators.required])],
     });
     this._notificacion.updateData$.subscribe((data) => {
       this.notificacion = data;
@@ -48,7 +48,7 @@ export class ActualizarNotificacionComponent implements OnInit {
   }
 
   async actualizarNotificacion() {
-    let data = await this.cargarData();
+    const data = await this.cargarData();
     await Swal.fire({
       title: '¿Está seguro que desea actualizar la Notificación?',
       icon: 'warning',
@@ -90,13 +90,14 @@ export class ActualizarNotificacionComponent implements OnInit {
   }
 
   cargarData() {
-    let data = new FormData();
-    let datosForm = this.form_actualizarNotificacion.value;
+    const data = new FormData();
+    const datosForm = this.form_actualizarNotificacion.value;
     data.append('titulo', datosForm['titulo']);
     data.append('mensaje', datosForm['mensaje']);
     data.append('estado', this.notificacion['estado']);
     data.append('fecha_created', this.getFecha());
     data.append('id_camposanto', this.notificacion['id_camposanto']);
+    data.append('tipo', datosForm['tipo']);
     return data;
   }
 
@@ -112,6 +113,9 @@ export class ActualizarNotificacionComponent implements OnInit {
     );
     this.form_actualizarNotificacion.controls['mensaje'].setValue(
       elemento['mensaje']
+    );
+    this.form_actualizarNotificacion.controls['tipo'].setValue(
+      elemento['tipo']
     );
   }
 }

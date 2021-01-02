@@ -774,6 +774,8 @@ export class RegistroDifuntoComponent implements OnInit, OnDestroy {
             lng: position.coords.longitude,
           };
           this.markers.push(marker);
+          this.latitudFinal = this.markers[0].lat;
+          this.longitudFinal = this.markers[0].lng;
           this.cdRef.detectChanges();
         },
         () => {
