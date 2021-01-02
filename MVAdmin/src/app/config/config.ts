@@ -50,7 +50,11 @@ const URL_SERVICIOS = {
   homenajesFree: URL_ROOT + '/homenajesFree/',
   homenajesPaid: URL_ROOT + '/homenajesPaid/',
   contactoCamposanto: URL_ROOT + '/contactoCamposanto/',
-  contacto: URL_ROOT + '/contacto/'
+  contacto: URL_ROOT + '/contacto/',
+  homenajeUpd: URL_ROOT + '/homenajeUpd/',
+  himagenUpd: URL_ROOT + '/himagenUpd/',
+  hyoutubeUpd: URL_ROOT + '/hyoutubeUpd/',
+
 };
 
 export default URL_SERVICIOS;

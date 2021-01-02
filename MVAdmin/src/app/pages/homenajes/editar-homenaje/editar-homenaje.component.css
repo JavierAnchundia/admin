@@ -1,0 +1,65 @@
+input {
+    font-size: 0.75em;
+    background: #edeef0;
+    color: #87868a;
+    border: none;
+    width: 100%;
+  }
+  
+  .custom-select{
+    font-size: 0.75em;
+    background: #edeef0;
+    color: #87868a;
+    -webkit-appearance: menulist;
+  }
+  
+  h5 {
+    font-weight: bolder;
+  }
+  
+  textarea {
+    font-size: 0.75em;
+    background: #edeef0;
+    color: #87868a;
+    border-radius: 10px 10px 10px 10px;
+    color: #87868a;
+    border: none;
+    height: 140px;
+    width: 100%;
+  }
+  .dangerColor {
+    color: red;
+    font-size: 20px;
+  }
+  
+  #closeModalCPC {
+    background: #a3c442;
+    color: #ffffff;
+    border-radius: 0px;
+  }
+  #closeModalCPC span {
+    font-size: 0.95em;
+  }
+  
+  h5 {
+    font-weight: 800;
+  }
+  
+  ::ng-deep .cdk-overlay-pane {
+    /* Do you changes here */
+      width:auto !important;
+  }
+  
+  input.matInput {
+    box-shadow: none;
+    border: none;
+    font-weight: normal;
+    font-size: 12px;
+    background-color: #edeef0;
+    color: #87868a;
+    height: 40px;
+    width: 100%;
+    margin: 2px;
+    text-align: center;
+    align-items: center;
+  }

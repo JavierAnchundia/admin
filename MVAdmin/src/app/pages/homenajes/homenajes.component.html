@@ -9,7 +9,7 @@
   </div>
   <div class="form-group col-sm-12 cols-xs-12 col-md-3">
     <mat-form-field class="example-full-width" appearance="fill" color="primary" >
-      <mat-label>Seleccione una opción</mat-label>
+      <mat-label>Seleccione un difunto</mat-label>
       <!-- [formControl]="difuntoControl" -->
       <input type="text" matInput [formControl]="difuntoControl" required
         [matAutocomplete]="auto">
@@ -22,7 +22,7 @@
   </div>
   <div class="form-group col-sm-12 cols-xs-12 col-md-3">
     <mat-form-field appearance="fill">
-      <mat-label>Seleccione una opción</mat-label>
+      <mat-label>Seleccione un tipo</mat-label>
       <mat-select [disabled]="disableSelect.value" [formControl]="tipoControl">
         <mat-option value="true">Gratuito</mat-option>
         <mat-option value="false">Pagado</mat-option>
@@ -123,6 +123,7 @@
             class="buttonEditar"
             type="button" 
             data-toggle="modal" data-target="#modalEditarHomenaje"
+            (click)="loadHomenajeModal(element)"
           >
             <fa-icon [icon]="faPen"></fa-icon>
           </button>

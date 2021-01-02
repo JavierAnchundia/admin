@@ -3,11 +3,14 @@ import URL_SERVICIOS from 'src/app/config/config';
 import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UsuarioService } from '../usuario/usuario.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HomenajeService {
+  private loadMemorial = new Subject<any>();
+  updateData$ = this.loadMemorial.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -56,5 +59,36 @@ export class HomenajeService {
       })
     };
     return this.http.post<FormData>(url, homenaje, httpOptions);
+  }
+
+  recarga_Data(data: any) {
+    this.loadMemorial.next(data);
+  }
+
+  updateHomenaje(id, homenaje){
+    const url = URL_SERVICIOS.homenajeUpd + id + '/';
+    const httpOptions = {
+    headers: new HttpHeaders({
+    })
+  };
+    return this.http.put(url, homenaje, httpOptions);
+  }
+
+  updateHImagen(id, homenaje){
+    const url = URL_SERVICIOS.himagenUpd + id + '/';
+    const httpOptions = {
+    headers: new HttpHeaders({
+    })
+  };
+    return this.http.put(url, homenaje, httpOptions);
+  }
+
+  updateHYoutube(id, homenaje){
+    const url = URL_SERVICIOS.hyoutubeUpd + id + '/';
+    const httpOptions = {
+    headers: new HttpHeaders({
+    })
+  };
+    return this.http.put(url, homenaje, httpOptions);
   }
 }

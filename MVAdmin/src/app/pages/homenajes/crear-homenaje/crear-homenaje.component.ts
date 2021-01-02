@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DifuntoService } from '../../../services/difunto/difunto.service';
 import { UsuarioService } from '../../../services/usuario/usuario.service';
 import { Difunto } from '../../../models/difunto.model';
@@ -29,6 +29,7 @@ export class CrearHomenajeComponent implements OnInit {
   public date;
   archivo: File = null;
   imageName = '-Seleccione un archivo-';
+  @ViewChild('closebuttonAgregar') closebuttonAgregar;
   difuntoControl = new FormControl('', Validators.required);
   filteredDifuntos: Observable<any[]>;
   usuarioControl = new FormControl('', Validators.required);
@@ -42,23 +43,8 @@ export class CrearHomenajeComponent implements OnInit {
     private homenajes: HomenajeService,
     public datepipe: DatePipe
   ) {
-    this.filteredDifuntos = this.difuntoControl.valueChanges.pipe(
-      startWith(''),
-      debounceTime(400),
-      distinctUntilChanged(),
-      switchMap((val) => {
-        return this.filterDifuntos(val || '');
-      })
-    );
-
-    this.filteredUsuarios = this.usuarioControl.valueChanges.pipe(
-      startWith(''),
-      debounceTime(400),
-      distinctUntilChanged(),
-      switchMap((val) => {
-        return this.filterUsuarios(val || '');
-      })
-    );
+    this.initializeDifuntoFilter();
+    this.intializeClientFilter();
   }
 
   ngOnInit(): void {
@@ -70,6 +56,29 @@ export class CrearHomenajeComponent implements OnInit {
       contenido: new FormControl(null, Validators.required),
       mensaje: new FormControl(null),
     });
+  }
+
+  initializeDifuntoFilter(){
+    this.filteredDifuntos = this.difuntoControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(400),
+      distinctUntilChanged(),
+      switchMap((val) => {
+        return this.filterDifuntos(val || '');
+      })
+    );
+
+  }
+
+  intializeClientFilter(){
+    this.filteredUsuarios = this.usuarioControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(400),
+      distinctUntilChanged(),
+      switchMap((val) => {
+        return this.filterUsuarios(val || '');
+      })
+    );
   }
 
   selectFile(event) {
@@ -109,19 +118,30 @@ export class CrearHomenajeComponent implements OnInit {
 
   onSubmit() {
     Swal.showLoading();
-    console.log(this.homenaje.value);
+    if (this.homenaje.value.mensaje.length > 200){
+      this.getVideoID(this.homenaje.value.contenido);
+      Swal.fire('Error en la publicación', 'Los mensajes sólo pueden ser de hasta 200 caracteres.', 'error');
+    } else{
     if (this.homenaje.value.tipo === '1') {
       this.postImagen();
     } else if (this.homenaje.value.tipo === '2'){
       this.postYotube();
     }
   }
+  }
 
   postHomenaje(homenaje) {
     this.homenajes.postHomenaje(homenaje).subscribe((resp: any) => {
       Swal.close();
-      this.homenaje.reset();
-      Swal.fire('¡Publicación exitosa!')
+      this.closebuttonAgregar.nativeElement.click();
+      this.initializeDifuntoFilter();
+      this.intializeClientFilter();
+      this.homenaje.patchValue({
+        tipo: null,
+        contenido: null,
+        mensaje: null,
+      });
+      Swal.fire('¡Publicación exitosa!');
       console.log('success');
     });
   }
@@ -236,7 +256,18 @@ export class CrearHomenajeComponent implements OnInit {
   }
 
   getVideoID(url){
-    const videoID = url.split('v=')[1];
+    const playlistUrl = url.includes('&list');
+    const channelURL = url.includes('&');
+    let videoID;
+    if (playlistUrl){
+      videoID = url.split('?v=')[1].split('&list')[0];
+    } else if (channelURL){
+      videoID = url.split('?v=')[1].split('&')[0];
+    }
+    else {
+      videoID = url.split('?v=')[1];
+    }
+    console.log(videoID);
     return videoID;
   }
 }

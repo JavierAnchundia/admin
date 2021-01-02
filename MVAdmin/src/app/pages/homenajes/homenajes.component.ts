@@ -20,7 +20,7 @@ export class HomenajesComponent implements OnInit {
   public id;
   difuntoControl = new FormControl('', Validators.required);
   tipoControl = new FormControl('', Validators.required);
-  
+
   public displayedColumns = [];
   public dataSource = new MatTableDataSource<any>();
   disableSelect = new FormControl(false);
@@ -29,8 +29,9 @@ export class HomenajesComponent implements OnInit {
   faPen = faPen;
   faPlus = faPlus;
   faSearch = faSearch;
+  public memorial: any;
   public homenajes: [] = [];
-  
+
   filteredDifuntos: Observable<any[]>;
   dataLoaded = false;
   @ViewChild(MatPaginator, {static: false})
@@ -45,6 +46,10 @@ export class HomenajesComponent implements OnInit {
     private difunto: DifuntoService,
 
   ) {
+    this.initializeDifuntoFilter();
+   }
+
+  initializeDifuntoFilter(){
     this.filteredDifuntos = this.difuntoControl.valueChanges.pipe(
       startWith(''),
       debounceTime(400),
@@ -53,8 +58,7 @@ export class HomenajesComponent implements OnInit {
         return this.filterDifuntos(val || '');
       })
     );
-   }
-
+  }
   ngOnInit(): void {
     this.id = JSON.parse(localStorage.getItem('camposanto'));
   }
@@ -89,7 +93,6 @@ export class HomenajesComponent implements OnInit {
     console.log(this.tipoControl.value);
     this.displayColumns();
     if (this.tipoControl.value === 'true'){
-      
       this.homenaje.getHomenajesFree(this.difuntoControl.value.id_difunto).subscribe(
       (resp: any) => {
         this.homenajes = resp;
@@ -98,10 +101,10 @@ export class HomenajesComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         Swal.close();
         this.dataLoaded = true;
+        this.initializeDifuntoFilter();
 
       });
     }else if (this.tipoControl.value === 'false') {
-      
       this.homenaje.getHomenajesPaid(this.difuntoControl.value.id_difunto).subscribe(
         (resp: any) => {
           this.homenajes = resp;
@@ -110,7 +113,7 @@ export class HomenajesComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
           Swal.close();
           this.dataLoaded = true;
-
+          this.initializeDifuntoFilter();
         });
     }
   }
@@ -141,4 +144,11 @@ export class HomenajesComponent implements OnInit {
     ];
    }
   }
+
+  loadHomenajeModal(elemento) {
+    this.memorial = elemento;
+    this.homenaje.recarga_Data(this.memorial);
+
+  }
+
 }

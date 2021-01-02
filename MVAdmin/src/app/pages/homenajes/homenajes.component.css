@@ -80,7 +80,10 @@ td {
   font-size: 10px;
 }
 
-
+td.mat-cell{
+  padding: 2px;
+  margin: 2px;
+}
 th.mat-row {
   padding: 15px 5px;
   text-align: center !important;
