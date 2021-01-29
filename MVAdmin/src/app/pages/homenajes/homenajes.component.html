@@ -113,8 +113,8 @@
       <ng-container matColumnDef="bloquear">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Bloquear</th>
         <td mat-cell *matCellDef="let element">
-            <mat-icon *ngIf="element.estado==true"  class="delete-icon" (click)="redirectToBloqueo(element)">block</mat-icon>
-            <mat-icon *ngIf="element.estado==false" class="delete-icon" (click)="redirectToBloqueo(element)">check_circle</mat-icon>
+            <mat-icon *ngIf="element.estado==true"   data-toggle="tooltip" data-placement="bottom" title="De click para bloquear" class="delete-icon" (click)="redirectToBloqueo(element)">block</mat-icon>
+            <mat-icon *ngIf="element.estado==false"  data-toggle="tooltip" data-placement="bottom" title="De click para desbloquear "class="delete-icon" (click)="redirectToBloqueo(element)">check_circle</mat-icon>
 
         </td>
       </ng-container>
