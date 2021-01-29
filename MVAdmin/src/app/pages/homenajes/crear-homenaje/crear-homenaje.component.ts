@@ -58,7 +58,7 @@ export class CrearHomenajeComponent implements OnInit {
     });
   }
 
-  initializeDifuntoFilter(){
+  initializeDifuntoFilter() {
     this.filteredDifuntos = this.difuntoControl.valueChanges.pipe(
       startWith(''),
       debounceTime(400),
@@ -70,7 +70,7 @@ export class CrearHomenajeComponent implements OnInit {
 
   }
 
-  intializeClientFilter(){
+  intializeClientFilter() {
     this.filteredUsuarios = this.usuarioControl.valueChanges.pipe(
       startWith(''),
       debounceTime(400),
@@ -84,6 +84,7 @@ export class CrearHomenajeComponent implements OnInit {
   selectFile(event) {
     this.archivo = event.target.files[0];
     this.imageName = event.target.files[0].name;
+    this.checkFileType();
   }
 
   filterDifuntos(val: any): Observable<any[]> {
@@ -118,16 +119,16 @@ export class CrearHomenajeComponent implements OnInit {
 
   onSubmit() {
     Swal.showLoading();
-    if (this.homenaje.value.mensaje.length > 200){
+    if (this.homenaje.value.mensaje.length > 200) {
       this.getVideoID(this.homenaje.value.contenido);
       Swal.fire('Error en la publicación', 'Los mensajes sólo pueden ser de hasta 200 caracteres.', 'error');
-    } else{
-    if (this.homenaje.value.tipo === '1') {
-      this.postImagen();
-    } else if (this.homenaje.value.tipo === '2'){
-      this.postYotube();
+    } else {
+      if (this.homenaje.value.tipo === '1') {
+        this.postImagen();
+      } else if (this.homenaje.value.tipo === '2') {
+        this.postYotube();
+      }
     }
-  }
   }
 
   postHomenaje(homenaje) {
@@ -255,13 +256,13 @@ export class CrearHomenajeComponent implements OnInit {
     return latest_date;
   }
 
-  getVideoID(url){
+  getVideoID(url) {
     const playlistUrl = url.includes('&list');
     const channelURL = url.includes('&');
     let videoID;
-    if (playlistUrl){
+    if (playlistUrl) {
       videoID = url.split('?v=')[1].split('&list')[0];
-    } else if (channelURL){
+    } else if (channelURL) {
       videoID = url.split('?v=')[1].split('&')[0];
     }
     else {
@@ -269,5 +270,20 @@ export class CrearHomenajeComponent implements OnInit {
     }
     console.log(videoID);
     return videoID;
+  }
+
+  checkFileType() {
+    const ext = this.imageName.substring(this.imageName.lastIndexOf('.') + 1);
+
+    if (ext.toLowerCase() === 'png' || ext.toLowerCase() === 'jpg' || ext.toLowerCase() === 'jpeg') {
+      console.log('valid');
+      return true;
+
+    } else {
+      Swal.fire('Formato no válido', 'El formato del archivo no está permitido', 'error');
+      this.archivo = null;
+      this.imageName = '-Seleccione un archivo-';
+      return false;
+    }
   }
 }

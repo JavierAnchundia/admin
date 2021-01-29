@@ -15,7 +15,7 @@
                 <div class="form-group col-sm-12 cols-xs-12 col-md-3">
                   <label>Cliente:</label>
                   <mat-form-field class="example-full-width" appearance="fill" color="primary" [style.width.px]=330>
-                    <mat-label>Seleccione una opción</mat-label>  
+                    <mat-label>Seleccione una opción</mat-label>
                     <!-- [formControl]="usuarioControl" -->
                     <input type="text" matInput formControlName= "cliente" required
                       [matAutocomplete]="auto1">
@@ -31,7 +31,7 @@
                         homenaje.controls['cliente'].hasError('required')
                       ">
                       <small>Seleccione un usuario.</small>
-                    </span> 
+                    </span>
               </div>
               <div class="row">
                 <div class="form-group col-sm-12 cols-xs-12 col-md-3">
@@ -47,14 +47,14 @@
                       </mat-option>
                     </mat-autocomplete>
                   </mat-form-field>
-                  
+
                 </div>
                 <span class="text-danger" *ngIf="
                         homenaje.controls['difunto'].touched &&
                         homenaje.controls['difunto'].hasError('required')
                       ">
                       <small>Seleccione un difunto.</small>
-                    </span> 
+                    </span>
               </div>
               <div class="row">
                 <div class="col-8">
@@ -75,7 +75,7 @@
                         homenaje.controls['tipo'].hasError('required')
                       ">
                       <small>Seleccione un tipo.</small>
-                    </span> 
+                    </span>
               </div>
             </div>
             <div class="col-6">
@@ -94,7 +94,7 @@
                         homenaje.controls['contenido'].hasError('required')
                       ">
                       <small>Seleccione un archivo.</small>
-                    </span> 
+                    </span>
                 </div>
                 <div class="col-11" *ngIf="this.homenaje.value.tipo==='2'">
                   <div class="custom-file">
@@ -106,7 +106,7 @@
                         homenaje.controls['contenido'].hasError('required')
                       ">
                       <small>Seleccione un archivo.</small>
-                    </span> 
+                    </span>
                 </div>
               </div>
               <div class="row">
