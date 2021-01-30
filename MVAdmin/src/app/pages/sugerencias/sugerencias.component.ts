@@ -87,22 +87,41 @@ export class SugerenciasComponent implements OnInit {
   }
 
   public  deleteSugerencia = async (row) => {
+    
     this.rowID = row as Sugerencia[];  
 
-    await this._sugerencias.deleteSugerencia(this.rowID['id_contacto'])
-    .then((resp:any) =>{
-      this.cargarSugerencias(this.id.camposanto);
-      Swal.close();
-      Swal.fire('¡Sugerencia eliminada exitosamente!');
-      console.log("Esto ha sido eliminado")
-      console.log(resp);})
-    .catch(function(error){
-      Swal.close();
-      Swal.fire('¡Hubo un problema, intente nuevamente!');
-      console.log(error)
-    })
+    await Swal.fire({
+      title: '¿Está seguro que desea eliminar la sugerencia?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Eliminando...',
+          onOpen: async () => {
+            await Swal.showLoading();
+            await this._sugerencias.deleteSugerencia(this.rowID['id_contacto'])
+              .then((resp:any) =>{
+                this.cargarSugerencias(this.id.camposanto);
+                Swal.close();
+                Swal.fire('¡Sugerencia eliminada exitosamente!');
+                console.log("Esto ha sido eliminado")
+                console.log(resp);})
+              .catch(function(error){
+                Swal.close();
+                Swal.fire('¡Hubo un problema, intente nuevamente!');
+                console.log(error)
+              })
+          },
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+      }
+    });
 
   }
 
+  
 
 }
