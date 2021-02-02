@@ -122,7 +122,15 @@ export class CrearHomenajeComponent implements OnInit {
     if (this.homenaje.value.mensaje.length > 200) {
       this.getVideoID(this.homenaje.value.contenido);
       Swal.fire('Error en la publicación', 'Los mensajes sólo pueden ser de hasta 200 caracteres.', 'error');
-    } else {
+    } else if (this.homenaje.value.cliente.id === undefined || this.homenaje.value.difunto.id_difunto === undefined){
+      Swal.fire(
+        'Error en la publicación',
+        'Todos los campos deben estar llenos. Intenta nuevamente',
+        'error'
+      );
+    }
+
+    else {
       if (this.homenaje.value.tipo === '1') {
         this.postImagen();
       } else if (this.homenaje.value.tipo === '2') {
@@ -159,7 +167,7 @@ export class CrearHomenajeComponent implements OnInit {
           console.log(err);
           Swal.fire(
             'Error en la publicación',
-            'Revisar que se llenaron todos los campos. Intenta nuevamente',
+            'Todos los campos deben estar llenos. Intenta nuevamente',
             'error'
           );
 
@@ -188,7 +196,7 @@ export class CrearHomenajeComponent implements OnInit {
           console.error('Error:' + error);
           Swal.fire(
             'Error en la publicación',
-            'Revisar que se llenaron todos los campos. Intenta nuevamente',
+            'Todos los campos deben estar llenos. Intenta nuevamente',
             'error'
           );
 
@@ -210,7 +218,7 @@ export class CrearHomenajeComponent implements OnInit {
           console.log(err);
           Swal.fire(
             'Error en la publicación',
-            'Revisar que se llenaron todos los campos. Intenta nuevamente',
+            'Todos los campos deben estar llenos. Intenta nuevamente',
             'error'
           );
 
@@ -239,7 +247,7 @@ export class CrearHomenajeComponent implements OnInit {
           console.error(error);
           Swal.fire(
             'Error en la publicación',
-            'Revisar que se llenaron todos los campos. Intenta nuevamente',
+            'Todos los campos deben estar llenos. Intenta nuevamente',
             'error'
           );
 
